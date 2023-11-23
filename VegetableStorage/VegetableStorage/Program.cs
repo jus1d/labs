@@ -6,6 +6,8 @@ public static class Program
 {
     public static void Main()
     {
+        Console.WriteLine("Выполнил студент группы 6101-020302D\n");
+        Console.WriteLine("Добро пожаловать на Ваш склад!\n");
         Storage storage;
         var storageFillMethodMenu = new Menu(new List<string>
         {

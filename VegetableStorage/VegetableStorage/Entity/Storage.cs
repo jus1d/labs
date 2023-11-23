@@ -25,12 +25,8 @@ public class Storage
     /// <returns></returns>
     public bool AddContainer(Container container)
     {
-        if (!IsContainerCostEffective(container)) // Проверка контейнера на рентабельность
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Контейнер не был добавлен на склад, так как он не рентабелен");
-            Console.ResetColor();
-            
+        if (!IsContainerCostEffective(container))
+        {      
             return false;
         }
         
@@ -51,16 +47,22 @@ public class Storage
     /// <returns></returns>
     public bool IsContainerCostEffective(Container container)
     {
-        float damageRate = new Random().Next(0, 50) / 10;
-        float containerPrice = 0;
+        double damageRate = new Random().NextDouble() * 0.5;
+        double containerPrice = 0;
         for (int i = 0; i < container.Boxes.Count; i++)
         {
             var box = container.Boxes[i];
             containerPrice += box.Price - box.Price * damageRate;
         }
 
-        // return containerPrice <= _pricePerContainer; // Мне кажется так правильно
-        return containerPrice > _pricePerContainer; // Как в задании
+        if (containerPrice > _pricePerContainer)
+        {
+            return true;
+        }
+
+        Program.LogRedUnderlined("Контейнер не будет добавлен на склад, так как он не рентабелен");
+        Console.ReadLine();
+        return false;
     }
     
     /// <summary>

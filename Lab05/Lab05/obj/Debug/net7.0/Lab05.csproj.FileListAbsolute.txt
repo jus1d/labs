@@ -1,0 +1,15 @@
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/bin/Debug/net7.0/Lab05
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/bin/Debug/net7.0/Lab05.deps.json
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/bin/Debug/net7.0/Lab05.runtimeconfig.json
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/bin/Debug/net7.0/Lab05.dll
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/bin/Debug/net7.0/Lab05.pdb
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/obj/Debug/net7.0/Lab05.csproj.AssemblyReference.cache
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/obj/Debug/net7.0/Lab05.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/obj/Debug/net7.0/Lab05.AssemblyInfoInputs.cache
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/obj/Debug/net7.0/Lab05.AssemblyInfo.cs
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/obj/Debug/net7.0/Lab05.csproj.CoreCompileInputs.cache
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/obj/Debug/net7.0/Lab05.dll
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/obj/Debug/net7.0/refint/Lab05.dll
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/obj/Debug/net7.0/Lab05.pdb
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/obj/Debug/net7.0/Lab05.genruntimeconfig.cache
+/Users/jus1d/RiderProjects/Labs/Lab05/Lab05/obj/Debug/net7.0/ref/Lab05.dll

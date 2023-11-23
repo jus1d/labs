@@ -1,0 +1,14 @@
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/bin/Debug/net8.0/VegetableStorage
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/bin/Debug/net8.0/VegetableStorage.deps.json
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/bin/Debug/net8.0/VegetableStorage.runtimeconfig.json
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/bin/Debug/net8.0/VegetableStorage.dll
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/bin/Debug/net8.0/VegetableStorage.pdb
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/obj/Debug/net8.0/VegetableStorage.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/obj/Debug/net8.0/VegetableStorage.AssemblyInfoInputs.cache
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/obj/Debug/net8.0/VegetableStorage.AssemblyInfo.cs
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/obj/Debug/net8.0/VegetableStorage.csproj.CoreCompileInputs.cache
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/obj/Debug/net8.0/VegetableStorage.dll
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/obj/Debug/net8.0/refint/VegetableStorage.dll
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/obj/Debug/net8.0/VegetableStorage.pdb
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/obj/Debug/net8.0/VegetableStorage.genruntimeconfig.cache
+/Users/jus1d/RiderProjects/VegetableStorage/VegetableStorage/obj/Debug/net8.0/ref/VegetableStorage.dll

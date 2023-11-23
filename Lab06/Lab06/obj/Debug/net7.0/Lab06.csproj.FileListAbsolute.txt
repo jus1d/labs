@@ -1,0 +1,15 @@
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/bin/Debug/net7.0/Lab06
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/bin/Debug/net7.0/Lab06.deps.json
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/bin/Debug/net7.0/Lab06.runtimeconfig.json
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/bin/Debug/net7.0/Lab06.dll
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/bin/Debug/net7.0/Lab06.pdb
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/obj/Debug/net7.0/Lab06.csproj.AssemblyReference.cache
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/obj/Debug/net7.0/Lab06.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/obj/Debug/net7.0/Lab06.AssemblyInfoInputs.cache
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/obj/Debug/net7.0/Lab06.AssemblyInfo.cs
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/obj/Debug/net7.0/Lab06.csproj.CoreCompileInputs.cache
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/obj/Debug/net7.0/Lab06.dll
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/obj/Debug/net7.0/refint/Lab06.dll
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/obj/Debug/net7.0/Lab06.pdb
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/obj/Debug/net7.0/Lab06.genruntimeconfig.cache
+/Users/jus1d/RiderProjects/Labs/Lab06/Lab06/obj/Debug/net7.0/ref/Lab06.dll

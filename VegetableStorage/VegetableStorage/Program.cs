@@ -24,11 +24,11 @@ public static class Program
         
             storage = new Storage(new List<Container>(), containersLimit, pricePerContainer);
         }
-        
-        storage.Log();
 
         while (true)
         {
+            storage.Log();
+            
             var menu = new Menu(new List<string>
             {
                 "Добавить контейнер на склад", 
@@ -39,7 +39,6 @@ public static class Program
             switch (chosen)
             {
                 case 0:
-
                     storage = AddContainer(storage);
                     break;
                 case 1:
@@ -74,7 +73,6 @@ public static class Program
         }
                     
         storage.AddContainer(container);
-        storage.Log();
 
         return storage;
     }
@@ -82,8 +80,11 @@ public static class Program
     public static Container AddBox(Container container)
     {
         float weight, price;
+        string inp;
+        
         LogUnderlined(Message.InputBoxWeight);
-        string inp = Console.ReadLine().Replace(".", ",");
+        
+        inp = Console.ReadLine().Replace(".", ",");
         while (!float.TryParse(inp, out weight) || weight < 0)
         {
             LogUnderlined(Message.IncorrectBoxWeight);
@@ -91,6 +92,7 @@ public static class Program
         }
                         
         LogUnderlined(Message.InputBoxFee);
+        
         inp = Console.ReadLine().Replace(".", ",");
         while (!float.TryParse(inp, out price) || weight < 0)
         {
@@ -106,8 +108,9 @@ public static class Program
             container.Log();
         }
         else
-        { 
-            container.Log(); LogRedUnderlined(Message.UnacceptableBoxWeight);
+        {
+            container.Log(); 
+            LogRedUnderlined(Message.UnacceptableBoxWeight);
         }
 
         return container;
@@ -115,8 +118,8 @@ public static class Program
 
     public static Storage RemoveContainer(Storage storage)
     {
-        storage.Log();
         Console.WriteLine(Message.ChooseContainerToDelete);
+        
         List<string> ids = new List<string>();
         for (int i = 0; i < storage.Containers.Count; i++)
         {
@@ -126,6 +129,7 @@ public static class Program
         ids.Add("Отмена");
                     
         var menuRemove = new Menu(ids);
+        
         int chosenRemove = menuRemove.Choose();
         if (chosenRemove == ids.Count - 1)
         {
@@ -135,7 +139,6 @@ public static class Program
 
         string id = ids[chosenRemove].Replace("#", "");
         storage.RemoveContainerById(id);
-        storage.Log();
 
         return storage;
     }

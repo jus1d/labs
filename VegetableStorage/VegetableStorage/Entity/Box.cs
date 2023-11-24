@@ -5,19 +5,8 @@ namespace VegetableStorage.Entity;
 /// </summary>
 public class Box
 {
-    private float _weight;
-    private float _price;
-
-    public float Weight
-    {
-        get => _weight;
-        private set => _weight = value;
-    }
-    public float Price
-    {
-        get => _price;
-        private set => _price = value;
-    }
+    public float Weight { get; private set; }
+    public float Price { get; private set; }
     public string ID { get; private set;  }
 
     public Box(float weight, float price)

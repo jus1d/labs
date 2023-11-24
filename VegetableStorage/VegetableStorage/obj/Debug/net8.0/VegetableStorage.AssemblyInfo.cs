@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VegetableStorage")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dbbab75ceef5d57b43a41418deb449868a9912e0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b519217c91c8416dc787becee4c8f13f4ebb46eb")]
 [assembly: System.Reflection.AssemblyProductAttribute("VegetableStorage")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VegetableStorage")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

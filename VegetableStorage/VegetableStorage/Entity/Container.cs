@@ -5,30 +5,22 @@ namespace VegetableStorage.Entity;
 /// </summary>
 public class Container
 {
-    private List<Box> _boxes;
-    private float _currentWeight;
-    private int _weightLimit;
+    public List<Box> Boxes { get; private set; }
 
-    public List<Box> Boxes => _boxes;
-
-    public float CurrentWeight
-    {
-        get => _currentWeight;
-        private set => _currentWeight = value;
-    }
-    public int WeightLimit => _weightLimit;
+    public float CurrentWeight { get; private set; }
+    public int WeightLimit { get; private set; }
 
     public string ID { get; private set; }
 
     public Container(List<Box> boxes)
     {
-        _boxes = boxes;
-        _weightLimit = new Random().Next(10, 101);
-        _currentWeight = 0;
+        Boxes = boxes;
+        WeightLimit = new Random().Next(10, 101);
+        CurrentWeight = 0;
 
-        for (int i = 0; i < _boxes.Count; i++)
+        for (int i = 0; i < Boxes.Count; i++)
         {
-            _currentWeight += _boxes[i].Weight;
+            CurrentWeight += Boxes[i].Weight;
         }
 
         ID = Id.New();
@@ -41,7 +33,7 @@ public class Container
     /// <returns></returns>
     public bool AddBox(Box box)
     {
-        if (_currentWeight + box.Weight > _weightLimit)
+        if (CurrentWeight + box.Weight > WeightLimit)
         {
             return false;
         }
@@ -62,10 +54,10 @@ public class Container
         string reset = "\x1b[0m";
 
         Console.WriteLine($"{format}CONTAINER #{ID}:{reset} {Boxes.Count} коробок, {CurrentWeight}/{WeightLimit}кг");
-        for (int i = 0; i < _boxes.Count; i++)
+        for (int i = 0; i < Boxes.Count; i++)
         {
-            var box = _boxes[i];
-            if (i == _boxes.Count - 1)
+            var box = Boxes[i];
+            if (i == Boxes.Count - 1)
             {
                 Console.WriteLine($"\u2514\u2500\u2500 {format}BOX #{box.ID}:{reset} {box.Weight}кг, {box.Price}р/кг");
             }

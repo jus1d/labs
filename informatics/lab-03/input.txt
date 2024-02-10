@@ -1,0 +1,5 @@
+mouse 1000
+cat 70
+dog 0
+cattt 11
+souce 3

@@ -1,0 +1,51 @@
+namespace Lab01;
+
+public class Vectors
+{
+    public static ArrayVector Sum(ArrayVector a, ArrayVector b)
+    {
+        if (a.GetNorm() != b.GetNorm())
+        {
+            throw new Exception("Vectors norms are not equals");
+        }
+
+        var vec = new ArrayVector(a.GetNorm());
+        for (int i = 0; i < vec.GetNorm(); i++)
+        {
+            vec[i] = a[i] + b[i];
+        }
+
+        return vec;
+    }
+
+    public static double ScalarMultiply(ArrayVector a, ArrayVector b)
+    {
+        if (a.GetNorm() != b.GetNorm())
+        {
+            throw new Exception("Vectors norms are not equals");
+        }
+
+        var result = 0;
+        for (int i = 0; i < a.GetNorm(); i++)
+        {
+            result += a[i] * b[i];
+        }
+
+        return result;
+    }
+
+    public static ArrayVector MultiplyByNumber(ArrayVector vector, int number)
+    {
+        for (int i = 0; i < vector.GetNorm(); i++)
+        {
+            vector[i] *= number;
+        }
+
+        return vector;
+    }
+
+    public static int GetNormSt(ArrayVector vector)
+    {
+        return vector.GetNorm();
+    }
+}

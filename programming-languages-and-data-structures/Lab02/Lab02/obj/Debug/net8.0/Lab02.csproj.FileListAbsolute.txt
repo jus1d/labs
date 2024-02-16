@@ -1,0 +1,15 @@
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/bin/Debug/net8.0/Lab02
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/bin/Debug/net8.0/Lab02.deps.json
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/bin/Debug/net8.0/Lab02.runtimeconfig.json
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/bin/Debug/net8.0/Lab02.dll
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/bin/Debug/net8.0/Lab02.pdb
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/obj/Debug/net8.0/Lab02.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/obj/Debug/net8.0/Lab02.AssemblyInfoInputs.cache
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/obj/Debug/net8.0/Lab02.AssemblyInfo.cs
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/obj/Debug/net8.0/Lab02.csproj.CoreCompileInputs.cache
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/obj/Debug/net8.0/Lab02.sourcelink.json
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/obj/Debug/net8.0/Lab02.dll
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/obj/Debug/net8.0/refint/Lab02.dll
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/obj/Debug/net8.0/Lab02.pdb
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/obj/Debug/net8.0/Lab02.genruntimeconfig.cache
+/Users/jus1d/Programming/labs/programming-languages-and-data-structures/Lab02/Lab02/obj/Debug/net8.0/ref/Lab02.dll

@@ -8,12 +8,17 @@ int main() {
     setlocale(LC_ALL, "Russian");
 
     int a, b, c, d;
-    cout << "Введите a, b, c, d: " << endl;
-    // cin >> a >> b >> c >> d;
-    a = 1;
-    b = -1;
-    c = 0;
-    d = 5;
+    cout << "Введите a: " << endl;
+    cin >> a;
+    cout << "Введите b: " << endl;
+    cin >> b;
+    cout << "Введите c: " << endl;
+    cin >> c;
+    do {
+        cout << "Введите d != 0: " << endl;
+        cin >> d;
+    } while (d == 0);
+    
 
     int result = calculate(a, b, c, d);
 

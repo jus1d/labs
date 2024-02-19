@@ -9,6 +9,7 @@ desktop.ini
 # Ignore IDE files
 */*/.idea/
 .idea
+*/*/*.sln.DotSettings.user
 
 # Ignore CMake files
 CMakeLists.txt

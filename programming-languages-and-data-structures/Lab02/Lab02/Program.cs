@@ -4,7 +4,9 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        var list = new LinkedListVector(5);
+        var list = new LinkedListVector();
+        list.Log();
+        list.DeleteByIndex(2);
         list.Log();
     }
 }

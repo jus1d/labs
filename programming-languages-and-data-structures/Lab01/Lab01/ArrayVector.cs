@@ -47,9 +47,15 @@ public class ArrayVector
         }
     }
 
-    public int GetNorm()
+    public double GetNorm()
     {
-        return _vector.Count;
+        double acc = 0;
+        for (int i = 0; i < _vector.Count; i++)
+        {
+            acc += Math.Pow(_vector[i], 2);
+        }
+
+        return Math.Sqrt(acc);
     }
 
     public int SumPositivesWithEvenIndex()
@@ -158,7 +164,7 @@ public class ArrayVector
         {
             Console.Write(message + ": ");
         }
-        Console.Write("[");
+        Console.Write("{");
         for (int i = 0; i < _vector.Count; i++)
         {
             if (i == _vector.Count - 1)
@@ -170,6 +176,6 @@ public class ArrayVector
                 Console.Write(_vector[i] + ", ");
             }
         }
-        Console.WriteLine("]");
+        Console.WriteLine("}");
     }
 }

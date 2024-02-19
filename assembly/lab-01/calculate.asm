@@ -9,51 +9,38 @@ calculate:
     ; -- arg0, arg1, arg2, arg3 --
     ; -- rdi,  rsi,  rdx,  rcx  -- 
 
-    ; -- (-2 * a + 6 - 3 * b)/(-2 * c * c - 55 / d) -- 
+    ; -- (-2 * a + 6 - 3 * b) / (-2 * c * c - 55 / d) -- 
 
     ; -- (-2 * a + 6 - 3 * b) --
-    shl     rdi, 1
-    neg     rdi
-    add     rdi, 6
-    imul    rsi, 3
-    sub     rdi, rsi       ; (-2 * a + 6 - 3 * b)
-    push    rdi            ; load first part of expression to stack
-    cmp rax, rbx
+    shl     rdi, 1      ; <rdi> =  2 * a
+    neg     rdi         ; <rdx> = -2 * a
+    add     rdi, 6      ; <rdi> = -2 * a + 6
+    imul    rsi, 3      ; <rsi> =  b * 3
+    sub     rdi, rsi    ; <rdi> = -2 * a + 6 - 3 * b
+    push    rdi         ; push first part of expression to stack
 
     ; -- (-2 * c * c) --
-    mov     rax, rdx
-    imul    rax, rdx
-    imul    rax, -2
-    push    rax
+    mov     rax, rdx    ; <rax> = c
+    imul    rax, rdx    ; <rax> = c * c
+    imul    rax, -2     ; <rax> = -2 * c * c
+    push    rax         ; push this part to stack
 
     ; -- (55 / d) -- 
-    mov     rax, 55
-    cqo
-    idiv    rcx
-    push    rax
+    mov     rax, 55     ; <rax> = 55
+    cqo                 ; <rax> => <rdx:rax> - Extending 64-bit <rax> register to 128-bit <rdx:rax>
+    idiv    rcx         ; <rax> = 55 / d
+    push    rax         ; push this part to stack
 
     ; -- (-2 * c * c - 55 / d)
-    pop     rbx
-    pop     rax
-    sub     rax, rbx
-    push    rax
+    pop     rbx         ; pop (55 / d) from stack
+    pop     rax         ; pop (-2 * c * c) from stack
+    sub     rax, rbx    ; <rax> = (-2 * c * c) - (55 / d)
+    push    rax         ; push this part to stack
 
-    ; -- (-2 * a + 6 - 3 * b)/(-2 * c * c - 55 / d) -- 
-    pop     rbx
-    pop     rax
-    cqo
-    idiv    rbx
+    ; -- (-2 * a + 6 - 3 * b) / (-2 * c * c - 55 / d) -- 
+    pop     rbx         ; pop (-2 * c * c) - (55 / d) from stack
+    pop     rax         ; pop (-2 * a + 6 - 3 * b) from stack
+    cqo                 ; <rax> => <rdx:rax> - Extending 64-bit <rax> register to 128-bit <rdx:rax> 
+    idiv    rbx         ; <rax> = (-2 * a + 6 - 3 * b) / (-2 * c * c - 55 / d)
     
     ret
-    
-
-error_zero_div:
-    mov     rax, 1
-    mov     rdi, 2
-    mov     rsi, zero_div_message
-    mov     rdx, 40
-    syscall
-
-    mov     rax, 60
-    mov     rdi, 1
-    syscall

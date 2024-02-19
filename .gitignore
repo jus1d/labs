@@ -15,3 +15,4 @@ desktop.ini
 CMakeLists.txt
 */*/cmake-build-debug/
 *.o
+*.out

@@ -2,62 +2,64 @@ namespace Lab01;
 
 public class ArrayVector
 {
-    private List<int> _field;
+    private List<int> _vector;
     
     public int this[int idx]
     {
         get
         {
-            if (idx < 0 || idx >= _field.Count)
+            if (idx < 0 || idx >= _vector.Count)
             {
-                throw new IndexOutOfRangeException("Index out of range");
+                throw new IndexOutOfRangeException("Vector index out of range");
             }
-            return _field[idx];
+            return _vector[idx];
         }
         set
         {
-            if (idx < 0 || idx >= _field.Count)
+            if (idx < 0 || idx >= _vector.Count)
             {
-                throw new IndexOutOfRangeException("Index out of range");
+                throw new IndexOutOfRangeException("Vector index out of range");
             }
-            _field[idx] = value;
+            _vector[idx] = value;
         }
     }
 
+    public int Length => _vector.Count();
+
     public ArrayVector(int length)
     {
-        _field = new List<int>();
+        _vector = new List<int>();
         for (int i = 0; i < length; i++)
         {
             var r = new Random();
-            _field.Add(r.Next(100));
+            _vector.Add(r.Next(100));
         }
     }
 
     public ArrayVector()
     {
         int length = 5;
-        _field = new List<int>();
+        _vector = new List<int>();
         for (int i = 0; i < length; i++)
         {
             var r = new Random();
-            _field.Add(r.Next(100));
+            _vector.Add(r.Next(100));
         }
     }
 
     public int GetNorm()
     {
-        return _field.Count;
+        return _vector.Count;
     }
 
     public int SumPositivesWithEvenIndex()
     {
         int acc = 0;
-        for (int i = 0; i < _field.Count; i += 2)
+        for (int i = 0; i < _vector.Count; i += 2)
         {
-            if (_field[i] > 0)
+            if (_vector[i] > 0)
             {
-                acc += _field[i];
+                acc += _vector[i];
             }
         }
 
@@ -66,26 +68,26 @@ public class ArrayVector
 
     public int SumLessAverageAbsoluteWithOddIndex()
     {
-        if (_field.Count == 0)
+        if (_vector.Count == 0)
         {
             return 0;
         }
         
         int average = 0;
-        for (int i = 0; i < _field.Count; i++)
+        for (int i = 0; i < _vector.Count; i++)
         {
-            average += Math.Abs(_field[i]);
+            average += Math.Abs(_vector[i]);
         }
 
-        average /= _field.Count;
+        average /= _vector.Count;
         
         
         int acc = 0;
-        for (int i = 1; i < _field.Count; i += 2)
+        for (int i = 1; i < _vector.Count; i += 2)
         {
-            if (_field[i] < average)
+            if (_vector[i] < average)
             {
-                acc += _field[i];
+                acc += _vector[i];
             }
         }
 
@@ -95,11 +97,11 @@ public class ArrayVector
     public int MultiplyEven()
     {
         int result = 1;
-        for (int i = 0; i < _field.Count; i++)
+        for (int i = 0; i < _vector.Count; i++)
         {
-            if (_field[i] > 0 && _field[i] % 2 == 0)
+            if (_vector[i] > 0 && _vector[i] % 2 == 0)
             {
-                result *= _field[i];
+                result *= _vector[i];
             }
         }
 
@@ -109,11 +111,11 @@ public class ArrayVector
     public int MultiplyOdd()
     {
         int result = 1;
-        for (int i = 0; i < _field.Count; i++)
+        for (int i = 0; i < _vector.Count; i++)
         {
-            if (_field[i] % 2 != 0 && _field[i] % 3 != 0)
+            if (_vector[i] % 2 != 0 && _vector[i] % 3 != 0)
             {
-                result *= _field[i];
+                result *= _vector[i];
             }
         }
 
@@ -122,14 +124,14 @@ public class ArrayVector
 
     public void SortUp()
     {
-        int n = _field.Count;
+        int n = _vector.Count;
         for (int i = 0; i < n - 1; i++)
         {
             for (int j = 0; j < n - i - 1; j++)
             {
-                if (_field[j] > _field[j + 1])
+                if (_vector[j] > _vector[j + 1])
                 {
-                    (_field[j], _field[j + 1]) = (_field[j + 1], _field[j]);
+                    (_vector[j], _vector[j + 1]) = (_vector[j + 1], _vector[j]);
                 }
             }
         }
@@ -137,14 +139,14 @@ public class ArrayVector
 
     public void SortDown()
     {
-        int n = _field.Count;
+        int n = _vector.Count;
         for (int i = 0; i < n - 1; i++)
         {
             for (int j = 0; j < n - i - 1; j++)
             {
-                if (_field[j] < _field[j + 1])
+                if (_vector[j] < _vector[j + 1])
                 {
-                    (_field[j], _field[j + 1]) = (_field[j + 1], _field[j]);
+                    (_vector[j], _vector[j + 1]) = (_vector[j + 1], _vector[j]);
                 }
             }
         }
@@ -157,15 +159,15 @@ public class ArrayVector
             Console.Write(message + ": ");
         }
         Console.Write("[");
-        for (int i = 0; i < _field.Count; i++)
+        for (int i = 0; i < _vector.Count; i++)
         {
-            if (i == _field.Count - 1)
+            if (i == _vector.Count - 1)
             {
-                Console.Write(_field[i]);
+                Console.Write(_vector[i]);
             }
             else
             {
-                Console.Write(_field[i] + ", ");
+                Console.Write(_vector[i] + ", ");
             }
         }
         Console.WriteLine("]");

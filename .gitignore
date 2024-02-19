@@ -1,8 +1,16 @@
+# Ignore OS files
 .DS_Store
-*/*/bin/
-*/*/obj/
+desktop.ini
+
+# Ignore binary, object files
+*/*/*/bin/
+*/*/*/obj/
+
+# Ignore IDE files
 */*/.idea/
 .idea
+
+# Ignore CMake files
 CMakeLists.txt
 */*/cmake-build-debug/
 *.o

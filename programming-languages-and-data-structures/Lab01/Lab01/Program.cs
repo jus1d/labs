@@ -53,6 +53,9 @@ public static class Program
                     Console.WriteLine("Нет такого пункта в меню");
                     break;
             }
+            
+            Console.WriteLine("Нажмите любую клавишу для продолжения...");
+            Console.ReadKey();
         }
     }
 
@@ -143,14 +146,12 @@ public static class Program
     public static void SumVectors()
     {
         int length;
-        Console.Write("Введите длину для 2х векторов: ");
-        string inp = Console.ReadLine();
-        
-        while (!int.TryParse(inp, out length))
+        string inp;
+        do
         {
-            Console.Write("Введите длину для 2х векторов: ");
+            Console.Write("Введите длину для вектора: ");
             inp = Console.ReadLine();
-        }
+        } while (!int.TryParse(inp, out length) || length == 0);
 
         var vec1 = new ArrayVector(length);
         var vec2 = new ArrayVector(length);
@@ -166,14 +167,12 @@ public static class Program
     public static void ScalarMultiply()
     {
         int length;
-        Console.Write("Введите длину для 2х векторов: ");
-        string inp = Console.ReadLine();
-        
-        while (!int.TryParse(inp, out length))
+        string inp;
+        do
         {
             Console.Write("Введите длину для 2х векторов: ");
             inp = Console.ReadLine();
-        }
+        } while (!int.TryParse(inp, out length) || length == 0);
 
         var vec1 = new ArrayVector(length);
         var vec2 = new ArrayVector(length);
@@ -189,14 +188,12 @@ public static class Program
     public static void MultiplyVectorByNumber()
     {
         int length;
-        Console.Write("Введите длину для вектора: ");
-        string inp = Console.ReadLine();
-        
-        while (!int.TryParse(inp, out length))
+        string inp;
+        do
         {
-            Console.Write("Введите длину вектора: ");
+            Console.Write("Введите длину для вектора: ");
             inp = Console.ReadLine();
-        }
+        } while (!int.TryParse(inp, out length) || length == 0);
 
         var vector = new ArrayVector(length);
         
@@ -204,14 +201,11 @@ public static class Program
         
         
         int number;
-        Console.Write("Введите число на которое умножить вектор: ");
-        inp = Console.ReadLine();
-        
-        while (!int.TryParse(inp, out number))
+        do
         {
             Console.Write("Введите число на которое умножить вектор: ");
             inp = Console.ReadLine();
-        }
+        } while (!int.TryParse(inp, out number));
 
         var result = Vectors.MultiplyByNumber(vector, number);
         
@@ -221,14 +215,12 @@ public static class Program
     public static void GetVectorNorm()
     {
         int length;
-        Console.Write("Введите длину для вектора: ");
-        string inp = Console.ReadLine();
-        
-        while (!int.TryParse(inp, out length))
+        string inp;
+        do
         {
-            Console.Write("Введите длину вектора: ");
+            Console.Write("Введите длину для вектора: ");
             inp = Console.ReadLine();
-        }
+        } while (!int.TryParse(inp, out length) || length == 0);
 
         var vector = new ArrayVector(length);
         

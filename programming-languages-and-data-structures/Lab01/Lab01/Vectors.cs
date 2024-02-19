@@ -22,7 +22,7 @@ public class Vectors
     {
         if (a.GetNorm() != b.GetNorm())
         {
-            throw new Exception("Vectors norms are not equals");
+            throw new Exception("Vectors norms are not equal");
         }
 
         var result = 0;

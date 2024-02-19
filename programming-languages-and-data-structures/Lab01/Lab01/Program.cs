@@ -72,16 +72,6 @@ public static class Program
     
     public static void CountSumLessAverageAbsWithOddIndex()
     {
-        int length;
-        Console.Write("Введите длину вектора: ");
-        string inp = Console.ReadLine();
-        
-        while (!int.TryParse(inp, out length))
-        {
-            Console.Write("Введите длину вектора: ");
-            inp = Console.ReadLine();
-        }
-
         var vector = ArrayVector.GetFromUserInput();
         
         vector.Log("Созданный вектор");
@@ -121,9 +111,15 @@ public static class Program
         vec1.Log("Первый вектор");
         vec2.Log("Второй вектор");
 
-        var result = Vectors.Sum(vec1, vec2);
-        
-        result.Log("Результирующий векторсложения");
+        try
+        {
+            var result = Vectors.Sum(vec1, vec2);
+            result.Log("Результирующий векторсложения");
+        }
+        catch
+        {
+            Console.WriteLine("Длины векторов не совпадают");
+        }
     }
 
     public static void ScalarMultiply()
@@ -134,9 +130,15 @@ public static class Program
         vec1.Log("Первый вектор");
         vec2.Log("Второй вектор");
 
-        var result = Vectors.ScalarMultiply(vec1, vec2);
-        
-        Console.WriteLine("Результат скалярного произведения: " + result);
+        try
+        {
+            var result = Vectors.ScalarMultiply(vec1, vec2);
+            Console.WriteLine("Результат скалярного произведения: " + result);
+        }
+        catch
+        {
+            Console.WriteLine("Длины векторов не совпадают");
+        }
     }
 
     public static void MultiplyVectorByNumber()

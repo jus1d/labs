@@ -4,13 +4,13 @@ public class Vectors
 {
     public static ArrayVector Sum(ArrayVector a, ArrayVector b)
     {
-        if (a.GetNorm() != b.GetNorm())
+        if (a.Length != b.Length)
         {
             throw new Exception("Vectors norms are not equals");
         }
 
-        var vec = new ArrayVector(a.GetNorm());
-        for (int i = 0; i < vec.GetNorm(); i++)
+        var vec = new ArrayVector(a.Length);
+        for (int i = 0; i < vec.Length; i++)
         {
             vec[i] = a[i] + b[i];
         }
@@ -20,13 +20,13 @@ public class Vectors
 
     public static double ScalarMultiply(ArrayVector a, ArrayVector b)
     {
-        if (a.GetNorm() != b.GetNorm())
+        if (a.Length != b.Length)
         {
             throw new Exception("Vectors norms are not equal");
         }
 
         var result = 0;
-        for (int i = 0; i < a.GetNorm(); i++)
+        for (int i = 0; i < a.Length; i++)
         {
             result += a[i] * b[i];
         }
@@ -36,7 +36,7 @@ public class Vectors
 
     public static ArrayVector MultiplyByNumber(ArrayVector vector, int number)
     {
-        for (int i = 0; i < vector.GetNorm(); i++)
+        for (int i = 0; i < vector.Length; i++)
         {
             vector[i] *= number;
         }
@@ -44,7 +44,7 @@ public class Vectors
         return vector;
     }
 
-    public static int GetNormSt(ArrayVector vector)
+    public static double GetNormSt(ArrayVector vector)
     {
         return vector.GetNorm();
     }

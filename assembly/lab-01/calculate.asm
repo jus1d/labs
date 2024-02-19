@@ -18,6 +18,7 @@ calculate:
     imul    rsi, 3
     sub     rdi, rsi       ; (-2 * a + 6 - 3 * b)
     push    rdi            ; load first part of expression to stack
+    cmp rax, rbx
 
     ; -- (-2 * c * c) --
     mov     rax, rdx

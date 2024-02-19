@@ -26,13 +26,6 @@ int main() {
     printf("Выражение:\n(b + 1)/a + 1,   a > b\n-b,              a = b\n(a - 5)/(a + b), a < b\n\n");
 
     int a, b, c, d;
-
-    // do {
-    //     cout << "Введите a: " << endl;
-    //     cin >> a;
-    //     cout << "Введите b: " << endl;
-    //     cin >> b;
-    // } while (a == -b);
     
     cout << "Введите a: " << endl;
     cin >> a;

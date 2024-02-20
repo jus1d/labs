@@ -5,46 +5,60 @@ public static class Program
     public static void Main(string[] args)
     {
         Greeting();
+        ArrayVector vec = ArrayVector.GetFromUserInput();
+        vec.Log("Созданный вектор");
         while (true)
         {
             Console.WriteLine("Выберете действие:\n\n" +
-                              "\t1 - Посчитать сумму всех положительных элементов массива с четными номерами\n" +
-                              "\t2 - Посчитать сумму элементов массива с нечетным индексом и одновременно меньше среднего значения всех модулей элементов массива\n" +
-                              "\t3 - Сортировка по возрастанию\n" +
-                              "\t4 - Сортировка по убыванию\n" +
-                              "\t5 - Сумма векторов\n" +
-                              "\t6 - Скалярное умножение\n" +
-                              "\t7 - Умножить вектор на число\n" +
-                              "\t8 - Посчитать модуль вектора\n" +
-                              "\t0 - Выход из программы\n");
+                              "\t1  - Посчитать сумму всех положительных элементов массива с четными номерами\n" +
+                              "\t2  - Посчитать сумму элементов массива с нечетным индексом и одновременно меньше среднего значения всех модулей элементов массива\n" +
+                              "\t3  - Сортировка по возрастанию\n" +
+                              "\t4  - Сортировка по убыванию\n" +
+                              "\t5  - Сумма векторов\n" +
+                              "\t6  - Скалярное умножение\n" +
+                              "\t7  - Умножить вектор на число\n" +
+                              "\t8  - Посчитать модуль вектора\n" +
+                              "\t9  - Перемножить все четные\n" +
+                              "\t10 - Перемножить все нечетные, неделящиеся на 3\n" +
+                              "\t11 - Установить элемент вектора\n" +
+                              "\t0  - Выход из программы\n");
             
-            string? inp = Console.ReadLine();
+            string inp = Console.ReadLine();
 
             switch (inp)
             {
                 case "1":
-                    CountSumPositiveNumbersWithEvenIndex();
+                    CountSumPositiveNumbersWithEvenIndex(vec);
                     break;
                 case "2":
-                    CountSumLessAverageAbsWithOddIndex();
+                    CountSumLessAverageAbsWithOddIndex(vec);
                     break;
                 case "3":
-                    SortAscending();
+                    SortAscending(vec);
                     break;
                 case "4":
-                    SortDescending();
+                    SortDescending(vec);
                     break;
                 case "5":
-                    SumVectors();
+                    SumVectors(vec);
                     break;
                 case "6":
-                    ScalarMultiply();
+                    ScalarMultiply(vec);
                     break;
                 case "7":
-                    MultiplyVectorByNumber();
+                    MultiplyVectorByNumber(vec);
                     break;
                 case "8":
-                    GetVectorNorm();
+                    GetVectorNorm(vec);
+                    break;
+                case "9":
+                    MultiplyEven(vec);
+                    break;
+                case "10":
+                    MultiplyOdd(vec);
+                    break;
+                case "11":
+                    SetVectorCoordinate(vec);
                     break;
                 case "0":
                     Console.WriteLine("До встречи!");
@@ -59,32 +73,40 @@ public static class Program
         }
     }
 
-    public static void CountSumPositiveNumbersWithEvenIndex()
+    public static void CountSumPositiveNumbersWithEvenIndex(ArrayVector vector)
     {
-        var vector = ArrayVector.GetFromUserInput();
-        
         vector.Log("Созданный вектор");
 
         int sum = vector.SumPositivesWithEvenIndex();
-        
-        Console.WriteLine("Сумма положительных элементов с четными индексами: " + sum);
+
+        if (sum == 0)
+        {
+            Console.WriteLine("В заданном векторе нет положительных элементов на четных позициях");
+        }
+        else
+        {
+            Console.WriteLine("Сумма положительных элементов с четными индексами: " + sum);
+        }
     }
     
-    public static void CountSumLessAverageAbsWithOddIndex()
+    public static void CountSumLessAverageAbsWithOddIndex(ArrayVector vector)
     {
-        var vector = ArrayVector.GetFromUserInput();
-        
         vector.Log("Созданный вектор");
 
         int sum = vector.SumLessAverageAbsoluteWithOddIndex();
         
-        Console.WriteLine("Сумма элементов с нечетными индексами, которые меньше среднего значения всех модулей: " + sum);
+        if (sum == 0)
+        {
+            Console.WriteLine("В заданном векторе нет значений на нечетных позициях, которые меньше среднего значения");
+        }
+        else
+        {
+            Console.WriteLine("Сумма элементов с нечетными индексами, которые меньше среднего значения всех модулей: " + sum);
+        }
     }
 
-    public static void SortAscending()
+    public static void SortAscending(ArrayVector vector)
     {
-        var vector = ArrayVector.GetFromUserInput();
-        
         vector.Log("Исходный вектор");
         
         vector.SortUp();
@@ -92,10 +114,8 @@ public static class Program
         vector.Log("Отсортированный вектор по возрастанию");
     }
     
-    public static void SortDescending()
+    public static void SortDescending(ArrayVector vector)
     {
-        var vector = ArrayVector.GetFromUserInput();
-        
         vector.Log("Исходный вектор");
         
         vector.SortDown();
@@ -103,17 +123,16 @@ public static class Program
         vector.Log("Отсортированный вектор по убыванию");
     }
 
-    public static void SumVectors()
+    public static void SumVectors(ArrayVector vector)
     {
-        var vec1 = ArrayVector.GetFromUserInput();
-        var vec2 = ArrayVector.GetFromUserInput();
+        ArrayVector vec2 = new ArrayVector();
         
-        vec1.Log("Первый вектор");
+        vector.Log("Первый вектор");
         vec2.Log("Второй вектор");
 
         try
         {
-            var result = Vectors.Sum(vec1, vec2);
+            ArrayVector result = Vectors.Sum(vector, vec2);
             result.Log("Результирующий векторсложения");
         }
         catch
@@ -122,17 +141,16 @@ public static class Program
         }
     }
 
-    public static void ScalarMultiply()
+    public static void ScalarMultiply(ArrayVector vector)
     {
-        var vec1 = ArrayVector.GetFromUserInput();
-        var vec2 = ArrayVector.GetFromUserInput();
+        ArrayVector vec2 = new ArrayVector();
         
-        vec1.Log("Первый вектор");
+        vector.Log("Первый вектор");
         vec2.Log("Второй вектор");
 
         try
         {
-            var result = Vectors.ScalarMultiply(vec1, vec2);
+            double result = Vectors.ScalarMultiply(vector, vec2);
             Console.WriteLine("Результат скалярного произведения: " + result);
         }
         catch
@@ -141,10 +159,8 @@ public static class Program
         }
     }
 
-    public static void MultiplyVectorByNumber()
+    public static void MultiplyVectorByNumber(ArrayVector vector)
     {
-        var vector = ArrayVector.GetFromUserInput();
-        
         vector.Log("Созданный вектор");
         
         int number;
@@ -155,18 +171,70 @@ public static class Program
             inp = Console.ReadLine();
         } while (!int.TryParse(inp, out number));
 
-        var result = Vectors.MultiplyByNumber(vector, number);
+        ArrayVector result = Vectors.MultiplyByNumber(vector, number);
         
         result.Log("Результат умножения вектора на число");
     }
 
-    public static void GetVectorNorm()
+    public static void GetVectorNorm(ArrayVector vector)
     {
-        var vector = ArrayVector.GetFromUserInput();
-        
         vector.Log("Созданный вектор");
         
         Console.WriteLine($"Модуль созданного вектора: {vector.GetNorm():0.00}");
+    }
+
+    public static void MultiplyEven(ArrayVector vector)
+    {
+        vector.Log("Созданный вектор");
+        
+        int result = vector.MultiplyEven();
+        if (result == 0)
+        {
+            Console.WriteLine("В векторе нет положительных четных элементов");
+        }
+        else
+        {
+            Console.WriteLine($"Результат умножения всех четных положительных элементов по значению: {result}");
+        }
+    }
+    
+    public static void MultiplyOdd(ArrayVector vector)
+    {
+        vector.Log("Созданный вектор");
+
+        int result = vector.MultiplyOdd();
+        if (result == 0)
+        {
+            Console.WriteLine("В векторе нет нечетных положительных элементов не делящихся на 3");
+        }
+        else
+        {
+            Console.WriteLine($"Результат умножения всех нечетных положительных элементов не делящихся на 3: {result}");
+        }
+    }
+    
+    public static void SetVectorCoordinate(ArrayVector vector)
+    {
+        vector.Log("Созданный вектор");
+
+        int idx;
+        string inp;
+        do
+        {
+            Console.Write($"Введите номер координаты вектора для установки [1-{vector.Length}]: ");
+            inp = Console.ReadLine();
+        } while (!int.TryParse(inp, out idx) || idx < 1 || idx > vector.Length);
+
+        int value;
+        do
+        {
+            Console.Write($"Введите значение для {{{idx}}}: ");
+            inp = Console.ReadLine();
+        } while (!int.TryParse(inp, out value));
+
+        vector[idx - 1] = value;
+        
+        vector.Log("Новый вектор");
     }
     
     public static void Greeting()

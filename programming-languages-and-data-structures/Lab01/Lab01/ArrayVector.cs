@@ -4,28 +4,6 @@ public class ArrayVector
 {
     private int[] _vector;
     
-    public int this[int idx]
-    {
-        get
-        {
-            if (idx < 0 || idx >= _vector.Length)
-            {
-                throw new IndexOutOfRangeException("Vector index out of range");
-            }
-            return _vector[idx];
-        }
-        set
-        {
-            if (idx < 0 || idx >= _vector.Length)
-            {
-                throw new IndexOutOfRangeException("Vector index out of range");
-            }
-            _vector[idx] = value;
-        }
-    }
-
-    public int Length => _vector.Length;
-
     public ArrayVector(int length)
     {
         _vector = new int[length];
@@ -35,11 +13,33 @@ public class ArrayVector
     {
         _vector = new int[5];
     }
+    
+    public int this[int idx]
+    {
+        get
+        {
+            if (idx < 0 || idx >= Length)
+            {
+                throw new IndexOutOfRangeException("Vector index out of range");
+            }
+            return _vector[idx];
+        }
+        set
+        {
+            if (idx < 0 || idx >= Length)
+            {
+                throw new IndexOutOfRangeException("Vector index out of range");
+            }
+            _vector[idx] = value;
+        }
+    }
+
+    public int Length => _vector.Length;
 
     public double GetNorm()
     {
         double acc = 0;
-        for (int i = 0; i < _vector.Length; i++)
+        for (int i = 0; i < Length; i++)
         {
             acc += Math.Pow(_vector[i], 2);
         }
@@ -50,7 +50,7 @@ public class ArrayVector
     public int SumPositivesWithEvenIndex()
     {
         int acc = 0;
-        for (int i = 0; i < _vector.Length; i += 2)
+        for (int i = 1; i < Length; i += 2)
         {
             if (_vector[i] > 0)
             {
@@ -63,22 +63,22 @@ public class ArrayVector
 
     public int SumLessAverageAbsoluteWithOddIndex()
     {
-        if (_vector.Length == 0)
+        if (Length == 0)
         {
             return 0;
         }
         
         int average = 0;
-        for (int i = 0; i < _vector.Length; i++)
+        for (int i = 0; i < Length; i++)
         {
             average += Math.Abs(_vector[i]);
         }
 
-        average /= _vector.Length;
+        average /= Length;
         
         
         int acc = 0;
-        for (int i = 1; i < _vector.Length; i += 2)
+        for (int i = 0; i < Length; i += 2)
         {
             if (_vector[i] < average)
             {
@@ -91,11 +91,12 @@ public class ArrayVector
 
     public int MultiplyEven()
     {
-        int result = 1;
-        for (int i = 0; i < _vector.Length; i++)
+        int result = 0;
+        for (int i = 1; i < Length; i+=2)
         {
             if (_vector[i] > 0 && _vector[i] % 2 == 0)
             {
+                if (result == 0) result = 1;
                 result *= _vector[i];
             }
         }
@@ -105,11 +106,12 @@ public class ArrayVector
     
     public int MultiplyOdd()
     {
-        int result = 1;
-        for (int i = 0; i < _vector.Length; i++)
+        int result = 0;
+        for (int i = 0; i < Length; i+=2)
         {
             if (_vector[i] % 2 != 0 && _vector[i] % 3 != 0)
             {
+                if (result == 0) result = 1;
                 result *= _vector[i];
             }
         }
@@ -119,7 +121,7 @@ public class ArrayVector
 
     public void SortUp()
     {
-        int n = _vector.Length;
+        int n = Length;
         for (int i = 0; i < n - 1; i++)
         {
             for (int j = 0; j < n - i - 1; j++)
@@ -134,7 +136,7 @@ public class ArrayVector
 
     public void SortDown()
     {
-        int n = _vector.Length;
+        int n = Length;
         for (int i = 0; i < n - 1; i++)
         {
             for (int j = 0; j < n - i - 1; j++)
@@ -154,9 +156,9 @@ public class ArrayVector
             Console.Write(message + ": ");
         }
         Console.Write("{");
-        for (int i = 0; i < _vector.Length; i++)
+        for (int i = 0; i < Length; i++)
         {
-            if (i == _vector.Length - 1)
+            if (i == Length - 1)
             {
                 Console.Write(_vector[i]);
             }
@@ -170,7 +172,7 @@ public class ArrayVector
 
     public static ArrayVector GetFromUserInput()
     {
-        string? inp;
+        string inp;
         do
         {
             Console.WriteLine("Выберете как хотите заполнить вектор:\n" +
@@ -185,11 +187,11 @@ public class ArrayVector
             Console.Write("Введите длину вектора: ");
         } while (!int.TryParse(Console.ReadLine(), out length) || length <= 0);
 
-        var vec = new ArrayVector(length);
+        ArrayVector vec = new ArrayVector(length);
 
         if (inp == "1")
         {
-            var r = new Random();
+            Random r = new Random();
             for (int i = 0; i < length; i++)
             {
                 vec[i] = r.Next(100);
@@ -204,7 +206,7 @@ public class ArrayVector
                 int value;
                 do
                 {
-                    Console.Write($"Введите значение координаты {{{i}}}: ");
+                    Console.Write($"Введите значение координаты {{{i+1}}}: ");
                     inp = Console.ReadLine();
                 } while (!int.TryParse(inp, out value));
 

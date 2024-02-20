@@ -9,7 +9,7 @@ public class Vectors
             throw new Exception("Vectors norms are not equals");
         }
 
-        var vec = new ArrayVector(a.Length);
+        ArrayVector vec = new ArrayVector(a.Length);
         for (int i = 0; i < vec.Length; i++)
         {
             vec[i] = a[i] + b[i];
@@ -25,7 +25,7 @@ public class Vectors
             throw new Exception("Vectors norms are not equal");
         }
 
-        var result = 0;
+        int result = 0;
         for (int i = 0; i < a.Length; i++)
         {
             result += a[i] * b[i];

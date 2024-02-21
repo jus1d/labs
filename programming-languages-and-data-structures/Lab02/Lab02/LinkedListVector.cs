@@ -68,7 +68,7 @@ public class LinkedListVector
             }
             else
             {
-                throw new Exception("Linked list index out of range");
+                throw new IndexOutOfRangeException("Linked list index out of range");
             }
         }
         set
@@ -85,7 +85,7 @@ public class LinkedListVector
             }
             else
             {
-                throw new Exception("Linked list index out of range");
+                throw new IndexOutOfRangeException("Linked list index out of range");
             }
         }
     }
@@ -152,7 +152,7 @@ public class LinkedListVector
         }
         else
         {
-            throw new Exception("Linked list index out of range");
+            throw new IndexOutOfRangeException("Linked list index out of range");
         }
     }
 
@@ -186,12 +186,16 @@ public class LinkedListVector
         }
         else
         {
-            throw new Exception("Linked list index out of range");
+            throw new IndexOutOfRangeException("Linked list index out of range");
         }
     }
 
-    public void Log()
+    public void Log(string message = "")
     {
+        if (message != "")
+        {
+            Console.Write($"{message}: ");
+        }
         var cur = _head;
         Console.Write("{");
         while (cur.Next != null)

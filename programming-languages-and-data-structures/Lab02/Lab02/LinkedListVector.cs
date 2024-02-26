@@ -4,7 +4,7 @@ namespace Lab02;
 
 public class LinkedListVector
 {
-    private Node _head;
+    private Node head;
 
     private class Node
     {
@@ -28,8 +28,8 @@ public class LinkedListVector
     {
         var r = new Random();
         
-        _head = new Node(r.Next(100));
-        Node cur = _head;
+        head = new Node(r.Next(100));
+        Node cur = head;
         
         for (int i = 0; i < 5; i++)
         {
@@ -42,8 +42,8 @@ public class LinkedListVector
     {
         var r = new Random();
         
-        _head = new Node(r.Next(100));
-        Node cur = _head;
+        head = new Node(r.Next(100));
+        Node cur = head;
         
         for (int i = 0; i < length; i++)
         {
@@ -58,7 +58,7 @@ public class LinkedListVector
         {
             if (0 <= idx && idx <= Length)
             {
-                Node cur = _head;
+                Node cur = head;
                 for (int i = 0; i < idx; i++)
                 {
                     cur = cur.Next;
@@ -75,7 +75,7 @@ public class LinkedListVector
         {
             if (0 <= idx && idx <= Length)
             {
-                Node cur = _head;
+                Node cur = head;
                 for (int i = 0; i < idx; i++)
                 {
                     cur = cur.Next;
@@ -94,13 +94,13 @@ public class LinkedListVector
     {
         get
         {
-            if (_head == null)
+            if (head == null)
             {
                 return -1;
             }
 
             int length = 0;
-            Node cur = _head;
+            Node cur = head;
             while (cur.Next != null)
             {
                 cur = cur.Next;
@@ -114,7 +114,7 @@ public class LinkedListVector
     public double GetNorm()
     {
         double acc = 0;
-        Node cur = _head;
+        Node cur = head;
         for (int i = 0; i < Length; i++)
         {
             acc += Math.Pow(cur.Value, 2);
@@ -127,8 +127,8 @@ public class LinkedListVector
     public void AddToStart(int value)
     {
         Node tmp = new Node(value);
-        tmp.Next = _head;
-        _head = tmp;
+        tmp.Next = head;
+        head = tmp;
     }
     
     public void AddToEnd(int value)
@@ -140,7 +140,7 @@ public class LinkedListVector
     {
         if (0 <= idx && idx <= Length)
         {
-            Node cur = _head;
+            Node cur = head;
             for (int i = 0; i < idx - 1; i++)
             {
                 cur = cur.Next;
@@ -158,12 +158,12 @@ public class LinkedListVector
 
     public void DeleteFromStart()
     {
-        _head = _head.Next;
+        head = head.Next;
     }
 
     public void DeleteFromEnd()
     {
-        Node cur = _head;
+        Node cur = head;
         for (int i = 0; i < Length - 1; i++)
         {
             cur = cur.Next;
@@ -176,7 +176,7 @@ public class LinkedListVector
     {
         if (0 <= idx && idx <= Length)
         {
-            Node cur = _head;
+            Node cur = head;
             for (int i = 0; i < idx - 1; i++)
             {
                 cur = cur.Next;
@@ -196,7 +196,7 @@ public class LinkedListVector
         {
             Console.Write($"{message}: ");
         }
-        var cur = _head;
+        var cur = head;
         Console.Write("{");
         while (cur.Next != null)
         {

@@ -2,16 +2,16 @@ namespace Lab01;
 
 public class ArrayVector
 {
-    private int[] _vector;
+    private int[] vector;
     
     public ArrayVector(int length)
     {
-        _vector = new int[length];
+        vector = new int[length];
     }
 
     public ArrayVector()
     {
-        _vector = new int[5];
+        vector = new int[5];
     }
     
     public int this[int idx]
@@ -22,7 +22,7 @@ public class ArrayVector
             {
                 throw new IndexOutOfRangeException("Vector index out of range");
             }
-            return _vector[idx];
+            return vector[idx];
         }
         set
         {
@@ -30,18 +30,18 @@ public class ArrayVector
             {
                 throw new IndexOutOfRangeException("Vector index out of range");
             }
-            _vector[idx] = value;
+            vector[idx] = value;
         }
     }
 
-    public int Length => _vector.Length;
+    public int Length => vector.Length;
 
     public double GetNorm()
     {
         double acc = 0;
         for (int i = 0; i < Length; i++)
         {
-            acc += Math.Pow(_vector[i], 2);
+            acc += Math.Pow(vector[i], 2);
         }
 
         return Math.Sqrt(acc);
@@ -52,9 +52,9 @@ public class ArrayVector
         int acc = 0;
         for (int i = 1; i < Length; i += 2)
         {
-            if (_vector[i] > 0)
+            if (vector[i] > 0)
             {
-                acc += _vector[i];
+                acc += vector[i];
             }
         }
 
@@ -71,7 +71,7 @@ public class ArrayVector
         int average = 0;
         for (int i = 0; i < Length; i++)
         {
-            average += Math.Abs(_vector[i]);
+            average += Math.Abs(vector[i]);
         }
 
         average /= Length;
@@ -80,9 +80,9 @@ public class ArrayVector
         int acc = 0;
         for (int i = 0; i < Length; i += 2)
         {
-            if (_vector[i] < average)
+            if (vector[i] < average)
             {
-                acc += _vector[i];
+                acc += vector[i];
             }
         }
 
@@ -94,10 +94,10 @@ public class ArrayVector
         int result = 0;
         for (int i = 1; i < Length; i+=2)
         {
-            if (_vector[i] > 0 && _vector[i] % 2 == 0)
+            if (vector[i] > 0 && vector[i] % 2 == 0)
             {
                 if (result == 0) result = 1;
-                result *= _vector[i];
+                result *= vector[i];
             }
         }
 
@@ -109,10 +109,10 @@ public class ArrayVector
         int result = 0;
         for (int i = 0; i < Length; i+=2)
         {
-            if (_vector[i] % 2 != 0 && _vector[i] % 3 != 0)
+            if (vector[i] % 2 != 0 && vector[i] % 3 != 0)
             {
                 if (result == 0) result = 1;
-                result *= _vector[i];
+                result *= vector[i];
             }
         }
 
@@ -126,9 +126,9 @@ public class ArrayVector
         {
             for (int j = 0; j < n - i - 1; j++)
             {
-                if (_vector[j] > _vector[j + 1])
+                if (vector[j] > vector[j + 1])
                 {
-                    (_vector[j], _vector[j + 1]) = (_vector[j + 1], _vector[j]);
+                    (vector[j], vector[j + 1]) = (vector[j + 1], vector[j]);
                 }
             }
         }
@@ -141,9 +141,9 @@ public class ArrayVector
         {
             for (int j = 0; j < n - i - 1; j++)
             {
-                if (_vector[j] < _vector[j + 1])
+                if (vector[j] < vector[j + 1])
                 {
-                    (_vector[j], _vector[j + 1]) = (_vector[j + 1], _vector[j]);
+                    (vector[j], vector[j + 1]) = (vector[j + 1], vector[j]);
                 }
             }
         }
@@ -160,11 +160,11 @@ public class ArrayVector
         {
             if (i == Length - 1)
             {
-                Console.Write(_vector[i]);
+                Console.Write(vector[i]);
             }
             else
             {
-                Console.Write(_vector[i] + ", ");
+                Console.Write(vector[i] + ", ");
             }
         }
         Console.WriteLine("}");

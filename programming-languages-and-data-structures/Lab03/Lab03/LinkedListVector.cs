@@ -1,6 +1,6 @@
-namespace Lab02;
+namespace Lab03;
 
-public class LinkedListVector
+public class LinkedListVector : IVectorable
 {
     private Node head;
 
@@ -122,92 +122,18 @@ public class LinkedListVector
         return Math.Sqrt(acc);
     }
 
-    public void AddToStart(int value)
+    public override string ToString()
     {
-        Node tmp = new Node(value);
-        tmp.Next = head;
-        head = tmp;
-    }
-    
-    public void AddToEnd(int value)
-    {
-        AddByIndex(Length, value);
-    }
-
-    public void AddByIndex(int idx, int value)
-    {
-        if (0 <= idx && idx <= Length)
-        {
-            Node cur = head;
-            for (int i = 0; i < idx - 1; i++)
-            {
-                cur = cur.Next;
-            }
-
-            Node tmp = new Node(value);
-            tmp.Next = cur.Next;
-            cur.Next = tmp;
-        }
-        else
-        {
-            throw new IndexOutOfRangeException("Linked list index out of range");
-        }
-    }
-
-    public void DeleteFromStart()
-    {
-        head = head.Next;
-    }
-
-    public void DeleteFromEnd()
-    {
-        Node cur = head;
-        for (int i = 0; i < Length - 1; i++)
-        {
-            cur = cur.Next;
-        }
-
-        cur.Next = null;
-    }
-    
-    public void DeleteByIndex(int idx)
-    {
-        if (0 <= idx && idx <= Length)
-        {
-            Node cur = head;
-            for (int i = 0; i < idx - 1; i++)
-            {
-                cur = cur.Next;
-            }
-
-            cur.Next = cur.Next.Next;
-        }
-        else
-        {
-            throw new IndexOutOfRangeException("Linked list index out of range");
-        }
-    }
-
-    public void Log(string message = "")
-    {
-        if (message != "")
-        {
-            Console.Write($"{message}: ");
-        }
+        string s = $"{Length}: {{";
         var cur = head;
-        Console.Write("{");
         while (cur.Next != null)
         {
-            if (cur.Next.Next == null)
-            {
-                Console.Write(cur.Value);
-            }
-            else
-            {
-                Console.Write(cur.Value + ", ");
-            }
+            if (cur.Next.Next == null) s += cur.Value.ToString();
+            else s += $"{cur.Value}, ";
             cur = cur.Next;
         }
-        Console.WriteLine("}");
+
+        s += "}";
+        return s;
     }
 }

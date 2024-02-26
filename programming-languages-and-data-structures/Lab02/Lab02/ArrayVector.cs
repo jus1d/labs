@@ -1,4 +1,4 @@
-namespace Lab01;
+namespace Lab02;
 
 public class ArrayVector
 {

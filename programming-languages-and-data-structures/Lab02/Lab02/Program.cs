@@ -1,10 +1,47 @@
-﻿namespace Lab02;
+﻿using Lab01;
+
+namespace Lab02;
 
 public static class Program
 {
     public static void Main(string[] args)
     {
         Greeting();
+
+        string inp;
+
+        while (true)
+        {
+            Console.WriteLine("Выберете класс для работы:\n\n" +
+                              "\t1 - LinkedListVector\n" +
+                              "\t2 - ArrayVector\n" +
+                              "\t0 - Выход");
+            
+            inp = Console.ReadLine();
+
+            switch (inp)
+            {
+                case "1":
+                    TestLinkedListVectorClass();
+                    break;
+                case "2":
+                    TestArrayVectorClass();
+                    break;
+                case "0":
+                    Console.WriteLine("До скорой встречи, до скорой встречи!");
+                    return;
+                default:
+                    Console.WriteLine("Нет такого пункта в меню");
+                    break;
+            }
+            
+            Console.WriteLine("Нажмите любую клавишу для продолжения...");
+            Console.ReadKey();
+        }
+    }
+
+    public static void TestLinkedListVectorClass()
+    {
         string inp;
         int length;
         do
@@ -25,7 +62,7 @@ public static class Program
                               "\t4 - Удалить первый элемент\n" +
                               "\t5 - Удалить последний элемент\n" +
                               "\t6 - Удалить элемент по индексу\n" +
-                              "\t0 - Выход из программы\n");
+                              "\t0 - Выход в меню\n");
 
             inp = Console.ReadLine();
 
@@ -119,7 +156,6 @@ public static class Program
                 }
                 case "0":
                 {
-                    Console.WriteLine("До скорой встречи, до скорой встречи!");
                     return;
                 }
                 default:
@@ -128,6 +164,59 @@ public static class Program
                     break;
                 }
             }
+            Console.WriteLine("Нажмите любую клавишу для продолжения...");
+            Console.ReadKey();
+        }
+    }
+
+    public static void TestArrayVectorClass()
+    {
+        string inp;
+        
+        ArrayVector vector = ArrayVector.GetFromUserInput();
+        vector.Log();
+
+        while (true)
+        {
+            ArrayVector vector2;
+            
+            Console.WriteLine("Выберете действие:\n\n" +
+                              "\t1 - Пересоздать вектор\n" +
+                              "\t2 - Получить модуль вектора\n" +
+                              "\t3 - Сумма двух векторов\n" +
+                              "\t4 - Скалярное произведение двух векторов\n" +
+                              "\t0 - Выход");
+            
+            inp = Console.ReadLine();
+
+            switch (inp)
+            {
+                case "1":
+                    vector = ArrayVector.GetFromUserInput();
+                    vector.Log("Новый вектор");
+                    break;
+                case "2":
+                    Console.WriteLine($"Модуль вектора равен: {vector.GetNorm()}");
+                    break;
+                case "3":
+                    vector2 = ArrayVector.GetFromUserInput();
+                    vector.Log("Первый вектор");
+                    vector2.Log("Второй вектор");
+                    Vectors.Sum(vector, vector2).Log("Результат сложения двух векторов");
+                    break;
+                case "4":
+                    vector2 = ArrayVector.GetFromUserInput();
+                    vector.Log("Первый вектор");
+                    vector2.Log("Второй вектор");
+                    Console.WriteLine($"Результат скалярного умножения векторов: {Vectors.ScalarMultiply(vector, vector2)}");
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("Нет такого пункта в меню");
+                    break;
+            }
+            
             Console.WriteLine("Нажмите любую клавишу для продолжения...");
             Console.ReadKey();
         }

@@ -6,14 +6,15 @@ calculate:
     ; -- vector, size,   d    --
     ; -- rdi,    rsi,    rdx  -- 
 
-    ; -- Dereferencing first layer of vector's pointer
+    ; -- dereference first layer of vector's pointer --
+    ; WHY THERE TWO LAYERS OF POINTERS ??? DONNOW :)
     mov     rdi, [rdi]
 
     xor     r8, r8            ; <r8> - index
     xor     r9, r9            ; <r9> - counter
 
 loop:
-    mov rax, [rdi + r8 * 4]   ; <rax> = a[i]
+    mov rax, [rdi + r8 * 4]   ; dereference a[i] element to <rax>
 
     cmp rax, 0                ; compare <rax> and 0
     jge skip                  ; skip incrementing <r9> if <rax> >= 0

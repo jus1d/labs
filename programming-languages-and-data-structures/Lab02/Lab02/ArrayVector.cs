@@ -34,7 +34,13 @@ public class ArrayVector
         }
     }
 
-    public int Length => vector.Length;
+    public int Length
+    {
+        get
+        {
+            return vector.Length;
+        }
+    }
 
     public double GetNorm()
     {

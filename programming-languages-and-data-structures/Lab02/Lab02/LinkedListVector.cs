@@ -6,19 +6,13 @@ public class LinkedListVector
 
     private class Node
     {
-        public int Value;
-        public Node Next;
-        
-        public Node()
-        {
-            Value = 0;
-            Next = null;
-        }
+        public int value = 0;
+        public Node next = null;
 
         public Node(int value)
         {
-            Value = value;
-            Next = null;
+            this.value = value;
+            next = null;
         }
     }
 
@@ -31,8 +25,8 @@ public class LinkedListVector
         
         for (int i = 0; i < 5; i++)
         {
-            cur.Next = new Node(r.Next(100));
-            cur = cur.Next;
+            cur.next = new Node(r.Next(100));
+            cur = cur.next;
         }
     }
     
@@ -45,8 +39,8 @@ public class LinkedListVector
         
         for (int i = 0; i < length; i++)
         {
-            cur.Next = new Node(r.Next(100));
-            cur = cur.Next;
+            cur.next = new Node(r.Next(100));
+            cur = cur.next;
         }
     }
 
@@ -59,14 +53,14 @@ public class LinkedListVector
                 Node cur = head;
                 for (int i = 0; i < idx; i++)
                 {
-                    cur = cur.Next;
+                    cur = cur.next;
                 }
 
-                return cur.Value;
+                return cur.value;
             }
             else
             {
-                throw new IndexOutOfRangeException("Linked list index out of range");
+                throw new IndexOutOfRangeException("Индекс за границами связного списка");
             }
         }
         set
@@ -76,14 +70,14 @@ public class LinkedListVector
                 Node cur = head;
                 for (int i = 0; i < idx; i++)
                 {
-                    cur = cur.Next;
+                    cur = cur.next;
                 }
 
-                cur.Value = value;
+                cur.value = value;
             }
             else
             {
-                throw new IndexOutOfRangeException("Linked list index out of range");
+                throw new IndexOutOfRangeException("Индекс за границами связного списка");
             }
         }
     }
@@ -99,9 +93,9 @@ public class LinkedListVector
 
             int length = 0;
             Node cur = head;
-            while (cur.Next != null)
+            while (cur.next != null)
             {
-                cur = cur.Next;
+                cur = cur.next;
                 length++;
             }
 
@@ -115,8 +109,8 @@ public class LinkedListVector
         Node cur = head;
         for (int i = 0; i < Length; i++)
         {
-            acc += Math.Pow(cur.Value, 2);
-            cur = cur.Next;
+            acc += Math.Pow(cur.value, 2);
+            cur = cur.next;
         }
 
         return Math.Sqrt(acc);
@@ -125,7 +119,7 @@ public class LinkedListVector
     public void AddToStart(int value)
     {
         Node tmp = new Node(value);
-        tmp.Next = head;
+        tmp.next = head;
         head = tmp;
     }
     
@@ -136,77 +130,88 @@ public class LinkedListVector
 
     public void AddByIndex(int idx, int value)
     {
+        idx--; // Index for users should start with 1
+        
         if (0 <= idx && idx <= Length)
         {
             Node cur = head;
             for (int i = 0; i < idx - 1; i++)
             {
-                cur = cur.Next;
+                cur = cur.next;
             }
 
             Node tmp = new Node(value);
-            tmp.Next = cur.Next;
-            cur.Next = tmp;
+            tmp.next = cur.next;
+            cur.next = tmp;
         }
         else
         {
-            throw new IndexOutOfRangeException("Linked list index out of range");
+            throw new IndexOutOfRangeException("Индекс за границами связного списка");
         }
     }
 
     public void DeleteFromStart()
     {
-        head = head.Next;
+        if (Length == 0) throw new Exception("Связный список пуст");
+        
+        head = head.next;
     }
 
     public void DeleteFromEnd()
     {
+        if (Length == 0) throw new Exception("Связный список пуст");
+        
         Node cur = head;
         for (int i = 0; i < Length - 1; i++)
         {
-            cur = cur.Next;
+            cur = cur.next;
         }
 
-        cur.Next = null;
+        cur.next = null;
     }
     
     public void DeleteByIndex(int idx)
     {
-        if (0 <= idx && idx <= Length)
-        {
-            Node cur = head;
-            for (int i = 0; i < idx - 1; i++)
-            {
-                cur = cur.Next;
-            }
+        idx--; // Index for users should start with 1
+        
+        if (head == null) throw new Exception("Связный список пуст");
+        if (idx < 0 || idx >= Length) throw new IndexOutOfRangeException("Индекс за границами связного списка");
 
-            cur.Next = cur.Next.Next;
-        }
-        else
+        Node cur = head;
+
+        if (idx == 0) 
         {
-            throw new IndexOutOfRangeException("Linked list index out of range");
+            head = cur.next;
+            return;
         }
+
+        for (int i = 0; cur != null && i < idx - 1; i++)
+        {
+            cur = cur.next;
+        }
+
+        if (cur == null || cur.next == null) return;
+
+        cur.next = cur.next.next;
     }
 
     public void Log(string message = "")
     {
-        if (message != "")
-        {
-            Console.Write($"{message}: ");
-        }
+        if (message != "") Console.Write($"{message}: ");
+        
         var cur = head;
         Console.Write("{");
-        while (cur.Next != null)
+        while (cur.next != null)
         {
-            if (cur.Next.Next == null)
+            if (cur.next.next == null)
             {
-                Console.Write(cur.Value);
+                Console.Write(cur.value);
             }
             else
             {
-                Console.Write(cur.Value + ", ");
+                Console.Write(cur.value + ", ");
             }
-            cur = cur.Next;
+            cur = cur.next;
         }
         Console.WriteLine("}");
     }

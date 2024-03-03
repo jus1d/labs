@@ -20,7 +20,7 @@ public class ArrayVector
         {
             if (idx < 0 || idx >= Length)
             {
-                throw new IndexOutOfRangeException("Vector index out of range");
+                throw new IndexOutOfRangeException("Индекс за границами вектора");
             }
             return vector[idx];
         }
@@ -28,13 +28,19 @@ public class ArrayVector
         {
             if (idx < 0 || idx >= Length)
             {
-                throw new IndexOutOfRangeException("Vector index out of range");
+                throw new IndexOutOfRangeException("Индекс за границами вектора");
             }
             vector[idx] = value;
         }
     }
 
-    public int Length => vector.Length;
+    public int Length
+    {
+        get
+        {
+            return vector.Length;
+        }
+    }
 
     public double GetNorm()
     {

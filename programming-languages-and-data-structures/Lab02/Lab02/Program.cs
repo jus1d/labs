@@ -121,14 +121,28 @@ public static class Program
                 }
                 case "4":
                 {
-                    vec.DeleteFromStart();
-                    vec.Log("Обновленный вектор");
+                    try
+                    {
+                        vec.DeleteFromStart();
+                        vec.Log("Обновленный вектор");
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Пустой вектор");
+                    }
                     break;
                 }
                 case "5":
                 {
-                    vec.DeleteFromEnd();
-                    vec.Log("Обновленный вектор");
+                    try
+                    {
+                        vec.DeleteFromEnd();
+                        vec.Log("Обновленный вектор");
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Пустой вектор");
+                    }
                     break;
                 }
                 case "6":

@@ -3,41 +3,30 @@ section .text
 global calculate
 
 calculate:
-    ; -- vector, size,   d    -- {1, -2, -8, -9, 4}
+    ; -- vector, size,   d    --
     ; -- rdi,    rsi,    rdx  -- 
 
-    ; -- Dereferencing first layer of pointer --
+    ; -- Dereferencing first layer of vector's pointer
     mov     rdi, [rdi]
 
-    ; -- Check if vector's size is 0, return 69 error code --
-    mov     rax, 0
-    cmp     rsi, rax
-    je      exit_error
-
-    mov     r8, 0 ; <rbx> is index
-    mov     r9, 0 ; <rcx> is counter
+    xor     r8, r8            ; <r8> - index
+    xor     r9, r9            ; <r9> - counter
 
 loop:
-    mov     rax, [rdi + r8 * 4] ; <rax> = vec[i]
-    inc     r8                  ; incrementing vector's index
-    cmp     r8, rsi             ; check    if index == vector.size()
-    je      end_loop            ; end loop if index == vector.size()
+    mov rax, [rdi + r8 * 4]   ; <rax> = a[i]
 
-    ; cmp     rax, 0
-    ; jg      skip
+    cmp rax, 0                ; compare <rax> and 0
+    jge skip                  ; skip incrementing <r9> if <rax> >= 0
 
-    cmp     rax, rdx
-    jg      skip
+    cmp rax, rdx              ; compare <rax> and <rdx>
+    jg skip                   ; skip incrementing <r9> if <rax> > d
 
-    inc     r9
-
+    inc r9                    ; increment counter in <r9>, if all checks passed
+    
 skip:
-    jmp     loop
+    inc r8                    ; increment index in <r8>
+    cmp r8, rsi               ; check if index == vec.size()
+    jl loop                   ; if index == vec.size() jump to loop's end
 
-end_loop:
-    mov     rax, r9
-    ret
-
-exit_error:
-    mov     rax, 0
-    ret
+    mov rax, r9               ; put couner to <rax>
+    ret                       ; return <rax> value

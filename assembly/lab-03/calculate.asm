@@ -7,7 +7,7 @@ calculate:
     ; -- rdi,    rsi,    rdx  -- 
 
     ; -- dereference first layer of vector's pointer --
-    ; WHY THERE TWO LAYERS OF POINTERS ??? DONNOW :)
+    ; WHY TF THERE ARE TWO LAYERS OF POINTERS ??? DONNOW :)
     mov     rdi, [rdi]
 
     xor     r8, r8            ; <r8> - index

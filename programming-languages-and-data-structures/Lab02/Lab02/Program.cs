@@ -5,9 +5,9 @@ public static class Program
     public static void Main(string[] args)
     {
         Greeting();
-
+    
         string inp;
-
+    
         while (true)
         {
             Console.WriteLine("Выберете класс для работы:\n\n" +
@@ -16,7 +16,7 @@ public static class Program
                               "\t0 - Выход");
             
             inp = Console.ReadLine();
-
+    
             switch (inp)
             {
                 case "1":
@@ -37,7 +37,7 @@ public static class Program
             Console.ReadKey();
         }
     }
-
+    
     public static void TestLinkedListVectorClass()
     {
         string inp;
@@ -47,7 +47,7 @@ public static class Program
             Console.Write("Введите длину вектора: ");
             inp = Console.ReadLine();
         } while (!int.TryParse(inp, out length) || length <= 0);
-
+    
         var vec = new LinkedListVector(length);
         vec.Log("Созданный вектор");
         
@@ -61,9 +61,9 @@ public static class Program
                               "\t5 - Удалить последний элемент\n" +
                               "\t6 - Удалить элемент по индексу\n" +
                               "\t0 - Выход в меню\n");
-
+    
             inp = Console.ReadLine();
-
+    
             switch (inp)
             {
                 case "1":
@@ -75,7 +75,7 @@ public static class Program
                         inp = Console.ReadLine();
                     } while (!int.TryParse(inp, out value));
                     
-                    vec.AddToStart(value);
+                    vec.InsertToStart(value);
                     vec.Log("Обновленный вектор");
                     break;
                 }
@@ -88,7 +88,7 @@ public static class Program
                         inp = Console.ReadLine();
                     } while (!int.TryParse(inp, out value));
                     
-                    vec.AddToEnd(value);
+                    vec.InsertToEnd(value);
                     vec.Log("Обновленный вектор");
                     break;
                 }
@@ -107,10 +107,10 @@ public static class Program
                         Console.Write("Введите позицию для добавления элемента: ");
                         inp = Console.ReadLine();
                     } while (!int.TryParse(inp, out idx));
-
+    
                     try
                     {
-                        vec.AddByIndex(idx, value);
+                        vec.InsertByIndex(idx, value);
                         vec.Log("Обновленный вектор");
                     }
                     catch (IndexOutOfRangeException e)
@@ -153,7 +153,7 @@ public static class Program
                         Console.Write("Введите индекс элемента который хотите удалить: ");
                         inp = Console.ReadLine();
                     } while (!int.TryParse(inp, out idx));
-
+    
                     try
                     {
                         vec.DeleteByIndex(idx);
@@ -163,7 +163,7 @@ public static class Program
                     {
                         Console.WriteLine("Введенный индекс выходит за рамки связного списка");
                     }
-
+    
                     break;
                 }
                 case "0":
@@ -180,14 +180,14 @@ public static class Program
             Console.ReadKey();
         }
     }
-
+    
     public static void TestArrayVectorClass()
     {
         string inp;
         
         ArrayVector vector = ArrayVector.GetFromUserInput();
         vector.Log();
-
+    
         while (true)
         {
             ArrayVector vector2;
@@ -200,7 +200,7 @@ public static class Program
                               "\t0 - Выход в меню");
             
             inp = Console.ReadLine();
-
+    
             switch (inp)
             {
                 case "1":

@@ -115,65 +115,44 @@ public class LinkedListVector
 
         return Math.Sqrt(acc);
     }
-
-    public void AddToStart(int value)
+    
+    public void InsertByIndex(int idx, int value)
     {
-        Node tmp = new Node(value);
-        tmp.next = head;
-        head = tmp;
+        if (idx < 0 || idx > Length) throw new IndexOutOfRangeException("Индекс за границами связного списка");
+
+        Node node = new Node(value);
+
+        if (idx == 0) {
+            node.next = head;
+            head = node;
+            return;
+        }
+
+        Node cur = head;
+        int curIndex = 0;
+        while (cur != null && curIndex < idx - 1) {
+            cur = cur.next;
+            curIndex++;
+        }
+
+        if (cur == null) throw new IndexOutOfRangeException("Индекс за границами связного списка");
+
+        node.next = cur.next;
+        cur.next = node;
+    }
+
+    public void InsertToStart(int value)
+    {
+        InsertByIndex(0, value);
     }
     
-    public void AddToEnd(int value)
+    public void InsertToEnd(int value)
     {
-        AddByIndex(Length, value);
-    }
-
-    public void AddByIndex(int idx, int value)
-    {
-        idx--; // Index for users should start with 1
-        
-        if (0 <= idx && idx <= Length)
-        {
-            Node cur = head;
-            for (int i = 0; i < idx - 1; i++)
-            {
-                cur = cur.next;
-            }
-
-            Node tmp = new Node(value);
-            tmp.next = cur.next;
-            cur.next = tmp;
-        }
-        else
-        {
-            throw new IndexOutOfRangeException("Индекс за границами связного списка");
-        }
-    }
-
-    public void DeleteFromStart()
-    {
-        if (Length == 0) throw new Exception("Связный список пуст");
-        
-        head = head.next;
-    }
-
-    public void DeleteFromEnd()
-    {
-        if (Length == 0) throw new Exception("Связный список пуст");
-        
-        Node cur = head;
-        for (int i = 0; i < Length - 1; i++)
-        {
-            cur = cur.next;
-        }
-
-        cur.next = null;
+        InsertByIndex(Length, value);
     }
     
     public void DeleteByIndex(int idx)
     {
-        idx--; // Index for users should start with 1
-        
         if (head == null) throw new Exception("Связный список пуст");
         if (idx < 0 || idx >= Length) throw new IndexOutOfRangeException("Индекс за границами связного списка");
 
@@ -193,6 +172,16 @@ public class LinkedListVector
         if (cur == null || cur.next == null) return;
 
         cur.next = cur.next.next;
+    }
+
+    public void DeleteFromStart()
+    {
+        DeleteByIndex(0);
+    }
+
+    public void DeleteFromEnd()
+    {
+        DeleteByIndex(Length - 1);
     }
 
     public void Log(string message = "")

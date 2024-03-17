@@ -13,7 +13,7 @@ calculate:
     xor     r8, r8            ; <r8> - index
     xor     r9, r9            ; <r9> - counter
 
-loop:
+start_loop:
     mov rcx, [rdi + r8 * 4]   ; dereference a[i] element to <rcx>
 
     cmp rcx, 0                ; compare <rcx> and 0
@@ -27,7 +27,7 @@ loop:
 skip:
     inc r8                    ; increment index in <r8>
     cmp r8, rsi               ; check if index == vec.size()
-    jl loop                   ; if index == vec.size() jump to loop's end
+    jl start_loop             ; if index == vec.size() jump to loop's end
 
     mov rax, r9               ; put counter to <rcx>
     ret                       ; return <rcx> value

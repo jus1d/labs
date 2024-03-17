@@ -5,6 +5,7 @@ desktop.ini
 # Ignore binary, object files
 */*/*/bin/
 */*/*/obj/
+main
 
 # Ignore IDE files
 */*/.idea/

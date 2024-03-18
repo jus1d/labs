@@ -110,7 +110,7 @@ public static class Program
     
                     try
                     {
-                        vec.InsertByIndex(idx, value);
+                        vec.InsertByIndex(idx - 1, value);
                         vec.Log("Обновленный вектор");
                     }
                     catch (IndexOutOfRangeException e)
@@ -156,7 +156,7 @@ public static class Program
     
                     try
                     {
-                        vec.DeleteByIndex(idx);
+                        vec.DeleteByIndex(idx - 1);
                         vec.Log("Обновленный вектор");
                     }
                     catch (IndexOutOfRangeException e)

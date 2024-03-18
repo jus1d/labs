@@ -29,21 +29,117 @@ public static class Program
                     Console.WriteLine("Выход из программы...");
                     return;
                 case "1":
+                {
+                    LogVectors(vectors);
+                    
+                    int firstVectorIdx, secondVectorIdx;
+                    
+                    do
+                    {
+                        Console.Write("Введите индекс первого вектора: ");
+                        inp = Console.ReadLine();
+                    } while (!int.TryParse(inp, out firstVectorIdx) ||  firstVectorIdx <= 0 || firstVectorIdx > vectors.Count);
+                    
+                    do
+                    {
+                        Console.Write("Введите индекс второго вектора: ");
+                        inp = Console.ReadLine();
+                    } while (!int.TryParse(inp, out secondVectorIdx) ||  secondVectorIdx <= 0 || secondVectorIdx > vectors.Count);
+
+                    try
+                    {
+                        var result = Vectors.Sum(vectors[firstVectorIdx - 1], vectors[secondVectorIdx - 1]);
+                        result.Log($"Результат сложения {firstVectorIdx}-го и {secondVectorIdx}-го векторов");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Длины векторов не совпадают");
+                    }
+                    
                     break;
+                }
                 case "2":
+                {
+                    LogVectors(vectors);
+                    
+                    int firstVectorIdx, secondVectorIdx;
+
+                    do
+                    {
+                        Console.Write("Введите индекс первого вектора: ");
+                        inp = Console.ReadLine();
+                    } while (!int.TryParse(inp, out firstVectorIdx) || firstVectorIdx <= 0 || firstVectorIdx > vectors.Count);
+
+                    do
+                    {
+                        Console.Write("Введите индекс второго вектора: ");
+                        inp = Console.ReadLine();
+                    } while (!int.TryParse(inp, out secondVectorIdx) || secondVectorIdx <= 0 || secondVectorIdx > vectors.Count);
+                    
+                    try
+                    {
+                        var result = Vectors.ScalarMultiply(vectors[firstVectorIdx - 1], vectors[secondVectorIdx - 1]);
+                        Console.WriteLine($"Результат скалярного умножения: {result}");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Длины векторов не совпадают");
+                    }
+
                     break;
+                }
                 case "3":
+                {
+                    LogVectors(vectors);
+                    
+                    int idx, value;
+                    
+                    do
+                    {
+                        Console.Write("Введите индекс вектора: ");
+                        inp = Console.ReadLine();
+                    } while (!int.TryParse(inp, out idx) ||  idx <= 0 || idx > vectors.Count);
+
+                    do
+                    {
+                        Console.Write("Введите значение на которое умножить число: ");
+                        inp = Console.ReadLine();
+                    } while (!int.TryParse(inp, out value));
+
+                    var result = Vectors.MultiplyByNumber(vectors[idx - 1], value);
+                    result.Log($"Результат сложения умножения вектора на число");
+                    
                     break;
+                }
                 case "4":
+                {
+                    LogVectors(vectors);
+                    
+                    int idx;
+
+                    do
+                    {
+                        Console.Write("Введите номер вектора для удаления: ");
+                        inp = Console.ReadLine();
+                    } while (!Int32.TryParse(inp, out idx) || idx < 1 || idx > vectors.Count);
+
+                    double norm = vectors[idx - 1].GetNorm();
+                    
+                    Console.WriteLine($"Модуль вектора: {norm}");
+                    
                     break;
+                }
                 case "5":
+                {
                     vectors.Add(GetVectorFromUserInput());
                     LogVectors(vectors);
                     break;
+                }
                 case "6":
+                {
                     LogVectors(vectors);
                     int idx;
-                    
+
                     do
                     {
                         Console.Write("Введите номер вектора для удаления: ");
@@ -51,10 +147,11 @@ public static class Program
                     } while (!Int32.TryParse(inp, out idx) || idx < 1 || idx > vectors.Count);
 
                     vectors.Remove(vectors[idx - 1]);
-                    
+
                     LogVectors(vectors);
-                    
+
                     break;
+                }
                 default:
                     Console.WriteLine("Нет такого пункта в меню");
                     break;

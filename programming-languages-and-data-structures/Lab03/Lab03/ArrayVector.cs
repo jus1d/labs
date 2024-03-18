@@ -18,7 +18,6 @@ public class ArrayVector : IVectorable
     {
         get
         {
-            idx--;
             if (idx < 0 || idx >= Length)
             {
                 throw new IndexOutOfRangeException("Индекс за границами вектора");
@@ -27,7 +26,6 @@ public class ArrayVector : IVectorable
         }
         set
         {
-            idx--;
             if (idx < 0 || idx >= Length)
             {
                 throw new IndexOutOfRangeException("Индекс за границами вектора");
@@ -47,36 +45,22 @@ public class ArrayVector : IVectorable
     public double GetNorm()
     {
         double acc = 0;
-        for (int i = 1; i <= Length; i++)
+        for (int i = 0; i < Length; i++)
         {
-            acc += Math.Pow(this[i], 2);
+            acc += Math.Pow(vector[i], 2);
         }
 
         return Math.Sqrt(acc);
     }
 
-    public override string ToString()
-    {
-        string s = $"{Length}: {{";
-
-        for (int i = 1; i <= Length; i++)
-        {
-            if (i == Length) s += this[i].ToString();
-            else s += $"{this[i]}, ";
-        }
-        s += "}";
-        
-        return s;
-    }
-
     public int SumPositivesWithEvenIndex()
     {
         int acc = 0;
-        for (int i = 2; i <= Length; i += 2)
+        for (int i = 1; i < Length; i += 2)
         {
-            if (this[i] > 0)
+            if (vector[i] > 0)
             {
-                acc += this[i];
+                acc += vector[i];
             }
         }
 
@@ -85,23 +69,26 @@ public class ArrayVector : IVectorable
 
     public int SumLessAverageAbsoluteWithOddIndex()
     {
-        if (Length == 0) return 0;
+        if (Length == 0)
+        {
+            return 0;
+        }
         
         int average = 0;
-        for (int i = 1; i <= Length; i++)
+        for (int i = 0; i < Length; i++)
         {
-            average += Math.Abs(this[i]);
+            average += Math.Abs(vector[i]);
         }
 
         average /= Length;
         
         
         int acc = 0;
-        for (int i = 1; i <= Length; i += 2)
+        for (int i = 0; i < Length; i += 2)
         {
-            if (this[i] < average)
+            if (vector[i] < average)
             {
-                acc += this[i];
+                acc += vector[i];
             }
         }
 
@@ -111,12 +98,12 @@ public class ArrayVector : IVectorable
     public int MultiplyEven()
     {
         int result = 0;
-        for (int i = 1; i <= Length; i+=2)
+        for (int i = 1; i < Length; i+=2)
         {
-            if (this[i] > 0 && this[i] % 2 == 0)
+            if (vector[i] > 0 && vector[i] % 2 == 0)
             {
                 if (result == 0) result = 1;
-                result *= this[i];
+                result *= vector[i];
             }
         }
 
@@ -126,12 +113,12 @@ public class ArrayVector : IVectorable
     public int MultiplyOdd()
     {
         int result = 0;
-        for (int i = 1; i <= Length; i+=2)
+        for (int i = 0; i < Length; i+=2)
         {
-            if (this[i] % 2 != 0 && this[i] % 3 != 0)
+            if (vector[i] % 2 != 0 && vector[i] % 3 != 0)
             {
                 if (result == 0) result = 1;
-                result *= this[i];
+                result *= vector[i];
             }
         }
 
@@ -141,13 +128,13 @@ public class ArrayVector : IVectorable
     public void SortUp()
     {
         int n = Length;
-        for (int i = 1; i <= n - 1; i++)
+        for (int i = 0; i < n - 1; i++)
         {
-            for (int j = 1; j <= n - i - 1; j++)
+            for (int j = 0; j < n - i - 1; j++)
             {
-                if (this[j] > this[j + 1])
+                if (vector[j] > vector[j + 1])
                 {
-                    (this[j], this[j + 1]) = (this[j + 1], this[j]);
+                    (vector[j], vector[j + 1]) = (vector[j + 1], vector[j]);
                 }
             }
         }
@@ -156,13 +143,13 @@ public class ArrayVector : IVectorable
     public void SortDown()
     {
         int n = Length;
-        for (int i = 1; i <= n - 1; i++)
+        for (int i = 0; i < n - 1; i++)
         {
-            for (int j = 1; j <= n - i - 1; j++)
+            for (int j = 0; j < n - i - 1; j++)
             {
-                if (this[j] < this[j + 1])
+                if (vector[j] < vector[j + 1])
                 {
-                    (this[j], this[j + 1]) = (this[j + 1], this[j]);
+                    (vector[j], vector[j + 1]) = (vector[j + 1], vector[j]);
                 }
             }
         }
@@ -175,15 +162,15 @@ public class ArrayVector : IVectorable
             Console.Write(message + ": ");
         }
         Console.Write("{");
-        for (int i = 1; i <= Length; i++)
+        for (int i = 0; i < Length; i++)
         {
             if (i == Length - 1)
             {
-                Console.Write(this[i]);
+                Console.Write(vector[i]);
             }
             else
             {
-                Console.Write(this[i] + ", ");
+                Console.Write(vector[i] + ", ");
             }
         }
         Console.WriteLine("}");
@@ -211,7 +198,7 @@ public class ArrayVector : IVectorable
         if (inp == "1")
         {
             Random r = new Random();
-            for (int i = 1; i <= length; i++)
+            for (int i = 0; i < length; i++)
             {
                 vec[i] = r.Next(100);
             }
@@ -220,7 +207,7 @@ public class ArrayVector : IVectorable
         }
         else
         {
-            for (int i = 1; i <= length; i++)
+            for (int i = 0; i < length; i++)
             {
                 int value;
                 do

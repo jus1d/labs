@@ -187,7 +187,6 @@ public static class Program
             vec = new LinkedListVector(length);
         }
         
-        
         return vec;
     }
 

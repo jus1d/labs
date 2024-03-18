@@ -3,31 +3,24 @@ section .text
 global calculate
 
 calculate:
-    ; -- vector, size,   d    --
-    ; -- rdi,    rsi,    rdx  -- 
+    ; -- a,   b   --
+    ; -- rdi, rsi --
 
-    ; -- dereference first layer of vector's pointer --
-    ; WHY TF THERE ARE TWO LAYERS OF POINTERS ??? DONNOW :)
-    mov     rdi, [rdi]
+    finit                    ; Initialize FPU
 
-    xor     r8, r8            ; <r8> - index
-    xor     r9, r9            ; <r9> - counter
+    ; Load the values of a and b from memory into FPU stack
+    fld qword [rdi]          ; Load a into FPU stack
+    fld qword [rsi]          ; Load b into FPU stack
 
-loop:
-    mov rax, [rdi + r8 * 4]   ; dereference a[i] element to <rax>
+    ; Add the values of a and b
+    fadd                     ; Add a and b
 
-    cmp rax, 0                ; compare <rax> and 0
-    jge skip                  ; skip incrementing <r9> if <rax> >= 0
+    ; Store the result back to memory
+    fstp qword [rdi]         ; Store the result back to a
 
-    cmp rax, rdx              ; compare <rax> and <rdx>
-    jg skip                   ; skip incrementing <r9> if <rax> > d
+    ; Clean up the FPU stack
+    fstp qword [rsi]         ; Pop the second value (b) from the FPU stack
 
-    inc r9                    ; increment counter in <r9>, if all checks passed
-    
-skip:
-    inc r8                    ; increment index in <r8>
-    cmp r8, rsi               ; check if index == vec.size()
-    jl loop                   ; if index == vec.size() jump to loop's end
-
-    mov rax, r9               ; put couner to <rax>
-    ret                       ; return <rax> value
+    mov rax, qword [rdi]
+    ; Return
+    ret

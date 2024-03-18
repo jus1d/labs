@@ -7,4 +7,6 @@ public interface IVectorable
     int Length { get; }
     
     double GetNorm();
+
+    void Log(string message = "");
 }

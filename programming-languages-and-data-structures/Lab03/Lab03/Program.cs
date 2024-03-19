@@ -7,7 +7,7 @@ public static class Program
         List<IVectorable> vectors = new List<IVectorable>();
         string inp;
         
-        vectors.Add(GetVectorFromUserInput());
+        // vectors.Add(GetVectorFromUserInput());
         LogVectors(vectors);
 
         while (true)

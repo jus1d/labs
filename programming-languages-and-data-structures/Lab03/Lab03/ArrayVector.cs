@@ -161,19 +161,19 @@ public class ArrayVector : IVectorable
         {
             Console.Write(message + ": ");
         }
-        Console.Write("{");
+        Console.WriteLine(ToString());
+    }
+    
+    public override string ToString()
+    {
+        string s = Length.ToString() + ' ';
+
         for (int i = 0; i < Length; i++)
         {
-            if (i == Length - 1)
-            {
-                Console.Write(vector[i]);
-            }
-            else
-            {
-                Console.Write(vector[i] + ", ");
-            }
+            s += this[i].ToString();
+            if (i != Length - 1) s += ' ';
         }
-        Console.WriteLine("}");
+        return s;
     }
 
     public static ArrayVector GetFromUserInput()

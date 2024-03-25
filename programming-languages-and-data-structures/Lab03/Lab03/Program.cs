@@ -7,7 +7,6 @@ public static class Program
         List<IVectorable> vectors = new List<IVectorable>();
         string inp;
         
-        // vectors.Add(GetVectorFromUserInput());
         LogVectors(vectors);
 
         while (true)
@@ -194,7 +193,11 @@ public static class Program
     {
         for (int i = 0; i < vectors.Count; ++i)
         {
-            vectors[i].Log($"Вектор {i + 1}");
+            IVectorable vec = vectors[i];
+
+            string typeView = vec is ArrayVector ? "ArrayVector" : "LinkedListVector";
+            
+            vec.Log($"{i + 1}: {typeView}");
         }
     }
 }

@@ -188,20 +188,18 @@ public class LinkedListVector : IVectorable
     {
         if (message != "") Console.Write($"{message}: ");
         
-        var cur = head;
-        Console.Write("{");
-        while (cur.next != null)
+        Console.WriteLine(ToString());
+    }
+
+    public override string ToString()
+    {
+        string s = Length.ToString() + ' ';
+
+        for (int i = 0; i < Length; i++)
         {
-            if (cur.next.next == null)
-            {
-                Console.Write(cur.value);
-            }
-            else
-            {
-                Console.Write(cur.value + ", ");
-            }
-            cur = cur.next;
+            s += this[i].ToString();
+            if (i != Length - 1) s += ' ';
         }
-        Console.WriteLine("}");
+        return s;
     }
 }

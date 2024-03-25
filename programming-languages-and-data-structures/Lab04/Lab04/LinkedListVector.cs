@@ -1,6 +1,6 @@
 namespace Lab04;
 
-public class LinkedListVector : IVectorable, IComparable
+public class LinkedListVector : IVectorable
 {
     private Node head;
 
@@ -188,46 +188,44 @@ public class LinkedListVector : IVectorable, IComparable
     {
         if (message != "") Console.Write($"{message}: ");
         
-        var cur = head;
-        Console.Write("{");
-        while (cur.next != null)
-        {
-            if (cur.next.next == null)
-            {
-                Console.Write(cur.value);
-            }
-            else
-            {
-                Console.Write(cur.value + ", ");
-            }
-            cur = cur.next;
-        }
-        Console.WriteLine("}");
+        Console.WriteLine(ToString());
     }
-    
+
+    public override string ToString()
+    {
+        string s = Length.ToString() + ' ';
+
+        for (int i = 0; i < Length; i++)
+        {
+            s += this[i].ToString();
+            if (i != Length - 1) s += ' ';
+        }
+        return s;
+    }
+
     public int CompareTo(object? obj)
     {
         if (!(obj is IVectorable))
         {
-            throw new Exception("Можно сравнить только обекты типа IVectorable");
+            throw new Exception("Можно сравнить только объекты типа IVectorable");
         }
         
         IVectorable other = obj as IVectorable;
 
         if (Length < other.Length) return -1;
-        else if (Length > other.Length) return 1;
-        else return 0;
+        if (Length > other.Length) return 1;
+        return 0;
     }
-
-    public override bool Equals(object obj)
+    
+    public override bool Equals(object? obj)
     {
         if (!(obj is IVectorable))
         {
-            throw new Exception("Можно сравнить только обекты типа IVectorable");
+            throw new Exception("Можно сравнивать только объекты типа IVectorable");
         }
         
         IVectorable other = obj as IVectorable;
-        
+
         if (Length != other.Length) return false;
 
         for (int i = 0; i < Length; i++)
@@ -236,5 +234,17 @@ public class LinkedListVector : IVectorable, IComparable
         }
 
         return true;
+    }
+    
+    public object Clone()
+    {
+        LinkedListVector clone = new LinkedListVector(Length);
+        
+        for (int i = 0; i < Length; i++)
+        {
+            clone[i] = this[i];
+        }
+
+        return clone;
     }
 }

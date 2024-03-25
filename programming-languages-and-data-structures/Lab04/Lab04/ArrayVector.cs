@@ -1,6 +1,6 @@
 namespace Lab04;
 
-public class ArrayVector : IVectorable, IComparable
+public class ArrayVector : IVectorable, ICloneable
 {
     private int[] vector;
     
@@ -161,19 +161,19 @@ public class ArrayVector : IVectorable, IComparable
         {
             Console.Write(message + ": ");
         }
-        Console.Write("{");
+        Console.WriteLine(ToString());
+    }
+    
+    public override string ToString()
+    {
+        string s = Length.ToString() + ' ';
+
         for (int i = 0; i < Length; i++)
         {
-            if (i == Length - 1)
-            {
-                Console.Write(vector[i]);
-            }
-            else
-            {
-                Console.Write(vector[i] + ", ");
-            }
+            s += this[i].ToString();
+            if (i != Length - 1) s += ' ';
         }
-        Console.WriteLine("}");
+        return s;
     }
 
     public static ArrayVector GetFromUserInput()
@@ -222,30 +222,30 @@ public class ArrayVector : IVectorable, IComparable
             return vec;
         }
     }
-
+    
     public int CompareTo(object? obj)
     {
         if (!(obj is IVectorable))
         {
-            throw new Exception("Можно сравнить только обекты типа IVectorable");
+            throw new Exception("Можно сравнить только объекты типа IVectorable");
         }
         
         IVectorable other = obj as IVectorable;
 
         if (Length < other.Length) return -1;
-        else if (Length > other.Length) return 1;
-        else return 0;
+        if (Length > other.Length) return 1;
+        return 0;
     }
-
-    public override bool Equals(object obj)
+    
+    public override bool Equals(object? obj)
     {
         if (!(obj is IVectorable))
         {
-            throw new Exception("Можно сравнить только обекты типа IVectorable");
+            throw new Exception("Можно сравнивать только объекты типа IVectorable");
         }
         
         IVectorable other = obj as IVectorable;
-        
+
         if (Length != other.Length) return false;
 
         for (int i = 0; i < Length; i++)
@@ -254,5 +254,17 @@ public class ArrayVector : IVectorable, IComparable
         }
 
         return true;
+    }
+
+    public object Clone()
+    {
+        ArrayVector clone = new ArrayVector(Length);
+        
+        for (int i = 0; i < Length; i++)
+        {
+            clone[i] = this[i];
+        }
+
+        return clone;
     }
 }

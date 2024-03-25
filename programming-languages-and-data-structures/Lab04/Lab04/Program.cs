@@ -22,6 +22,7 @@ public static class Program
                               "\t8  - Вывести вектора с минимальным и максимальным количеством координат\n" +
                               "\t9  - Отсортировать вектора по количеству координат\n" +
                               "\t10 - Отсортировать вектора по модулю\n" +
+                              "\t11 - Сравнить вектора\n" +
                               "\t0  - Выход\n");
 
             inp = Console.ReadLine();
@@ -237,26 +238,27 @@ public static class Program
                 {
                     IVectorable tmp;
                     VectorsComparer comparer = new VectorsComparer();
-
-                    for (int i = 0; i < vectors.Count; i++)
+                    
+                    
+                    for (int i = 0; i < vectors.Count - 1; i++)
                     {
-                        for (int j = 0; j < vectors.Count - i - 1; j++)
+                        for (int j = i + 1; j < vectors.Count; j++)
                         {
                             int compareResult;
                             if (vectors[i] is ArrayVector)
                             {
-                                compareResult = (vectors[i] as ArrayVector).CompareTo(vectors[j + 1]);
+                                compareResult = (vectors[i] as ArrayVector).CompareTo(vectors[j]);
                             }
                             else
                             {
-                                compareResult = (vectors[i] as LinkedListVector).CompareTo(vectors[j + 1]);
+                                compareResult = (vectors[i] as LinkedListVector).CompareTo(vectors[j]);
                             }
                             
                             if (compareResult > 0)
                             {
-                                tmp = vectors[j];
-                                vectors[j] = vectors[j + 1];
-                                vectors[j + 1] = tmp;
+                                tmp = vectors[i];
+                                vectors[i] = vectors[j];
+                                vectors[j] = tmp;
                             }
                         }
                     }
@@ -287,6 +289,32 @@ public static class Program
                     Console.WriteLine("Список векторов после сортировки по модулю: ");
                     LogVectors(vectors);
                     
+                    break;
+                }
+                case "11":
+                {
+                    int firstIdx, secondIdx;
+                    
+                    do
+                    {
+                        Console.Write("Введите индекс первого вектора: ");
+                        inp = Console.ReadLine();
+                    } while (!int.TryParse(inp, out firstIdx) ||  firstIdx <= 0 || firstIdx > vectors.Count);
+                    
+                    do
+                    {
+                        Console.Write("Введите индекс второго вектора: ");
+                        inp = Console.ReadLine();
+                    } while (!int.TryParse(inp, out secondIdx) ||  secondIdx <= 0 || secondIdx > vectors.Count);
+
+                    if (vectors[firstIdx-1].Equals(vectors[secondIdx-1]))
+                    {
+                        Console.WriteLine("Вектора равны");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Вектора не равны");
+                    }
                     break;
                 }
                 default:

@@ -1,4 +1,4 @@
-namespace Lab03;
+namespace Lab05;
 
 public class Vectors
 {
@@ -31,7 +31,7 @@ public class Vectors
             result += a[i] * b[i];
         }
 
-        return Math.Sqrt(result);
+        return result;
     }
 
     public static IVectorable MultiplyByNumber(IVectorable vector, int number)

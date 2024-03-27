@@ -1,4 +1,4 @@
-﻿namespace Lab04;
+﻿namespace Lab05;
 
 public static class Program
 {

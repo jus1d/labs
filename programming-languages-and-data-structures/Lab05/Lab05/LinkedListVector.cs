@@ -1,6 +1,7 @@
 namespace Lab05;
 
-public class LinkedListVector : IVectorable
+[Serializable]
+public class LinkedListVector : IVectorable, IComparable, ICloneable
 {
     private Node head;
 

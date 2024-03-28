@@ -1,4 +1,7 @@
-﻿namespace Lab05;
+﻿using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
+
+namespace Lab05;
 
 public static class Program
 {
@@ -23,6 +26,7 @@ public static class Program
                               "\t9  - Отсортировать вектора по количеству координат\n" +
                               "\t10 - Отсортировать вектора по модулю\n" +
                               "\t11 - Сравнить вектора\n" +
+                              "\t12 - Потоки\n" +
                               "\t0  - Выход\n");
 
             inp = Console.ReadLine();
@@ -325,9 +329,132 @@ public static class Program
                     }
                     break;
                 }
+                case "12":
+                {
+                    RunStreamSubmenu(vectors);
+                    break;
+                }
                 default:
                     Console.WriteLine("Нет такого пункта в меню");
                     break;
+            }
+        }
+    }
+
+    public static void RunStreamSubmenu(List<IVectorable> vectors)
+    {
+        while (true)
+        {
+            Console.Write("Выберете поток:\n\n" +
+                              "\t1. Байтовый поток\n" +
+                              "\t2. Символьный поток\n" +
+                              "\t3. Сериализация\n" +
+                              "\t0. Выход в главное меню\n");
+
+            string inp = Console.ReadLine();
+
+            switch (inp)
+            {
+                case "0":
+                    return;
+                case "1":
+                    RunByteStream(vectors);
+                    break;
+                case "2":
+                    RunSymbolStream(vectors);
+                    break;
+                case "3":
+                    RunSerialization(vectors);
+                    break;
+                default:
+                    Console.WriteLine("Нет такого пункта в меню");
+                    break;
+            }
+        }
+    }
+
+    public static void RunByteStream(List<IVectorable> vectors)
+    {
+        string path = "../../../vectors.txt";
+        if (File.Exists(path)) File.Delete(path);
+
+        using (FileStream fs = new FileStream(path, FileMode.Append, FileAccess.Write))
+        {
+            Vectors.WriteVectors(fs, vectors);
+        }
+        
+        Console.WriteLine("Запись в файл `vectors.txt` выполнена");
+
+        List<IVectorable> vectorsRead = new List<IVectorable>();
+        using (FileStream fs = new FileStream(path, FileMode.Open))
+        {
+            vectorsRead = Vectors.ReadVectors(fs);
+        }
+        
+        Console.WriteLine("Чтение из файла `vectors.txt` выполнено");
+        
+        Console.WriteLine("\nИсходный список векторов:");
+        LogVectors(vectors);
+        Console.WriteLine("\nСписок векторов считанный из файла:");
+        LogVectors(vectorsRead);
+    }
+    
+    public static void RunSymbolStream(List<IVectorable> vectors)
+    {
+        string path = "../../../vectors.txt";
+        if (File.Exists(path)) File.Delete(path);
+        
+        using (TextWriter w = File.AppendText(path))
+        {
+            for (int i = 0; i < vectors.Count; i++)
+            {
+                Vectors.WriteVector(w, vectors[i]);
+            }
+            Console.WriteLine("Запись в файл `vectors.txt` выполнена");
+        }
+
+        TextReader r = File.OpenText(path);
+        List<IVectorable> vectorsRead = new List<IVectorable>();
+        for (int i = 0; i < vectors.Count; i++)
+        {
+            vectorsRead.Add(Vectors.ReadVector(r));
+        }
+        r.Close();
+        
+        Console.WriteLine("Чтение из файла `vectors.txt` выполнено");
+        
+        Console.WriteLine("\nИсходный список векторов:");
+        LogVectors(vectors);
+        Console.WriteLine("\nСписок векторов считанный из файла:");
+        LogVectors(vectorsRead);
+    }
+    
+    public static void RunSerialization(List<IVectorable> vectors)
+    {
+        string path = "../../../vectors.txt";
+        List<IVectorable> vectorsRead = new List<IVectorable>();
+
+        for (int i = 0; i < vectors.Count; i++)
+        {
+            // Serialize
+            string serializedJson = JsonSerializer.Serialize(vectors[i]);
+            File.WriteAllText("serialized.json", serializedJson);
+
+            // Deserialize
+            string deserializedJson = File.ReadAllText(path);
+            vectorsRead.Add(JsonSerializer.Deserialize<IVectorable>(deserializedJson));
+
+            // Logging and comparison
+            vectors[i].Log("Ваш вектор");
+            vectorsRead[i].Log("Десереализованный вектор");
+
+            if (vectors[i].Equals(vectorsRead[i]))
+            {
+                Console.WriteLine("Вектора равны");
+            }
+            else
+            {
+                Console.WriteLine("Вектора не равны");
             }
         }
     }
@@ -369,9 +496,9 @@ public static class Program
         {
             IVectorable vec = vectors[i];
 
-            string typeView = vec is ArrayVector ? "ArrayVector" : "LinkedListVector";
+            string typeView = vec is ArrayVector ? "Array" : "LinkedList";
             
-            vec.Log($"{i + 1}: {typeView}");
+            vec.Log($"{i + 1}: {typeView, 10}");
         }
     }
 }

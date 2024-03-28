@@ -1,6 +1,7 @@
 namespace Lab05;
 
-public class ArrayVector : IVectorable, ICloneable
+[Serializable]
+public class ArrayVector : IVectorable, IComparable, ICloneable
 {
     private int[] vector;
     

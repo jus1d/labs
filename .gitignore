@@ -11,6 +11,10 @@ main
 */*/.idea/
 .idea
 */*/*.sln.DotSettings.user
+*/*/.vs/
+*/*/Debug/
+*/*/*/Debug/
+*/*/*/x64/
 
 # Ignore CMake files
 CMakeLists.txt

@@ -179,49 +179,22 @@ public class ArrayVector : IVectorable, IComparable, ICloneable
 
     public static ArrayVector GetFromUserInput()
     {
-        string inp;
-        do
-        {
-            Console.WriteLine("Выберете как хотите заполнить вектор:\n" +
-                              "1 - Случайно\n" +
-                              "2 - Ручной ввод");
-            inp = Console.ReadLine();
-        } while (inp != "1" && inp != "2");
 
         int length;
         do
         {
             Console.Write("Введите длину вектора: ");
         } while (!int.TryParse(Console.ReadLine(), out length) || length <= 0);
-
+        
         ArrayVector vec = new ArrayVector(length);
-
-        if (inp == "1")
+        
+        Random r = new Random();
+        for (int i = 0; i < length; i++)
         {
-            Random r = new Random();
-            for (int i = 0; i < length; i++)
-            {
-                vec[i] = r.Next(100);
-            }
-
-            return vec;
+            vec[i] = r.Next(100);
         }
-        else
-        {
-            for (int i = 0; i < length; i++)
-            {
-                int value;
-                do
-                {
-                    Console.Write($"Введите значение координаты {{{i+1}}}: ");
-                    inp = Console.ReadLine();
-                } while (!int.TryParse(inp, out value));
 
-                vec[i] = value;
-            }
-
-            return vec;
-        }
+        return vec;
     }
     
     public int CompareTo(object? obj)

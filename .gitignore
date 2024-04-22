@@ -17,3 +17,7 @@ CMakeLists.txt
 */*/cmake-build-debug/
 *.o
 *.out
+
+# Ignore different text and buffered files
+*.txt
+*.bin

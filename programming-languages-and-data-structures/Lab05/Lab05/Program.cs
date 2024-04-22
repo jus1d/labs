@@ -364,7 +364,7 @@ public static class Program
                     RunSymbolStream(vectors);
                     break;
                 case "3":
-                    RunSerialization(vectors);
+                    // RunSerialization(vectors);
                     break;
                 default:
                     Console.WriteLine("Нет такого пункта в меню");
@@ -375,7 +375,7 @@ public static class Program
 
     public static void RunByteStream(List<IVectorable> vectors)
     {
-        string path = "../../../vectors.txt";
+        string path = "../../../vectors.bin";
         if (File.Exists(path)) File.Delete(path);
 
         using (FileStream fs = new FileStream(path, FileMode.Append, FileAccess.Write))
@@ -383,7 +383,7 @@ public static class Program
             Vectors.WriteVectors(fs, vectors);
         }
         
-        Console.WriteLine("Запись в файл `vectors.txt` выполнена");
+        Console.WriteLine("Запись в файл `vectors.bin` выполнена");
 
         List<IVectorable> vectorsRead = new List<IVectorable>();
         using (FileStream fs = new FileStream(path, FileMode.Open))
@@ -391,7 +391,7 @@ public static class Program
             vectorsRead = Vectors.ReadVectors(fs);
         }
         
-        Console.WriteLine("Чтение из файла `vectors.txt` выполнено");
+        Console.WriteLine("Чтение из файла `vectors.bin` выполнено");
         
         Console.WriteLine("\nИсходный список векторов:");
         LogVectors(vectors);
@@ -432,17 +432,27 @@ public static class Program
     public static void RunSerialization(List<IVectorable> vectors)
     {
         string path = "../../../vectors.txt";
+        string serializedPath = "../../../serialized.json";
         List<IVectorable> vectorsRead = new List<IVectorable>();
+        
+        if (File.Exists(serializedPath)) File.Delete(serializedPath);
 
         for (int i = 0; i < vectors.Count; i++)
         {
             // Serialize
             string serializedJson = JsonSerializer.Serialize(vectors[i]);
-            File.WriteAllText("serialized.json", serializedJson);
+            File.WriteAllText(serializedPath, serializedJson);
 
             // Deserialize
-            string deserializedJson = File.ReadAllText(path);
-            vectorsRead.Add(JsonSerializer.Deserialize<IVectorable>(deserializedJson));
+            string deserializedJson = File.ReadAllText(serializedPath);
+            if (vectors[i] is LinkedListVector)
+            {
+                vectorsRead.Add(JsonSerializer.Deserialize<LinkedListVector>(deserializedJson));
+            }
+            else
+            {
+                vectorsRead.Add(JsonSerializer.Deserialize<ArrayVector>(deserializedJson));
+            }
 
             // Logging and comparison
             vectors[i].Log("Ваш вектор");

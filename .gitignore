@@ -25,3 +25,6 @@ CMakeLists.txt
 # Ignore different text and buffered files
 *.txt
 *.bin
+
+# Any other stuff, that I've fucked to call
+*.suo

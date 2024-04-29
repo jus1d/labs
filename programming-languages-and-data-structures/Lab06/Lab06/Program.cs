@@ -13,12 +13,12 @@ public static class Program
         string inp;
         
         Console.WriteLine("Выберете действие:\n\n" +
-                          "\t1  - Сумма векторов\n" +
-                          "\t2  - Скалярное умножение\n" +
-                          "\t3  - Умножение на число\n" +
-                          "\t4  - Рассчитать модуль вектора\n" +
-                          "\t5  - Добавить вектор в список\n" +
-                          "\t6  - Удалить вектор из списка\n" +
+                          "\t1  - Добавть вектор в список\n" +
+                          "\t2  - Удалить вектор из списка\n\n" +
+                          "\t3  - Сумма векторов\n" +
+                          "\t4  - Скалярное умножение\n" +
+                          "\t5  - Умножение на число\n" +
+                          "\t6  - Рассчитать модуль вектора\n" +
                           "\t7  - Клонировать вектор\n" +
                           "\t8  - Вывести вектора с минимальным и максимальным количеством координат\n" +
                           "\t9  - Отсортировать вектора по количеству координат\n" +
@@ -33,6 +33,9 @@ public static class Program
 
         foreach (string command in commands)
         {
+            execution += ConsoleClear;
+            execution += LogVectors;
+            
             switch (command)
             {
                 case "0":
@@ -40,51 +43,41 @@ public static class Program
                     return;
                 case "1":
                 {
-                    execution += LogVectors;
-                    execution += SumTwoVectors;
+                    execution += AddVector;
                     break;
                 }
                 case "2":
                 {
-                    execution += LogVectors;
-                    execution += MultiplyTwoVectors;
+                    execution += RemoveVector;
                     break;
                 }
                 case "3":
                 {
-                    execution += LogVectors;
-                    execution += MultiplyVectorByNumber;
+                    execution += SumTwoVectors;
                     break;
                 }
                 case "4":
                 {
-                    execution += LogVectors;
-                    execution += CalculateVectorNorm;
+                    execution += MultiplyTwoVectors;
                     break;
                 }
                 case "5":
                 {
-                    execution += AddVector;
-                    execution += LogVectors;
+                    execution += MultiplyVectorByNumber;
                     break;
                 }
                 case "6":
                 {
-                    execution += LogVectors;
-                    execution += RemoveVector;
-                    execution += LogVectors;
+                    execution += CalculateVectorNorm;
                     break;
                 }
                 case "7":
                 {
-                    execution += LogVectors;
                     execution += CloneVector;
-                    execution += LogVectors;
                     break;
                 }
                 case "8":
                 {
-                    execution += LogVectors;
                     execution += LogLongestAndShortestVectors;
                     break;
                 }
@@ -101,7 +94,6 @@ public static class Program
                 case "11":
                 {
                     execution += CompareVectors;
-                    execution += CompareVectors;
                     break;
                 }
                 default:
@@ -110,10 +102,9 @@ public static class Program
             }
         }
 
-        execution += LogVectors;
-
         execution(vectors);
         Console.WriteLine("Прорамма завершила работу . . .");
+        Console.ReadKey();
     }
 
     public static void Exit(List<IVectorable> vectors)
@@ -489,5 +480,11 @@ public static class Program
             
             vec.Log($"{i + 1}: {typeView, 10}");
         }
+    }
+
+    public static void ConsoleClear(List<IVectorable> _)
+    {
+        Console.ReadKey();
+        Console.Clear();
     }
 }

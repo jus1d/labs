@@ -191,7 +191,7 @@ public class ArrayVector : IVectorable, IComparable, ICloneable
         Random r = new Random();
         for (int i = 0; i < length; i++)
         {
-            vec[i] = r.Next(100);
+            vec[i] = r.Next(1000);
         }
 
         return vec;

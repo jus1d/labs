@@ -10,17 +10,19 @@ public static class Program
         List<IVectorable> vectors = new List<IVectorable>();
         string inp;
         
-        LogVectors(vectors);
 
         while (true)
         {
+            Console.Clear();
+            LogVectors(vectors);
+            
             Console.WriteLine("Выберете действие:\n\n" +
-                              "\t1  - Сумма векторов\n" +
-                              "\t2  - Скалярное умножение\n" +
-                              "\t3  - Умножение на число\n" +
-                              "\t4  - Рассчитать модуль вектора\n" +
-                              "\t5  - Добавить вектор в список\n" +
-                              "\t6  - Удалить вектор из списка\n" +
+                              "\t1  - Добавить вектор в список\n" +
+                              "\t2  - Удалить вектор из списка\n\n" +
+                              "\t3  - Сумма векторов\n" +
+                              "\t4  - Скалярное умножение\n" +
+                              "\t5  - Умножение на число\n" +
+                              "\t6  - Рассчитать модуль вектора\n" +
                               "\t7  - Клонировать вектор\n" +
                               "\t8  - Вывести вектора с минимальным и максимальным количеством координат\n" +
                               "\t9  - Отсортировать вектора по количеству координат\n" +
@@ -38,6 +40,32 @@ public static class Program
                     return;
                 case "1":
                 {
+                    vectors.Add(GetVectorFromUserInput());
+                    break;
+                }
+                case "2":
+                {
+                    LogVectors(vectors);
+                    int idx;
+
+                    do
+                    {
+                        Console.Write("Введите номер вектора для удаления: ");
+                        inp = Console.ReadLine();
+                    } while (!Int32.TryParse(inp, out idx) || idx < 1 || idx > vectors.Count);
+
+                    vectors.Remove(vectors[idx - 1]);
+
+                    break;
+                }
+                case "3":
+                {
+                    if (vectors.Count == 0)
+                    {
+                        Console.WriteLine("Добавьте хотя бы 1 вектор в список");
+                        break;
+                    }
+                    
                     LogVectors(vectors);
                     
                     int firstVectorIdx, secondVectorIdx;
@@ -66,8 +94,14 @@ public static class Program
                     
                     break;
                 }
-                case "2":
+                case "4":
                 {
+                    if (vectors.Count == 0)
+                    {
+                        Console.WriteLine("Добавьте хотя бы 1 вектор в список");
+                        break;
+                    }
+                    
                     LogVectors(vectors);
                     
                     int firstVectorIdx, secondVectorIdx;
@@ -96,8 +130,14 @@ public static class Program
 
                     break;
                 }
-                case "3":
+                case "5":
                 {
+                    if (vectors.Count == 0)
+                    {
+                        Console.WriteLine("Добавьте хотя бы 1 вектор в список");
+                        break;
+                    }
+                    
                     LogVectors(vectors);
                     
                     int idx, value;
@@ -115,19 +155,25 @@ public static class Program
                     } while (!int.TryParse(inp, out value));
 
                     var result = Vectors.MultiplyByNumber(vectors[idx - 1], value);
-                    result.Log($"Результат сложения умножения вектора на число");
+                    result.Log($"Результат умножения вектора на число");
                     
                     break;
                 }
-                case "4":
+                case "6":
                 {
+                    if (vectors.Count == 0)
+                    {
+                        Console.WriteLine("Добавьте хотя бы 1 вектор в список");
+                        break;
+                    }
+                    
                     LogVectors(vectors);
                     
                     int idx;
 
                     do
                     {
-                        Console.Write("Введите номер вектора для удаления: ");
+                        Console.Write("Введите номер вектора для расчета модуля: ");
                         inp = Console.ReadLine();
                     } while (!Int32.TryParse(inp, out idx) || idx < 1 || idx > vectors.Count);
 
@@ -137,31 +183,14 @@ public static class Program
                     
                     break;
                 }
-                case "5":
-                {
-                    vectors.Add(GetVectorFromUserInput());
-                    LogVectors(vectors);
-                    break;
-                }
-                case "6":
-                {
-                    LogVectors(vectors);
-                    int idx;
-
-                    do
-                    {
-                        Console.Write("Введите номер вектора для удаления: ");
-                        inp = Console.ReadLine();
-                    } while (!Int32.TryParse(inp, out idx) || idx < 1 || idx > vectors.Count);
-
-                    vectors.Remove(vectors[idx - 1]);
-
-                    LogVectors(vectors);
-
-                    break;
-                }
                 case "7":
                 {
+                    if (vectors.Count == 0)
+                    {
+                        Console.WriteLine("Добавьте хотя бы 1 вектор в список");
+                        break;
+                    }
+                    
                     LogVectors(vectors);
                     int idx;
 
@@ -190,6 +219,12 @@ public static class Program
                 }
                 case "8":
                 {
+                    if (vectors.Count == 0)
+                    {
+                        Console.WriteLine("В списке нет векторов, добавьте хотя бы 1 вектор в список");
+                        break;
+                    }
+                    
                     LogVectors(vectors);
 
                     try
@@ -240,6 +275,12 @@ public static class Program
                 }
                 case "9":
                 {
+                    if (vectors.Count == 0)
+                    {
+                        Console.WriteLine("Список векторов пуст, добавьте хотя бы 1 вектор");
+                        break;
+                    }
+                    
                     IVectorable tmp;
                     VectorsComparer comparer = new VectorsComparer();
                     
@@ -274,6 +315,12 @@ public static class Program
                 }
                 case "10":
                 {
+                    if (vectors.Count == 0)
+                    {
+                        Console.WriteLine("Список векторов пуст, добавьте хотя бы 1 вектор");
+                        break;
+                    }
+                    
                     IVectorable tmp;
                     VectorsComparer comparer = new VectorsComparer();
 
@@ -305,6 +352,12 @@ public static class Program
                 }
                 case "11":
                 {
+                    if (vectors.Count == 0)
+                    {
+                        Console.WriteLine("Список векторов пуст, добавьте хотя бы 1 вектор");
+                        break;
+                    }
+                    
                     int firstIdx, secondIdx;
                     
                     do
@@ -331,13 +384,22 @@ public static class Program
                 }
                 case "12":
                 {
+                    if (vectors.Count == 0)
+                    {
+                        Console.WriteLine("Добавьте в список хотя бы 1 вектор"); 
+                        break;
+                    }
+                    
                     RunStreamSubmenu(vectors);
                     break;
                 }
                 default:
+                {
                     Console.WriteLine("Нет такого пункта в меню");
                     break;
+                } 
             }
+            Console.ReadKey();
         }
     }
 
@@ -345,6 +407,9 @@ public static class Program
     {
         while (true)
         {
+            Console.Clear();
+            LogVectors(vectors);
+            
             Console.Write("Выберете поток:\n\n" +
                               "\t1. Байтовый поток\n" +
                               "\t2. Символьный поток\n" +
@@ -370,6 +435,8 @@ public static class Program
                     Console.WriteLine("Нет такого пункта в меню");
                     break;
             }
+
+            Console.ReadKey();
         }
     }
 
@@ -431,7 +498,7 @@ public static class Program
     
     public static void RunSerialization(List<IVectorable> vectors)
     {
-        string path = "./serialized.bin";
+        string path = "../../../serialized.bin";
         List<IVectorable> vectorsRead = new List<IVectorable>();
         for (int i = 0; i < vectors.Count; i++)
         {
@@ -490,6 +557,7 @@ public static class Program
 
     public static void LogVectors(List<IVectorable> vectors)
     {
+        Console.WriteLine($"Векторов в списке: {vectors.Count}");
         for (int i = 0; i < vectors.Count; ++i)
         {
             IVectorable vec = vectors[i];

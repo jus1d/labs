@@ -21,13 +21,14 @@ public class LinkedListVector : IVectorable, IComparable, ICloneable
     public LinkedListVector()
     {
         var r = new Random();
+        int n = 1000;
         
-        head = new Node(r.Next(100));
+        head = new Node(r.Next(n));
         Node cur = head;
         
         for (int i = 0; i < 5; i++)
         {
-            cur.next = new Node(r.Next(100));
+            cur.next = new Node(r.Next(n));
             cur = cur.next;
         }
     }
@@ -35,13 +36,14 @@ public class LinkedListVector : IVectorable, IComparable, ICloneable
     public LinkedListVector(int length)
     {
         var r = new Random();
+        int n = 1000;
         
-        head = new Node(r.Next(100));
+        head = new Node(r.Next(n));
         Node cur = head;
         
         for (int i = 0; i < length; i++)
         {
-            cur.next = new Node(r.Next(100));
+            cur.next = new Node(r.Next(n));
             cur = cur.next;
         }
     }

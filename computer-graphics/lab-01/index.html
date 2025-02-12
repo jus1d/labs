@@ -11,14 +11,14 @@
                 color: #333;
             }
             h1 {
-                color: #4caf50;
+                color: #4a6bff;
                 text-align: center;
                 font-size: 2.5em;
                 margin-bottom: 20px;
             }
             h2 {
                 color: #333;
-                border-bottom: 2px solid #4caf50;
+                border-bottom: 2px solid #4a6bff;
                 padding-bottom: 10px;
                 margin-top: 30px;
             }
@@ -31,29 +31,30 @@
                 margin: 10px 0 20px 20px;
             }
             table {
+                background-color: #4a6bff30;
                 width: 100%;
                 border-collapse: collapse;
                 margin-top: 20px;
             }
             th,
             td {
-                border: 1px solid #4caf50;
+                border: 1px solid #4a6bff;
                 padding: 10px;
                 text-align: center;
             }
             th {
-                background-color: #4caf50;
+                background-color: #4a6bff;
                 color: white;
             }
             hr {
-                border: 1px solid #4caf50;
+                border: 1px solid #4a6bff;
                 margin: 40px 0;
             }
             .center {
                 text-align: center;
             }
             a {
-                color: #4caf50;
+                color: #4a6bff;
                 text-decoration: none;
             }
             a:hover {
@@ -67,10 +68,33 @@
                 height: 150px; /* Размер аватарки */
                 object-fit: cover; /* Обеспечивает обрезку изображения */
             }
+            nav {
+                background-color: #4a6bff;
+                padding: 10px;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            nav a {
+                margin: 0 15px;
+                color: white;
+                font-weight: bold;
+            }
         </style>
     </head>
     <body>
-        <h1 class="center">Обо мне</h1>
+        <nav>
+            <a href="#about">Обо мне</a>
+            <a href="#family">Моя семья</a>
+            <a href="#education">Образование</a>
+            <a href="#hobbies">Увлечения и хобби</a>
+            <a href="#achievements">Мои достижения</a>
+            <a href="#performance">Успеваемость</a>
+            <a href="#contacts">Контакты</a>
+            <a href="#additional">Дополнительная информация</a>
+            <a href="#formatting">Форматирование текста</a>
+        </nav>
+
+        <h1 id="about" class="center">Обо мне</h1>
         <img
             src="https://avatars.githubusercontent.com/u/81350694?v=4"
             alt="Аватарка Артема"
@@ -78,25 +102,32 @@
         />
         <p
             class="center"
-            style="font-style: italic; color: #4caf50; margin-top: 10px"
+            style="font-style: italic; color: #4a6bff; margin-top: 10px"
         >
-            Тут мог быть я (но он тоже ничего)
+            Тут мог быть я (но он тоже ничего). <br />
+            Лучше смотрите на
+            <a
+                style="font-weight: bold"
+                href="https://github.com/jus1d"
+                target="_blank"
+                >гитхаб</a
+            >, а не на меня
         </p>
         <p>
             Меня зовут Артем Фадеев, я студент Самарского университета и
             программист.
         </p>
 
-        <h2>Моя семья</h2>
+        <h2 id="family">Моя семья</h2>
         <p>У меня есть мама, папа и младшая сестра.</p>
 
-        <h2>Образование</h2>
+        <h2 id="education">Образование</h2>
         <p>
             Я учусь в Самарском университете на факультете информационных
             технологий.
         </p>
 
-        <h2>Увлечения и хобби</h2>
+        <h2 id="hobbies">Увлечения и хобби</h2>
         <ul>
             <li>Программирование</li>
             <li>Компьютерные игры</li>
@@ -104,13 +135,13 @@
             <li>Спорт</li>
         </ul>
 
-        <h2>Мои достижения</h2>
+        <h2 id="achievements">Мои достижения</h2>
         <ol>
             <li>Участие в хакатонах</li>
             <li>Создание нескольких проектов на GitHub</li>
         </ol>
 
-        <h2>Успеваемость</h2>
+        <h2 id="performance">Успеваемость</h2>
         <table>
             <tr>
                 <th>Семестр</th>
@@ -132,25 +163,25 @@
 
         <hr />
 
-        <h2>Контакты</h2>
+        <h2 id="contacts">Контакты</h2>
         <p>
             Вы можете связаться со мной по электронной почте:
             <a href="mailto:artfa63@gmail.com">artfa63@gmail.com</a>
         </p>
 
-        <h2>Дополнительная информация</h2>
+        <h2 id="additional">Дополнительная информация</h2>
         <p>
             Я изучаю различные языки программирования, такие как Go, Rust и
-            неокторые другие. <br />
+            некоторые другие. <br />
             Дело не в языках. <br />
             Умею обходить закон, использовать запрещенные символы, такие как
             &lt; (меньше), &gt; (больше), &amp; (амперсанд) и &quot; (двойные
             кавычки). <br />
             И даже так могу, H<sub>2</sub>O (вода) и CO<sub>2</sub> (углекислый
-            газ).
+            газ). Немного разбираюсь в математике (2<sup>2</sup> = 4)
         </p>
 
-        <h2>Форматирование текста</h2>
+        <h2 id="formatting">Форматирование текста</h2>
         <p>
             Некоторые слова могут быть <i>курсивом</i>, а другие могут быть
             <b>жирным</b> шрифтом.

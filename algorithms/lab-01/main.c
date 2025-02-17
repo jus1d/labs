@@ -23,13 +23,17 @@ int *generate_array(int size) {
     return data;
 }
 
+void swap(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
 void bubblesort(int *data, int size) {
     for (size_t i = 0; i < size; ++i) {
         for (size_t j = i + 1; j < size; ++j) {
             if (data[i] > data[j]) {
-                int tmp = data[i];
-                data[i] = data[j];
-                data[j] = tmp;
+                swap(&data[i], &data[j]);
             }
         }
     }
@@ -47,9 +51,7 @@ void quicksort(int *data, int l, int r) {
         while (data[j] > pivot) j--;
 
         if (i <= j) {
-            int tmp = data[i];
-            data[i] = data[j];
-            data[j] = tmp;
+            swap(&data[i], &data[j]);
 
             i++;
             j--;
@@ -58,6 +60,53 @@ void quicksort(int *data, int l, int r) {
 
     quicksort(data, l, j);
     quicksort(data, i, r);
+}
+
+void merge(int arr[], int l, int mid, int r) {
+    int n1 = mid - l + 1;
+    int n2 = r - mid;
+
+    int left[n1], right[n2];
+
+    for (int i = 0; i < n1; i++)
+        left[i] = arr[l + i];
+
+    for (int j = 0; j < n2; j++)
+        right[j] = arr[mid + 1 + j];
+
+    int i = 0, j = 0, k = l;
+    while (i < n1 && j < n2) {
+        if (left[i] <= right[j]) {
+            arr[k] = left[i];
+            i++;
+        } else {
+            arr[k] = right[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = left[i];
+        i++;
+        k++;
+    }
+    while (j < n2) {
+        arr[k] = right[j];
+        j++;
+        k++;
+    }
+}
+
+void merge_sort(int arr[], int l, int r) {
+    if (l < r) {
+        int mid = l + (r - l) / 2;
+
+        merge_sort(arr, l, mid);
+        merge_sort(arr, mid + 1, r);
+
+        merge(arr, l, mid, r);
+    }
 }
 
 int main(int argc, char **argv) {
@@ -86,6 +135,9 @@ int main(int argc, char **argv) {
     }
     else if (strcmp(sort, "bubblesort") == 0) {
         bubblesort(data, size);
+    }
+    else if (strcmp(sort, "mergesort") == 0) {
+        merge_sort(data, 0, size -1);
     }
     else {
         printf("Unknown sorting method: `%s`\n", sort);

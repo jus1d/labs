@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
-
-// #define DEBUG
 
 void log_array(int *data, int size) {
     for (size_t i = 0; i < size; ++i) {
@@ -61,31 +60,48 @@ void quicksort(int *data, int l, int r) {
     quicksort(data, i, r);
 }
 
-int main(void) {
+int main(int argc, char **argv) {
     srand(time(NULL));
-    const int SIZE = 100000;
+    const int OUTPUT_MAX_SIZE = 20;
 
-    int *data = generate_array(SIZE);
+    int size;
+    printf("Enter array length (output only for N < %d) => ", OUTPUT_MAX_SIZE + 1);
+    scanf("%d", &size);
 
-#ifdef DEBUG
-    printf("before sorting: ");
-    log_array(data, SIZE);
-#endif
+    char *sort = "quicksort";
+    if (argc > 1) {
+        sort = argv[1];
+    }
+
+    int *data = generate_array(size);
+
+    if (size <= OUTPUT_MAX_SIZE) {
+        printf("Initial array: ");
+        log_array(data, size);
+    }
 
     clock_t timer_start = clock();
-    // bubblesort(data, SIZE);
-    quicksort(data, 0, SIZE - 1);
+    if (strcmp(sort, "quicksort") == 0) {
+        quicksort(data, 0, size - 1);
+    }
+    else if (strcmp(sort, "bubblesort") == 0) {
+        bubblesort(data, size);
+    }
+    else {
+        printf("Unknown sorting method: `%s`\n", sort);
+        exit(1);
+    }
     clock_t timer_end = clock();
 
-#ifdef DEBUG
-    printf("after sorting: ");
-    log_array(data, SIZE);
-#endif
-
-    double millis = (timer_end - timer_start) / (double) CLOCKS_PER_SEC * 1000;
-    printf("Sorting took %fms\n", millis);
+    if (size <= OUTPUT_MAX_SIZE) {
+        printf("Sorted array: ");
+        log_array(data, size);
+    }
 
     free(data);
+
+    double millis = (timer_end - timer_start) / (double) CLOCKS_PER_SEC * 1000;
+    printf("[%s] Sorting took %fms\n", sort, millis);
 
     return 0;
 }

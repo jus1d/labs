@@ -3,6 +3,8 @@
 #include <string.h>
 #include <time.h>
 
+#define OUTPUT_MAX_SIZE 20
+
 void log_array(int *data, int size) {
     for (size_t i = 0; i < size; ++i) {
         printf("%d ", data[i]);
@@ -10,23 +12,23 @@ void log_array(int *data, int size) {
     printf("\n");
 }
 
-int *generate_array(int size) {
-    int* data = malloc(sizeof(int) * size);
-    if (data == NULL) {
-        printf("Buy more RAM :)");
-        exit(1);
+void fill_random(int *a, int n, int upper) {
+    for (size_t i = 0; i < n; ++i) {
+        a[i] = rand() % (upper + 1);
     }
-
-    for (size_t i = 0; i < size; ++i) {
-        data[i] = rand() % 100;
-    }
-    return data;
 }
 
 void swap(int *a, int *b) {
     int tmp = *a;
     *a = *b;
     *b = tmp;
+}
+
+void shuffle(int *array, int n) {
+    for (int i = n - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        swap(&array[i], &array[j]);
+    }
 }
 
 void bubblesort(int *data, int size) {
@@ -109,51 +111,99 @@ void merge_sort(int arr[], int l, int r) {
     }
 }
 
-int main(int argc, char **argv) {
-    srand(time(NULL));
-    const int OUTPUT_MAX_SIZE = 20;
-
-    int size;
-    printf("Enter array length (output only for N < %d) => ", OUTPUT_MAX_SIZE + 1);
-    scanf("%d", &size);
-
-    char *sort = "quicksort";
-    if (argc > 1) {
-        sort = argv[1];
-    }
-
-    int *data = generate_array(size);
-
-    if (size <= OUTPUT_MAX_SIZE) {
-        printf("Initial array: ");
-        log_array(data, size);
+void measure_bubblesort(int a[], int n) {
+    if (n <= OUTPUT_MAX_SIZE) {
+        printf("[bubblesort] Initial array: ");
+        log_array(a, n);
     }
 
     clock_t timer_start = clock();
-    if (strcmp(sort, "quicksort") == 0) {
-        quicksort(data, 0, size - 1);
-    }
-    else if (strcmp(sort, "bubblesort") == 0) {
-        bubblesort(data, size);
-    }
-    else if (strcmp(sort, "mergesort") == 0) {
-        merge_sort(data, 0, size -1);
-    }
-    else {
-        printf("Unknown sorting method: `%s`\n", sort);
-        exit(1);
-    }
+    bubblesort(a, n);
     clock_t timer_end = clock();
 
-    if (size <= OUTPUT_MAX_SIZE) {
-        printf("Sorted array: ");
-        log_array(data, size);
+    if (n <= OUTPUT_MAX_SIZE) {
+        printf("[bubblesort] Sorted array:  ");
+        log_array(a, n);
     }
 
-    free(data);
+    double millis = (double)(timer_end - timer_start) * 1000 / CLOCKS_PER_SEC;
+    printf("[bubblesort] Sorting took %fms\n", millis);
+}
 
-    double millis = (timer_end - timer_start) / (double) CLOCKS_PER_SEC * 1000;
-    printf("[%s] Sorting took %fms\n", sort, millis);
+void measure_quicksort(int a[], int n) {
+    if (n <= OUTPUT_MAX_SIZE) {
+        printf("[quicksort] Initial array: ");
+        log_array(a, n);
+    }
+
+    clock_t timer_start = clock();
+    quicksort(a, 0, n-1);
+    clock_t timer_end = clock();
+
+    if (n <= OUTPUT_MAX_SIZE) {
+        printf("[quicksort] Sorted array:  ");
+        log_array(a, n);
+    }
+
+    double millis = (double)(timer_end - timer_start) * 1000 / CLOCKS_PER_SEC;
+    printf("[quicksort] Sorting took %fms\n", millis);
+}
+
+void measure_mergesort(int a[], int n) {
+    if (n <= OUTPUT_MAX_SIZE) {
+        printf("[mergesort] Initial array: ");
+        log_array(a, n);
+    }
+
+    clock_t timer_start = clock();
+    merge_sort(a, 0, n-1);
+    clock_t timer_end = clock();
+
+    if (n <= OUTPUT_MAX_SIZE) {
+        printf("[mergesort] Sorted array:  ");
+        log_array(a, n);
+    }
+
+    double millis = (double)(timer_end - timer_start) * 1000 / CLOCKS_PER_SEC;
+    printf("[mergesort] Sorting took %fms\n", millis);
+}
+
+int main(int argc, char **argv) {
+    srand(time(NULL));
+
+    int n = 10;
+    if (argc > 1) {
+        n = atoi(argv[1]);
+    }
+
+    int *data1 = (int *)malloc(n * sizeof(int));
+    int *data2 = (int *)malloc(n * sizeof(int));
+    int *data3 = (int *)malloc(n * sizeof(int));
+
+    if (argc > 2 && strcmp(argv[2], "rand") == 0) {
+        fill_random(data1, n, 100);
+    } else {
+        for (int i = 0; i < n; i++) {
+            data1[i] = i;
+        }
+
+        shuffle(data1, n);
+    }
+
+    for (int i = 0; i < n; i++) {
+        data2[i] = data1[i];
+        data3[i] = data1[i];
+    }
+
+    measure_quicksort(data1, n);
+    if (n <= OUTPUT_MAX_SIZE) printf("\n");
+    measure_mergesort(data3, n);
+    if (n <= OUTPUT_MAX_SIZE) printf("\n");
+    measure_bubblesort(data2, n);
+
+    free(data1);
+    free(data2);
+    free(data3);
 
     return 0;
 }

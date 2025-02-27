@@ -1,4 +1,4 @@
-LINE_LENGTH = 20
+line_length = 100
 ALPHA = 60
 AXIOM = 'FXF--FF--FF'
 RULES = {

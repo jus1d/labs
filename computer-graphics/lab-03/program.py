@@ -14,12 +14,12 @@ def draw_sierpinski_triangle(axiom, length, angle, x, y, canvas):
         if symbol in ['F', 'G']:
             new_x = current_x + length * math.cos(current_direction)
             new_y = current_y + length * math.sin(current_direction)
-            canvas.create_line(current_x, current_y, new_x, new_y, fill="white")
+            canvas.create_line(current_x, current_y, new_x, new_y, fill="black")
             current_x, current_y = new_x, new_y
         elif symbol == '+':
-            current_direction += math.radians(120)
+            current_direction += math.radians(60)
         elif symbol == '-':
-            current_direction -= math.radians(120)
+            current_direction -= math.radians(60)
         elif symbol == '[':
             stack.append((current_x, current_y, current_direction))
         elif symbol == ']':
@@ -32,13 +32,13 @@ def main():
     width = 800
     height = 800
 
-    canvas = tk.Canvas(root, width=width, height=height, bg="black")
+    canvas = tk.Canvas(root, width=width, height=height, bg="white")
     canvas.pack()
 
-    axiom = "F-G-G"
+    axiom = "FXF--FF--FF"
     rules = {
-        "F": "F-G+F+G-F",
-        "G": "GG"
+        "F": "FF",
+        "X": "--FXF++FXF++FXF--",
     }
     max_iterations = 6
     current_iteration = [0]
@@ -47,7 +47,7 @@ def main():
     start_x = width // 10
     start_y = height * 8 // 10
 
-    base_length = 600
+    base_length = 300
 
     def generate_axiom():
         result = axiom

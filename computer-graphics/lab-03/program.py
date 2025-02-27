@@ -11,7 +11,7 @@ def draw_sierpinski_triangle(axiom, length, angle, x, y, canvas):
     current_x, current_y = x, y
 
     for symbol in axiom:
-        if symbol in ['F', 'G']:
+        if symbol == 'F':
             new_x = current_x + length * math.cos(current_direction)
             new_y = current_y + length * math.sin(current_direction)
             canvas.create_line(current_x, current_y, new_x, new_y, fill="black")

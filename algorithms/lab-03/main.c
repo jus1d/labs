@@ -164,8 +164,10 @@ Node* ll_read_cycled(void) {
         }
     }
 
-    int mid = n / 2;
-    tail->next = nodes[mid];
+    int cycle_start = -1;
+    scanf("%d", &cycle_start);
+
+    tail->next = nodes[cycle_start];
     free(nodes);
     return head;
 }

@@ -106,7 +106,7 @@ void ll_print(Node *head) {
             printf("%d -> ", curr->value);
             curr = curr->next;
         }
-        printf("NULL\n");
+        printf("\n");
         return;
     }
 
@@ -131,7 +131,7 @@ void ll_print(Node *head) {
 Node* ll_read_cycled(void) {
     int n;
 
-    printf("Enter the number of nodes -> ");
+    printf("Enter the number of nodes (min 5) -> ");
     if (scanf("%d", &n) != 1 || n <= 5) {
         fprintf(stderr, "Invalid number of nodes\n");
         exit(1);
@@ -200,36 +200,6 @@ Node* ll_read(void) {
     return head;
 }
 
-void cycled_ll_demo(void) {
-    Node *head = ll_read_cycled();
-
-    ll_print(head);
-}
-
-void copy_demo(void) {
-    Node *head = ll_read();
-
-    printf("Initial list: ");
-    ll_print(head);
-
-    Node *copied = ll_copy(head);
-
-    printf("Copied list:  ");
-    ll_print(copied);
-}
-
-void remove_dup_demo(void) {
-    Node *head = ll_read();
-
-    printf("Initial list: ");
-    ll_print(head);
-
-    ll_remove_duplicates(head);
-
-    printf("List of distinct elements: ");
-    ll_print(head);
-}
-
 int main(int argc, char **argv) {
     char *program = shift(argv, argc);
 
@@ -240,14 +210,31 @@ int main(int argc, char **argv) {
 
     char *subcommand = shift(argv, argc);
     if (strcmp(subcommand, "cycle") == 0) {
-        cycled_ll_demo();
+        Node *head = ll_read_cycled();
+
+        ll_print(head);
     }
     else if (strcmp(subcommand, "copy") == 0) {
-        copy_demo();
+        Node *head = ll_read();
+
+        printf("Initial list: ");
+        ll_print(head);
+
+        Node *copied = ll_copy(head);
+
+        printf("Copied list:  ");
+        ll_print(copied);
     }
-    else if (strcmp(subcommand, "dup") == 0)
-    {
-        remove_dup_demo();
+    else if (strcmp(subcommand, "dup") == 0) {
+        Node *head = ll_read();
+
+        printf("Initial list: ");
+        ll_print(head);
+
+        ll_remove_duplicates(head);
+
+        printf("List of distinct elements: ");
+        ll_print(head);
     }
 
     return 0;

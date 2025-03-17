@@ -11,25 +11,13 @@ struct Node {
     Node *next;
 };
 
-Node *ll_copy(Node *head) {
-    if (head == NULL) return NULL;
+typedef struct DoubleNode DoubleNode;
 
-    Node *copied = malloc(sizeof(Node));
-    Node *c1 = head;
-    Node *c2 = copied;
-
-    while (c1 != NULL) {
-        c2->value = c1->value;
-        if (c1->next != NULL) {
-            c2->next = malloc(sizeof(Node));
-        }
-
-        c1 = c1->next;
-        c2 = c2->next;
-    }
-
-    return copied;
-}
+struct DoubleNode {
+    int value;
+    DoubleNode *next;
+    DoubleNode *prev;
+};
 
 void ll_remove_duplicates(Node *head) {
     if (head == NULL) return;
@@ -103,8 +91,11 @@ void ll_print(Node *head) {
     if (cycle_head == NULL) {
         Node *curr = head;
         while (curr != NULL) {
-            printf("%d -> ", curr->value);
+            printf("%d ", curr->value);
             curr = curr->next;
+            if (curr != NULL) {
+                printf("-> ");
+            }
         }
         printf("\n");
         return;
@@ -112,8 +103,11 @@ void ll_print(Node *head) {
 
     Node *curr = head;
     while (curr != cycle_head) {
-        printf("%d -> ", curr->value);
+        printf("%d ", curr->value);
         curr = curr->next;
+        if (curr != NULL) {
+            printf("-> ");
+        }
     }
 
     printf("[");
@@ -126,6 +120,17 @@ void ll_print(Node *head) {
         }
     } while (cycle_curr != cycle_head);
     printf("]\n");
+}
+
+void dll_print(DoubleNode *head) {
+    while (head != NULL) {
+        printf("%d ", head->value);
+        head = head->next;
+        if (head != NULL) {
+            printf("<-> ");
+        }
+    }
+    printf("\n");
 }
 
 Node* ll_read_cycled(void) {
@@ -200,6 +205,67 @@ Node* ll_read(void) {
     return head;
 }
 
+DoubleNode* double_node_create(int value) {
+    DoubleNode *new_node = malloc(sizeof(DoubleNode));
+    if (new_node == NULL) {
+        fprintf(stderr, "Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    new_node->value = value;
+    new_node->prev = NULL;
+    new_node->next = NULL;
+    return new_node;
+}
+
+DoubleNode* dll_read(void) {
+    int n;
+    printf("Enter the number of nodes -> ");
+    if (scanf("%d", &n) != 1 || n < 1) {
+        fprintf(stderr, "Invalid number of nodes.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    DoubleNode *head = NULL, *tail = NULL;
+
+    for (int i = 0; i < n; i++) {
+        int value;
+        if (scanf("%d", &value) != 1) {
+            fprintf(stderr, "Invalid value input.\n");
+            exit(EXIT_FAILURE);
+        }
+        DoubleNode *node = double_node_create(value);
+        if (head == NULL) {
+            head = tail = node;
+        } else {
+            tail->next = node;
+            node->prev = tail;
+            tail = node;
+        }
+    }
+
+    return head;
+}
+
+DoubleNode* dll_copy(DoubleNode *head) {
+    if (head == NULL) return NULL;
+
+    DoubleNode *copied_head = double_node_create(head->value);
+    DoubleNode *cur = head->next;
+    DoubleNode *copied = copied_head;
+
+    while (cur != NULL) {
+        DoubleNode *node = double_node_create(cur->value);
+
+        copied->next = node;
+        node->prev = copied;
+
+        copied = node;
+        cur = cur->next;
+    }
+
+    return copied_head;
+}
+
 int main(int argc, char **argv) {
     char *program = shift(argv, argc);
 
@@ -215,15 +281,15 @@ int main(int argc, char **argv) {
         ll_print(head);
     }
     else if (strcmp(subcommand, "copy") == 0) {
-        Node *head = ll_read();
+        DoubleNode *head = dll_read();
 
         printf("Initial list: ");
-        ll_print(head);
+        dll_print(head);
 
-        Node *copied = ll_copy(head);
+        DoubleNode *copied = dll_copy(head);
 
         printf("Copied list:  ");
-        ll_print(copied);
+        dll_print(copied);
     }
     else if (strcmp(subcommand, "dup") == 0) {
         Node *head = ll_read();
@@ -235,6 +301,10 @@ int main(int argc, char **argv) {
 
         printf("List of distinct elements: ");
         ll_print(head);
+    }
+    else {
+        fprintf(stdout, "Usage: %s [ cycle | copy | dup ]\n", program);
+        return 1;
     }
 
     return 0;

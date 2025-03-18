@@ -19,27 +19,72 @@ struct DoubleNode {
     DoubleNode *prev;
 };
 
-void ll_remove_duplicates(Node *head) {
-    if (head == NULL) return;
+Node* merge(Node* a, Node* b) {
+    if (a == NULL) return b;
+    if (b == NULL) return a;
 
-    Node *i = head;
-    while (i != NULL) {
-        Node *prev = i;
-        Node *j = i->next;
-
-        while (j != NULL) {
-            if (i->value == j->value) {
-                prev->next = j->next;
-                free(j);
-                j = prev->next;
-            }
-            else {
-                prev = j;
-                j = j->next;
-            }
-        }
-        i = i->next;
+    Node* result = NULL;
+    if (a->value <= b->value) {
+        result = a;
+        result->next = merge(a->next, b);
+    } else {
+        result = b;
+        result->next = merge(a, b->next);
     }
+    return result;
+}
+
+void split(Node* head, Node** front, Node** back) {
+    if (head == NULL || head->next == NULL) {
+        *front = head;
+        *back = NULL;
+        return;
+    }
+
+    Node* slow = head;
+    Node* fast = head->next;
+
+    while (fast) {
+        fast = fast->next;
+        if (fast) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+    }
+
+    *front = head;
+    *back = slow->next;
+    slow->next = NULL;
+}
+
+Node* merge_sort(Node* head) {
+    if (head == NULL || head->next == NULL) return head;
+
+    Node* a = NULL;
+    Node* b = NULL;
+
+    split(head, &a, &b);
+
+    a = merge_sort(a);
+    b = merge_sort(b);
+
+    return merge(a, b);
+}
+
+Node* ll_remove_duplicates(Node* head) {
+    Node* current = head;
+
+    while (current != NULL && current->next != NULL) {
+        if (current->value == current->next->value) {
+            Node* duplicate = current->next;
+            current->next = duplicate->next;
+            free(duplicate);
+        } else {
+            current = current->next;
+        }
+    }
+
+    return head;
 }
 
 Node* ll_find_cycle_head(Node *head) {
@@ -297,10 +342,12 @@ int main(int argc, char **argv) {
         printf("Initial list: ");
         ll_print(head);
 
-        ll_remove_duplicates(head);
+        Node *sorted = merge_sort(head);
 
-        printf("List of distinct elements: ");
-        ll_print(head);
+        Node *flushed = ll_remove_duplicates(sorted);
+
+        printf("Clean list:   ");
+        ll_print(flushed);
     }
     else {
         fprintf(stdout, "Usage: %s [ cycle | copy | dup ]\n", program);

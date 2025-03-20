@@ -161,36 +161,32 @@ class Paint:
         if target_color == fill_color:
             return
 
-        visited = set()
+        итерации = 0
         stack = [(x, y)]
-
         while stack:
             cx, cy = stack.pop()
-
-            if (cx, cy) in visited:
-                continue
-
-            visited.add((cx, cy))
-
             left = cx
+
             while left >= 0 and self.get_pixel(left, cy) == target_color:
                 left -= 1
-            left += 1
 
+            left += 1
             right = cx
+
             while right < CANVAS_WIDTH and self.get_pixel(right, cy) == target_color:
                 right += 1
             right -= 1
 
-            for i in range(left, right + 1):
+            for i in range(left, right+1):
                 color = fill_color if cy % 10 >= 5 else 'magenta'
                 self.set_pixel(i, cy, color)
 
-                if cy > 0 and self.get_pixel(i, cy - 1) == target_color and (i, cy - 1) not in visited:
-                    stack.append((i, cy - 1))
-
-                if cy < CANVAS_HEIGHT - 1 and self.get_pixel(i, cy + 1) == target_color and (i, cy + 1) not in visited:
-                    stack.append((i, cy + 1))
+                if cy > 0 and self.get_pixel(i, cy-1) == target_color:
+                    stack.append((i, cy-1))
+                if cy < CANVAS_HEIGHT-1 and self.get_pixel(i, cy+1) == target_color:
+                    stack.append((i, cy+1))
+            if итерации % 100 == 0:
+                self.canvas.update()
 
         self.canvas.update()
 

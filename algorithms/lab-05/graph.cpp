@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-// #define endl '\n'
+#define endl '\n'
 
 using namespace std;
 

@@ -183,7 +183,7 @@
                 <div id="contrastInfo" class="info"></div>
             </div>
             <div class="image-box">
-                <p>Фильтр границ (Лапласиан)</p>
+                <p>Фильтр границ</p>
                 <div class="canvas-container">
                     <canvas id="filterCanvas"></canvas>
                 </div>
@@ -192,7 +192,6 @@
         </div>
 
         <script>
-            // DOM elements
             const uploadBtn = document.getElementById("uploadBtn");
             const fileInput = document.getElementById("fileInput");
             const processBtn = document.getElementById("processBtn");
@@ -201,7 +200,6 @@
             const minValue = document.getElementById("minValue");
             const maxValue = document.getElementById("maxValue");
 
-            // Canvas elements and containers
             const originalCanvas = document.getElementById("originalCanvas");
             const grayCanvas = document.getElementById("grayCanvas");
             const contrastCanvas = document.getElementById("contrastCanvas");
@@ -212,19 +210,16 @@
             const contrastContainer = contrastCanvas.parentElement;
             const filterContainer = filterCanvas.parentElement;
 
-            // Info elements
             const originalInfo = document.getElementById("originalInfo");
             const grayInfo = document.getElementById("grayInfo");
             const contrastInfo = document.getElementById("contrastInfo");
             const filterInfo = document.getElementById("filterInfo");
 
-            // Image data
             let originalImage = null;
             let grayImageData = null;
             let originalWidth = 0;
             let originalHeight = 0;
 
-            // Event listeners
             uploadBtn.addEventListener("click", () => fileInput.click());
             fileInput.addEventListener("change", loadImage);
             processBtn.addEventListener("click", processImage);
@@ -237,11 +232,11 @@
                 () => (maxValue.textContent = maxSlider.value),
             );
 
-            // Image processing functions
             function toGrayscale(imageData) {
                 const data = imageData.data;
                 for (let i = 0; i < data.length; i += 4) {
-                    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                    const avg =
+                        0.3 * data[i] + 0.59 * data[i + 1] + 0.11 * data[i + 2];
                     data[i] = data[i + 1] = data[i + 2] = avg;
                 }
                 return imageData;
@@ -250,7 +245,7 @@
             function linearContrast(imageData, inMin, inMax) {
                 const data = imageData.data;
                 for (let i = 0; i < data.length; i += 4) {
-                    const gray = data[i]; // All channels same in grayscale
+                    const gray = data[i];
                     const clipped = Math.max(inMin, Math.min(inMax, gray));
                     const contrast =
                         ((clipped - inMin) / (inMax - inMin)) * 255;
@@ -265,45 +260,46 @@
                 const data = imageData.data;
                 const result = new ImageData(width, height);
 
-                // Laplacian kernel (second derivative of Gaussian)
-                // [ 0, -1,  0]
-                // [-1,  4, -1]
-                // [ 0, -1,  0]
-
-                for (let y = 1; y < height - 1; y++) {
-                    for (let x = 1; x < width - 1; x++) {
+                for (let y = 0; y < height; y++) {
+                    for (let x = 0; x < width; x++) {
                         const i = (y * width + x) * 4;
 
-                        // Apply Laplacian kernel
+                        const getPixel = (dx, dy) => {
+                            const nx = Math.max(0, Math.min(width - 1, x + dx));
+                            const ny = Math.max(
+                                0,
+                                Math.min(height - 1, y + dy),
+                            );
+                            const ni = (ny * width + nx) * 4;
+                            return data[ni];
+                        };
+
                         let sum = 0;
-                        sum += data[i - width * 4] * 0; // top-left
-                        sum += data[i - width * 4 + 4] * -1; // top-center
-                        sum += data[i - width * 4 + 8] * 0; // top-right
+                        sum += getPixel(-1, -1) * 0;
+                        sum += getPixel(0, -1) * -1;
+                        sum += getPixel(1, -1) * 0;
 
-                        sum += data[i] * -1; // middle-left
-                        sum += data[i + 4] * 4; // center
-                        sum += data[i + 8] * -1; // middle-right
+                        sum += getPixel(-1, 0) * -1;
+                        sum += getPixel(0, 0) * 4;
+                        sum += getPixel(1, 0) * -1;
 
-                        sum += data[i + width * 4] * 0; // bottom-left
-                        sum += data[i + width * 4 + 4] * -1; // bottom-center
-                        sum += data[i + width * 4 + 8] * 0; // bottom-right
+                        sum += getPixel(-1, 1) * 0;
+                        sum += getPixel(0, 1) * -1;
+                        sum += getPixel(1, 1) * 0;
 
-                        // Normalize and clamp the value
                         const edgeValue = Math.min(255, Math.max(0, sum));
 
-                        // Set all channels (grayscale)
                         result.data[i] =
                             result.data[i + 1] =
                             result.data[i + 2] =
                                 edgeValue;
-                        result.data[i + 3] = 255; // Alpha
+                        result.data[i + 3] = 255;
                     }
                 }
 
                 return result;
             }
 
-            // Helper function to resize canvas while maintaining aspect ratio
             function resizeCanvasToDisplay(canvas, container, width, height) {
                 const containerWidth = container.clientWidth;
                 const containerHeight = container.clientHeight;
@@ -323,7 +319,6 @@
                 };
             }
 
-            // UI functions
             function loadImage(e) {
                 const file = e.target.files[0];
                 if (!file) return;
@@ -335,10 +330,8 @@
                         originalWidth = img.width;
                         originalHeight = img.height;
 
-                        // Update info
                         originalInfo.textContent = `Размер: ${img.width}×${img.height}`;
 
-                        // Set canvas dimensions (maintain aspect ratio)
                         const originalDisplaySize = resizeCanvasToDisplay(
                             originalCanvas,
                             originalContainer,
@@ -352,7 +345,6 @@
                             img.height,
                         );
 
-                        // Draw original image
                         const ctx = originalCanvas.getContext("2d");
                         ctx.drawImage(
                             img,
@@ -362,7 +354,6 @@
                             originalCanvas.height,
                         );
 
-                        // Create grayscale version
                         const tempCanvas = document.createElement("canvas");
                         tempCanvas.width = img.width;
                         tempCanvas.height = img.height;
@@ -377,16 +368,13 @@
                         );
                         grayImageData = toGrayscale(imageData);
 
-                        // Display grayscale
                         const grayCtx = grayCanvas.getContext("2d");
                         grayCanvas.width = img.width;
                         grayCanvas.height = img.height;
                         grayCtx.putImageData(grayImageData, 0, 0);
 
-                        // Store original image
                         originalImage = img;
 
-                        // Clear processed canvases
                         contrastCanvas
                             .getContext("2d")
                             .clearRect(
@@ -418,7 +406,6 @@
                 const max = parseInt(maxSlider.value);
                 if (max <= min) return;
 
-                // Process contrast
                 const contrastImageData = linearContrast(
                     new ImageData(
                         new Uint8ClampedArray(grayImageData.data),
@@ -429,7 +416,6 @@
                     max,
                 );
 
-                // Process edge detection
                 const filteredImageData = laplacianEdgeDetection(
                     new ImageData(
                         new Uint8ClampedArray(grayImageData.data),
@@ -438,7 +424,6 @@
                     ),
                 );
 
-                // Set display sizes for processed images
                 resizeCanvasToDisplay(
                     contrastCanvas,
                     contrastContainer,
@@ -452,7 +437,6 @@
                     grayImageData.height,
                 );
 
-                // Display results
                 const contrastCtx = contrastCanvas.getContext("2d");
                 contrastCanvas.width = grayImageData.width;
                 contrastCanvas.height = grayImageData.height;
@@ -463,16 +447,13 @@
                 filterCanvas.height = grayImageData.height;
                 filterCtx.putImageData(filteredImageData, 0, 0);
 
-                // Update info
                 contrastInfo.textContent = `Размер: ${grayImageData.width}×${grayImageData.height}`;
                 filterInfo.textContent = `Размер: ${grayImageData.width}×${grayImageData.height}`;
             }
 
-            // Initialize slider values
             minValue.textContent = minSlider.value;
             maxValue.textContent = maxSlider.value;
 
-            // Handle window resize
             window.addEventListener("resize", function () {
                 if (originalImage) {
                     resizeCanvasToDisplay(

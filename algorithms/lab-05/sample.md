@@ -1,3 +1,10 @@
+# KMP
+
+```
+abacababc
+abab
+```
+
 # Find Cycles in Graph:
 
 ```

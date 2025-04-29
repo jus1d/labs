@@ -109,7 +109,7 @@ int main()
 		str += huffmanCode[ch];
 	}
 
-	cout << endl << "Encoded string is:" << endl << str << endl;
+	cout << endl << "Encoded string:" << endl << str << endl;
 
 	int index = -1;
 	cout << endl << "Decoded string:" << endl;

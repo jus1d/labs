@@ -23,16 +23,16 @@ void find_cycles(int node, int start, int depth, const vector<vector<int>>& grap
             vector<int> cycle(path.begin(), path.end());
             cycle.push_back(start);
 
-            bool isNew = true;
+            bool is_new = true;
             for (const auto& existing : cycles) {
                 if (existing.size() == cycle.size() &&
                     is_permutation(existing.begin(), existing.end(), cycle.begin())) {
-                    isNew = false;
+                    is_new = false;
                     break;
                 }
             }
 
-            if (isNew) {
+            if (is_new) {
                 cycles.push_back(cycle);
             }
         }
@@ -59,7 +59,7 @@ vector<vector<int>> get_cycles(const vector<vector<int>>& graph, bool directed) 
 }
 
 void print_cycles(const vector<vector<int>>& cycles) {
-    cout << "Found " << cycles.size() << " cycles" << endl;
+    cout << "Found " << cycles.size() << " cycle(s)" << endl;
     for (size_t i = 0; i < cycles.size(); ++i) {
         cout << "[";
         for (size_t j = 0; j < cycles[i].size(); ++j) {

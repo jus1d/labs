@@ -61,7 +61,7 @@ void decode(Node* root, int &index, string str)
 
 	index++;
 
-	if (str[index] =='0')
+	if (str[index] == '0')
 		decode(root->l, index, str);
 	else
 		decode(root->r, index, str);
@@ -69,7 +69,7 @@ void decode(Node* root, int &index, string str)
 
 int main()
 {
-	string text = "Huffman coding is a data compression algorithm.";
+	string text = "Very interesting text with some characters for testing Huffman data compression.";
 
 	unordered_map<char, int> freq;
 	for (char ch: text) {
@@ -116,6 +116,7 @@ int main()
 	while (index < (int)str.size() - 2) {
 		decode(root, index, str);
 	}
+	cout << endl;
 
 	return 0;
 }

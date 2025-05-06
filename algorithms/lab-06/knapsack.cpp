@@ -78,11 +78,13 @@ int main() {
     int capacity = 4;
 
     auto result = knapsack_no_repetitions(items, capacity);
-    display("Knapscak no reps: Max cost: ", result.first, result.second);
+    cout << "NO REPS" << endl;
+    display("Max cost: ", result.first, result.second);
 
     cout << endl;
 
     result = knapsack_with_repetitions(items, capacity);
+    cout << "NO REPS" << endl;
     display("Knapscak with reps: Max cost: ", result.first, result.second);
 
     return 0;

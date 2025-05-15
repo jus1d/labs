@@ -23,19 +23,13 @@ zk = 500
 zpp = 300
 
 def projection_matrix(z, zk=zk, zpp=zpp):
-    if True:
-        k = (zk - zpp) / (zk - z)
-        return np.array([
-            [k, 0, 0, 0],
-            [0, k, 0, 0],
-            [0, 0, 1, -zpp],
-            [0, 0, 0, 1]
-        ])
-    else:
-        return np.array([
-            [1, 0, 0],
-            [0, 1, 0]
-        ])
+    k = (zk - zpp) / (zk - z)
+    return np.array([
+        [k, 0, 0, 0],
+        [0, k, 0, 0],
+        [0, 0, 1, -zpp],
+        [0, 0, 0, 1]
+    ])
 
 def create_formochka_points():
     points = []

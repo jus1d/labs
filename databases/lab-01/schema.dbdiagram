@@ -1,0 +1,31 @@
+Table students {
+  id int [pk, increment]
+  last_name varchar
+  first_name varchar
+  patronymic varchar
+  gender enum('M','F')
+  birth_date date
+  address text
+  group_id int [ref: > groups.id]
+}
+
+Table groups {
+  id int [pk, increment]
+  name varchar
+  course int
+  semester int
+}
+
+Table disciplines {
+  id int [pk, increment]
+  name varchar
+  control_type enum('exam','test','project')
+}
+
+Table performance {
+  id int [pk, increment]
+  student_id int [ref: > students.id]
+  discipline_id int [ref: > disciplines.id]
+  total_hours int
+  grade int
+}

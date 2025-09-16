@@ -10,10 +10,11 @@ using namespace std;
 class Sentence {
 private:
     char* text;
+
+public:
     char** words;
     int word_count;
 
-public:
     Sentence(size_t max_length) {
         text = (char*)malloc(max_length + 1);
         size_t i = 0;
@@ -49,14 +50,6 @@ public:
         }
     }
 
-    char** get_words() const {
-        return words;
-    }
-
-    int get_word_count() const {
-        return word_count;
-    }
-
     ~Sentence() {
         if (words) {
             for (int i = 0; i < word_count; i++) {
@@ -70,33 +63,35 @@ public:
 
 class SentenceBuilder {
 private:
-    Sentence& first;
-    Sentence& second;
+    Sentence* first;
+    Sentence* second;
     int total_length;
 
 public:
-    SentenceBuilder(Sentence& s1, Sentence& s2) : first(s1), second(s2) {
-        char **w1 = first.get_words();
-        int n1 = first.get_word_count();
-        char **w2 = second.get_words();
-        int n2 = second.get_word_count();
+    SentenceBuilder(Sentence* s1, Sentence* s2) : first(s1), second(s2) {
+        char **w1 = first->words;
+        int n1 = first->word_count;
+        char **w2 = second->words;
+        int n2 = second->word_count;
+
         for (int i = 0; i < n1; i++) {
             total_length += strlen(w1[i]);
         }
         for (int i = 0; i < n2; i++) {
             total_length += strlen(w2[i]);
         }
+
         if (n1 > 0) total_length += n1 - 1;
         if (n2 > 0) total_length += n2 - 1;
     }
 
     char* build_sentence() {
         int i = 0, j = 0, k = 0;
-        int n1 = first.get_word_count();
-        int n2 = second.get_word_count();
+        int n1 = first->word_count;
+        int n2 = second->word_count;
         int max_len = (n1 > n2 ? n1 : n2);
-        char **w1 = first.get_words();
-        char **w2 = second.get_words();
+        char **w1 = first->words;
+        char **w2 = second->words;
 
         char* result = (char*)malloc(total_length + 1);
         result[0] = '\0';
@@ -126,7 +121,7 @@ int main() {
     printf("Введите второе предложение: ");
     Sentence second(MAX_LENGTH);
 
-    SentenceBuilder sb(first, second);
+    SentenceBuilder sb(&first, &second);
     char *sentence = sb.build_sentence();
     printf("Результат: %s\n", sentence);
     free(sentence);

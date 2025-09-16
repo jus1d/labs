@@ -1,6 +1,8 @@
 #include <cstdio>
+#include <algorithm>
 #include <cstring>
 #include <cstdlib>
+#include <assert.h>
 
 using namespace std;
 
@@ -14,40 +16,37 @@ private:
 public:
     char** words;
     int word_count;
+    size_t sentence_max_length;
 
     Sentence(size_t max_length) {
+        sentence_max_length = max_length;
         text = (char*)malloc(max_length + 1);
+        assert(text != nullptr);
         size_t i = 0;
         char c;
         while (i < max_length && (c = getchar()) != '\n') {
             text[i++] = c;
         }
         text[i] = '\0';
+        text = (char*)realloc(text, i);
 
         split_words();
-        sort_words();
+        std::sort(words, words + word_count, [](const char* a, const char* b) {
+            return strlen(a) < strlen(b);
+        });
     }
 
     void split_words() {
-        words = (char**)malloc(40 * sizeof(char*));
+        size_t max_words = sentence_max_length / 2;
+        words = (char**)malloc(max_words * sizeof(char*));
+        assert(words != nullptr);
         word_count = 0;
         char* token = strtok(text, " ");
         while (token != nullptr) {
             words[word_count++] = strdup(token);
             token = strtok(nullptr, " ");
         }
-    }
-
-    void sort_words() {
-        for (int i = 0; i < word_count - 1; i++) {
-            for (int j = i + 1; j < word_count; j++) {
-                if (strlen(words[i]) > strlen(words[j])) {
-                    char* tmp = words[i];
-                    words[i] = words[j];
-                    words[j] = tmp;
-                }
-            }
-        }
+        words = (char**)realloc(words, word_count * sizeof(char*));
     }
 
     ~Sentence() {
@@ -94,6 +93,7 @@ public:
         char **w2 = second->words;
 
         char* result = (char*)malloc(total_length + 1);
+        assert(result != nullptr);
         result[0] = '\0';
 
         i = j = k = 0;

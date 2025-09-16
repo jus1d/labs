@@ -1,4 +1,4 @@
-#include <iostream>
+#include <cstdio>
 #include <cstring>
 #include <cstdlib>
 
@@ -14,16 +14,11 @@ private:
     int word_count;
 
 public:
-    Sentence() {
-        text = (char*)malloc(MAX_LENGTH + 1);
-        words = nullptr;
-        word_count = 0;
-    }
-
-    void read_sentence() {
-        int i = 0;
+    Sentence(size_t max_length) {
+        text = (char*)malloc(max_length + 1);
+        size_t i = 0;
         char c;
-        while (i < MAX_LENGTH && (c = getchar()) != '\n') {
+        while (i < max_length && (c = getchar()) != '\n') {
             text[i++] = c;
         }
         text[i] = '\0';
@@ -33,7 +28,7 @@ public:
     }
 
     void split_words() {
-        words = (char**)malloc(20 * sizeof(char*));
+        words = (char**)malloc(40 * sizeof(char*));
         word_count = 0;
         char* token = strtok(text, " ");
         while (token != nullptr) {
@@ -125,16 +120,15 @@ public:
 };
 
 int main() {
-    Sentence first, second;
-    cout << "Введите первое предложение: ";
-    first.read_sentence();
+    printf("Введите первое предложение: ");
+    Sentence first(MAX_LENGTH);
 
-    cout << "Введите второе предложение: ";
-    second.read_sentence();
+    printf("Введите второе предложение: ");
+    Sentence second(MAX_LENGTH);
 
     SentenceBuilder sb(first, second);
     char *sentence = sb.build_sentence();
-    cout << "Результат: " << sentence << endl;
+    printf("Результат: %s\n", sentence);
     free(sentence);
 
     return 0;

@@ -1,0 +1,3 @@
+[submodule "automata-and-formal-language-theory/analyzer"]
+	path = automata-and-formal-language-theory/analyzer
+	url = https://github.com/jus1d/analyzer.git

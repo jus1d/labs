@@ -4,7 +4,7 @@ global calculate
 
 calculate:
     ; -- vector, size,   d    --
-    ; -- rdi,    rsi,    rdx  -- 
+    ; -- rdi,    rsi,    rdx  --
 
     ; -- dereference first layer of vector's pointer --
     ; WHY TF THERE ARE TWO LAYERS OF POINTERS ??? DONNOW :)
@@ -23,7 +23,7 @@ start_loop:
     jg skip                   ; skip incrementing <r9> if <rcx> > d
 
     inc r9                    ; increment counter in <r9>, if all checks passed
-    
+
 skip:
     inc r8                    ; increment index in <r8>
     cmp r8, rsi               ; check if index == vec.size()

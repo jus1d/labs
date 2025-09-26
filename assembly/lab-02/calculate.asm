@@ -7,7 +7,7 @@ global calculate
 calculate:
     ; -- a,    b --
     ; -- arg0, arg1 --
-    ; -- rdi,  rsi -- 
+    ; -- rdi,  rsi --
 
     ; -- Expression --
     ; (b + 1) / a + 1,    a > b
@@ -23,7 +23,7 @@ calculate:
     ; -- Should be unreachable --
 
 a_eq_b:
-    ; -- -b -- 
+    ; -- -b --
     neg     rsi         ; <rsi> = -b
     mov     rax, rsi    ; <rax> = -b
     ret                 ; return <rax>
@@ -56,7 +56,7 @@ a_lt_b:
     idiv    rbx         ; <rax> = (a - 5) / (a + b)
     ret                 ; return <rax>
 
-    
+
 
 err_zero_div:
     ; -- Call write syscall to stderr, with error message --

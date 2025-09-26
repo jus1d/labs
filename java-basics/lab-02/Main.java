@@ -1,4 +1,3 @@
-/** Entry point that demonstrates every method of Vector. */
 public class Main {
 
     public static void main(String[] args) {
@@ -15,22 +14,17 @@ public class Main {
         System.out.println("v1 = " + v1);
         System.out.println("v2 = " + v2);
 
-        // min / max
         System.out.println("min(v1) = " + v1.min());
         System.out.println("max(v1) = " + v1.max());
 
-        // norm
-        System.out.printf("‖v1‖ = %.3f%n", v1.euclideanNorm());
+        System.out.printf("|v1| = %.3f%n", v1.euclideanNorm());
 
-        // scalar multiply
         v1.multiplyBy(2);
         System.out.println("v1 * 2 = " + v1);
 
-        // sort
         v1.sort();
         System.out.println("v1 sorted = " + v1);
 
-        // add & dot
         Vector sum = Vector.add(v1, v2);
         double dot = Vector.dot(v1, v2);
         System.out.println("v1 + v2 = " + sum);

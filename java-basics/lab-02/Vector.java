@@ -6,7 +6,7 @@ public class Vector {
 
     public Vector(int length) {
         if (length <= 0) throw new IllegalArgumentException(
-            "Length must be >0"
+            "Length must be greater than zero"
         );
         this.coords = new double[length];
     }
@@ -88,7 +88,6 @@ public class Vector {
         );
     }
 
-    /* Optional: nice printing */
     @Override
     public String toString() {
         return Arrays.toString(coords);

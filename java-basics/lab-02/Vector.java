@@ -2,30 +2,19 @@ import java.util.Arrays;
 
 public class Vector {
 
-    private final int n;
     private final double[] coords;
 
     public Vector(int length) {
         if (length <= 0) throw new IllegalArgumentException(
             "Length must be greater than zero"
         );
-        this.n = length;
         this.coords = new double[length];
     }
 
-    public Vector(int length, double... coords) {
-        if (length < 0) {
+    public Vector(double... coords) {
+        if (coords.length < 0) {
             throw new IllegalArgumentException("length must be non-negative");
         }
-        if (coords == null) {
-            throw new NullPointerException("coords is null");
-        }
-        if (coords.length != length) {
-            throw new IllegalArgumentException(
-                "coords length " + coords.length + " != " + length
-            );
-        }
-        this.n = length;
         this.coords = coords.clone();
     }
 
@@ -40,7 +29,7 @@ public class Vector {
     }
 
     public int length() {
-        return n;
+        return coords.length;
     }
 
     public double min() {
@@ -89,11 +78,15 @@ public class Vector {
     }
 
     private void checkIndex(int i) {
-        if (i < 0 || i >= n) throw new IndexOutOfBoundsException("Index " + i);
+        if (i < 0 || i >= coords.length) throw new IndexOutOfBoundsException(
+            "Index " + i
+        );
     }
 
     private void ensureNotEmpty() {
-        if (n == 0) throw new IllegalStateException("Vector is empty");
+        if (coords.length == 0) throw new IllegalStateException(
+            "Vector is empty"
+        );
     }
 
     private static void checkSameLength(Vector a, Vector b) {

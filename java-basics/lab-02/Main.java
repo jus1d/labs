@@ -1,15 +1,8 @@
 public class Main {
 
     public static void main(String[] args) {
-        Vector v1 = new Vector(3);
-        v1.set(0, 1.0);
-        v1.set(1, -2.5);
-        v1.set(2, 4.0);
-
-        Vector v2 = new Vector(3);
-        v2.set(0, 0.5);
-        v2.set(1, 3.0);
-        v2.set(2, -1.5);
+        Vector v1 = new Vector(3, 1.0, -2.5, 4.0);
+        Vector v2 = new Vector(3, 0.5, 3.0, -1.5);
 
         System.out.println("v1 = " + v1);
         System.out.println("v2 = " + v2);

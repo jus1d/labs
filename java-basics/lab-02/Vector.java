@@ -29,12 +29,12 @@ public class Vector {
         this.coords = coords.clone();
     }
 
-    public double get(int index) {
+    public double getCoords(int index) {
         checkIndex(index);
         return coords[index];
     }
 
-    public void set(int index, double value) {
+    public void setCoords(int index, double value) {
         checkIndex(index);
         coords[index] = value;
     }

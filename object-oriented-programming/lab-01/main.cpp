@@ -93,24 +93,25 @@ char* build_sentence(Sentence* first, Sentence* second) {
 
     int n1 = first->word_count;
     int n2 = second->word_count;
-    int max_len = (n1 > n2 ? n1 : n2);
+    int max_len = (n1 > n2) ? n1 : n2;
 
     char* result = (char*)malloc(total_length + 1);
     assert(result != nullptr);
     result[0] = '\0';
 
-    int i = 0, j = 0, k = 0;
-    while (k < max_len * 2) {
-        if (k % 2 == 0 && n1 > 0) {
-            strcat(result, first->words[i]->buffer);
-            i = (i + 1) % n1;
-        } else if (n2 > 0) {
-            strcat(result, second->words[j]->buffer);
-            j = (j + 1) % n2;
+    for (int k = 0; k < max_len; k++) {
+        if (n1 > 0) {
+            strcat(result, first->words[k % n1]->buffer);
+            if (!(k == max_len - 1 && n2 == 0)) {
+                strcat(result, " ");
+            }
         }
-        k++;
-        if ((i == 0 && j == 0 && k > 0) || (k >= n1 + n2)) break;
-        strcat(result, " ");
+        if (n2 > 0) {
+            strcat(result, second->words[k % n2]->buffer);
+            if (k != max_len - 1) {
+                strcat(result, " ");
+            }
+        }
     }
 
     return result;

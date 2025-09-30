@@ -36,6 +36,8 @@ public:
         assert(this->data != nullptr);
         size_t i = 0;
         char c;
+
+        printf("Введите предложение: ");
         while (i < max_length && (c = getchar()) != '\n') {
             this->data[i++] = c;
         }
@@ -156,10 +158,7 @@ void intro() {
 
 int main() {
     intro();
-    printf("Введите первое предложение: ");
     Sentence first(DEFAULT_MAX_LENGTH);
-
-    printf("Введите второе предложение: ");
     Sentence second(DEFAULT_MAX_LENGTH);
 
     CompoundSentence cs(&first, &second);

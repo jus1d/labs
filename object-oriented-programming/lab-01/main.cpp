@@ -6,35 +6,51 @@
 
 using namespace std;
 
-#define MAX_LENGTH 80
-#define endl '\n';
+#define DEFAULT_MAX_LENGTH 80
 
 class Word {
 public:
-    char* buffer;
+    char* data;
     size_t length;
 };
 
 class Sentence {
 private:
-    char* text;
-
-public:
+    char* data;
     Word** words;
     int word_count;
     size_t sentence_max_length;
 
+public:
+    Word **get_words() {
+        return this->words;
+    }
+
+    int get_word_count() {
+        return this->word_count;
+    }
+
     Sentence(size_t max_length) {
-        sentence_max_length = max_length;
-        text = (char*)malloc(max_length + 1);
-        assert(text != nullptr);
+        this->sentence_max_length = max_length;
+        this->data = (char*)malloc(max_length + 1);
+        assert(this->data != nullptr);
         size_t i = 0;
         char c;
         while (i < max_length && (c = getchar()) != '\n') {
-            text[i++] = c;
+            this->data[i++] = c;
         }
-        text[i] = '\0';
-        text = (char*)realloc(text, i + 1);
+        this->data[i] = '\0';
+        this->data = (char*)realloc(this->data, i + 1);
+
+        split_words();
+        std::sort(words, words + word_count, [](const Word* a, const Word* b) {
+            return a->length < b->length;
+        });
+    }
+
+    Sentence(char *data) {
+        this->sentence_max_length = DEFAULT_MAX_LENGTH;
+        strcpy(this->data, data);
 
         split_words();
         std::sort(words, words + word_count, [](const Word* a, const Word* b) {
@@ -43,56 +59,61 @@ public:
     }
 
     void split_words() {
-        size_t max_words = sentence_max_length / 2;
-        words = (Word**)malloc(max_words * sizeof(Word*));
-        assert(words != nullptr);
+        size_t max_words = this->sentence_max_length / 2;
+        this->words = (Word**)malloc(max_words * sizeof(Word*));
+        assert(this->words != nullptr);
         word_count = 0;
 
-        char* token = strtok(text, " ");
+        char* token = strtok(this->data, " ");
         while (token != nullptr) {
-            words[word_count] = (Word*)malloc(sizeof(Word));
-            assert(words[word_count] != nullptr);
+            this->words[word_count] = (Word*)malloc(sizeof(Word));
+            assert(this->words[word_count] != nullptr);
 
-            words[word_count]->length = strlen(token);
-            words[word_count]->buffer = (char*)malloc(words[word_count]->length + 1);
-            assert(words[word_count]->buffer != nullptr);
-            strcpy(words[word_count]->buffer, token);
+            this->words[word_count]->length = strlen(token);
+            this->words[word_count]->data = (char*)malloc(words[word_count]->length + 1);
+            assert(this->words[word_count]->data != nullptr);
+            strcpy(this->words[word_count]->data, token);
 
             word_count++;
             token = strtok(nullptr, " ");
         }
-        words = (Word**)realloc(words, word_count * sizeof(Word*));
+        this->words = (Word**)realloc(this->words, word_count * sizeof(Word*));
     }
 
     ~Sentence() {
-        if (words) {
-            for (int i = 0; i < word_count; i++) {
-                if (words[i]) {
-                    if (words[i]->buffer) free(words[i]->buffer);
-                    free(words[i]);
+        if (this->words) {
+            for (int i = 0; i < this->word_count; i++) {
+                if (this->words[i]) {
+                    if (this->words[i]->data) free(this->words[i]->data);
+                    free(this->words[i]);
                 }
             }
-            free(words);
+            free(this->words);
         }
-        free(text);
+        free(this->data);
     }
 };
 
-char* build_sentence(Sentence* first, Sentence* second) {
+char *build_sentence(Sentence* first, Sentence* second) {
     int total_length = 0;
 
-    for (int i = 0; i < first->word_count; i++) {
-        total_length += first->words[i]->length;
+    Word **w1 = first->get_words();
+    int w1_count = first->get_word_count();
+    Word **w2 = second->get_words();
+    int w2_count = second->get_word_count();
+
+    for (int i = 0; i < w1_count; i++) {
+        total_length += w1[i]->length;
     }
-    for (int i = 0; i < second->word_count; i++) {
-        total_length += second->words[i]->length;
+    for (int i = 0; i < w2_count; i++) {
+        total_length += w2[i]->length;
     }
 
-    if (first->word_count > 0) total_length += first->word_count - 1;
-    if (second->word_count > 0) total_length += second->word_count - 1;
+    if (w1_count > 0) total_length += w1_count - 1;
+    if (w2_count > 0) total_length += w2_count - 1;
 
-    int n1 = first->word_count;
-    int n2 = second->word_count;
+    int n1 = w1_count;
+    int n2 = w2_count;
     int max_len = (n1 > n2) ? n1 : n2;
 
     char* result = (char*)malloc(total_length + 1);
@@ -101,13 +122,13 @@ char* build_sentence(Sentence* first, Sentence* second) {
 
     for (int k = 0; k < max_len; k++) {
         if (n1 > 0) {
-            strcat(result, first->words[k % n1]->buffer);
+            strcat(result, w1[k % n1]->data);
             if (!(k == max_len - 1 && n2 == 0)) {
                 strcat(result, " ");
             }
         }
         if (n2 > 0) {
-            strcat(result, second->words[k % n2]->buffer);
+            strcat(result, w2[k % n2]->data);
             if (k != max_len - 1) {
                 strcat(result, " ");
             }
@@ -131,13 +152,13 @@ void intro() {
 int main() {
     intro();
     printf("Введите первое предложение: ");
-    Sentence first(MAX_LENGTH);
+    Sentence first(DEFAULT_MAX_LENGTH);
 
     printf("Введите второе предложение: ");
-    Sentence second(MAX_LENGTH);
+    Sentence second(DEFAULT_MAX_LENGTH);
 
     char *sentence = build_sentence(&first, &second);
-    printf("Результат: %s\n", sentence);
+    printf("\n\nРезультат: %s\n", sentence);
     free(sentence);
 
     return 0;

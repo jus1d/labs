@@ -94,49 +94,56 @@ public:
     }
 };
 
-char *build_sentence(Sentence* first, Sentence* second) {
-    int total_length = 0;
+class CompoundSentence {
+public:
+    char *data;
 
-    Word **w1 = first->get_words();
-    int w1_count = first->get_word_count();
-    Word **w2 = second->get_words();
-    int w2_count = second->get_word_count();
+    CompoundSentence(Sentence* a, Sentence* b) {
+        int total_length = 0;
 
-    for (int i = 0; i < w1_count; i++) {
-        total_length += w1[i]->length;
-    }
-    for (int i = 0; i < w2_count; i++) {
-        total_length += w2[i]->length;
-    }
+        Word **w1 = a->get_words();
+        int w1_count = a->get_word_count();
+        Word **w2 = b->get_words();
+        int w2_count = b->get_word_count();
 
-    if (w1_count > 0) total_length += w1_count - 1;
-    if (w2_count > 0) total_length += w2_count - 1;
+        for (int i = 0; i < w1_count; i++) {
+            total_length += w1[i]->length;
+        }
+        for (int i = 0; i < w2_count; i++) {
+            total_length += w2[i]->length;
+        }
 
-    int n1 = w1_count;
-    int n2 = w2_count;
-    int max_len = (n1 > n2) ? n1 : n2;
+        if (w1_count > 0) total_length += w1_count - 1;
+        if (w2_count > 0) total_length += w2_count - 1;
 
-    char* result = (char*)malloc(total_length + 1);
-    assert(result != nullptr);
-    result[0] = '\0';
+        int n1 = w1_count;
+        int n2 = w2_count;
+        int max_len = (n1 > n2) ? n1 : n2;
 
-    for (int k = 0; k < max_len; k++) {
-        if (n1 > 0) {
-            strcat(result, w1[k % n1]->data);
-            if (!(k == max_len - 1 && n2 == 0)) {
-                strcat(result, " ");
+        this->data = (char*)malloc(total_length + 1);
+        assert(this->data != nullptr);
+        this->data[0] = '\0';
+
+        for (int k = 0; k < max_len; k++) {
+            if (n1 > 0) {
+                strcat(this->data, w1[k % n1]->data);
+                if (!(k == max_len - 1 && n2 == 0)) {
+                    strcat(this->data, " ");
+                }
+            }
+            if (n2 > 0) {
+                strcat(this->data, w2[k % n2]->data);
+                if (k != max_len - 1) {
+                    strcat(this->data, " ");
+                }
             }
         }
-        if (n2 > 0) {
-            strcat(result, w2[k % n2]->data);
-            if (k != max_len - 1) {
-                strcat(result, " ");
-            }
-        }
     }
 
-    return result;
-}
+    ~CompoundSentence() {
+        free(this->data);
+    }
+};
 
 void intro() {
     printf("Лабораторная работа 1. Вариант - 19\n"
@@ -157,9 +164,8 @@ int main() {
     printf("Введите второе предложение: ");
     Sentence second(DEFAULT_MAX_LENGTH);
 
-    char *sentence = build_sentence(&first, &second);
-    printf("\n\nРезультат: %s\n", sentence);
-    free(sentence);
+    CompoundSentence cs(&first, &second);
+    printf("\n\nРезультат: %s\n", cs.data);
 
     return 0;
 }

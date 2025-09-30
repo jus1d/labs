@@ -101,23 +101,21 @@ public:
     CompoundSentence(Sentence* a, Sentence* b) {
         int total_length = 0;
 
-        Word **w1 = a->get_words();
-        int w1_count = a->get_word_count();
-        Word **w2 = b->get_words();
-        int w2_count = b->get_word_count();
+        Word **ws1 = a->get_words();
+        int n1 = a->get_word_count();
+        Word **ws2 = b->get_words();
+        int n2 = b->get_word_count();
 
-        for (int i = 0; i < w1_count; i++) {
-            total_length += w1[i]->length;
+        for (int i = 0; i < n1; i++) {
+            total_length += ws1[i]->length;
         }
-        for (int i = 0; i < w2_count; i++) {
-            total_length += w2[i]->length;
+        for (int i = 0; i < n2; i++) {
+            total_length += ws2[i]->length;
         }
 
-        if (w1_count > 0) total_length += w1_count - 1;
-        if (w2_count > 0) total_length += w2_count - 1;
+        if (n1 > 0) total_length += n1 - 1;
+        if (n2 > 0) total_length += n2 - 1;
 
-        int n1 = w1_count;
-        int n2 = w2_count;
         int max_len = (n1 > n2) ? n1 : n2;
 
         this->data = (char*)malloc(total_length + 1);
@@ -126,13 +124,13 @@ public:
 
         for (int k = 0; k < max_len; k++) {
             if (n1 > 0) {
-                strcat(this->data, w1[k % n1]->data);
+                strcat(this->data, ws1[k % n1]->data);
                 if (!(k == max_len - 1 && n2 == 0)) {
                     strcat(this->data, " ");
                 }
             }
             if (n2 > 0) {
-                strcat(this->data, w2[k % n2]->data);
+                strcat(this->data, ws2[k % n2]->data);
                 if (k != max_len - 1) {
                     strcat(this->data, " ");
                 }

@@ -1,3 +1,5 @@
+all: run clean
+
 run: Main.class Vector.class
 	java Main
 

@@ -2,8 +2,8 @@ interface SpaceMission {
     int[] getResourceData();
     void setResourceData(int[] resourceData);
 
-    int get(int index) throws MissionValidationException;
-    void set(int index, int value) throws MissionValidationException;
+    int getArrayElement(int index) throws MissionValidationException;
+    void setArrayElement(int index, int value) throws MissionValidationException;
     int size();
 
     String getMissionName();

@@ -55,7 +55,7 @@ class AsteroidMiningMission implements SpaceMission {
     }
 
     @Override
-    public int get(int index) {
+    public int getArrayElement(int index) {
         if (index < 0 || index >= mineralQuantities.length) {
             throw new MissionValidationException(
                 "Неверный индекс астероида: " + index
@@ -65,7 +65,7 @@ class AsteroidMiningMission implements SpaceMission {
     }
 
     @Override
-    public void set(int index, int value) {
+    public void setArrayElement(int index, int value) {
         if (index < 0 || index >= mineralQuantities.length) {
             throw new MissionValidationException(
                 "Неверный индекс астероида: " + index

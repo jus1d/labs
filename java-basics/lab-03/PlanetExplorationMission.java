@@ -54,7 +54,7 @@ class PlanetExplorationMission implements SpaceMission {
     }
 
     @Override
-    public int get(int index) {
+    public int getArrayElement(int index) {
         if (index < 0 || index >= resourceYields.length) {
             throw new MissionValidationException(
                 "Неверный индекс планеты: " + index
@@ -64,7 +64,7 @@ class PlanetExplorationMission implements SpaceMission {
     }
 
     @Override
-    public void set(int index, int value) {
+    public void setArrayElement(int index, int value) {
         if (index < 0 || index >= resourceYields.length) {
             throw new MissionValidationException(
                 "Неверный индекс планеты: " + index

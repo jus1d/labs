@@ -6,20 +6,45 @@ class PlanetExplorationMission implements SpaceMission {
     private String missionName;
     private int fuelCostPerPlanet;
 
-    public PlanetExplorationMission() {
-        this.resourceYields = new int[0];
-        this.missionName = "Безымянная миссия";
-        this.fuelCostPerPlanet = 0;
-    }
-
     public PlanetExplorationMission(
         int[] resourceYields,
         String missionName,
         int fuelCostPerPlanet
     ) {
-        setResourceYields(resourceYields);
-        setMissionName(missionName);
-        setFuelCostPerPlanet(fuelCostPerPlanet);
+        if (resourceYields == null) {
+            throw new MissionValidationException(
+                "Массив доходности ресурсов не может быть null"
+            );
+        }
+        if (resourceYields.length == 0) {
+            throw new MissionValidationException(
+                "Миссия должна исследовать хотя бы одну планету"
+            );
+        }
+        for (int yield : resourceYields) {
+            if (yield < 0) {
+                throw new MissionValidationException(
+                    "Доходность ресурсов не может быть отрицательной: " + yield
+                );
+            }
+        }
+
+        if (missionName == null || missionName.trim().isEmpty()) {
+            throw new MissionValidationException(
+                "Название миссии не может быть пустым"
+            );
+        }
+
+        if (fuelCostPerPlanet < 0) {
+            throw new MissionValidationException(
+                "Стоимость топлива не может быть отрицательной: " +
+                    fuelCostPerPlanet
+            );
+        }
+
+        this.resourceYields = resourceYields.clone();
+        this.missionName = missionName;
+        this.fuelCostPerPlanet = fuelCostPerPlanet;
     }
 
     @Override

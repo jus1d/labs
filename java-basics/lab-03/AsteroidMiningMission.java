@@ -6,20 +6,48 @@ class AsteroidMiningMission implements SpaceMission {
     private String missionName;
     private int equipmentMaintenanceCost;
 
-    public AsteroidMiningMission() {
-        this.mineralQuantities = new int[0];
-        this.missionName = "Безымянная миссия";
-        this.equipmentMaintenanceCost = 0;
-    }
-
     public AsteroidMiningMission(
         int[] mineralQuantities,
         String missionName,
         int equipmentMaintenanceCost
     ) {
-        setMineralQuantities(mineralQuantities);
-        setMissionName(missionName);
-        setEquipmentMaintenanceCost(equipmentMaintenanceCost);
+        if (mineralQuantities == null) {
+            throw new MissionValidationException(
+                "Массив минералов не может быть пустым"
+            );
+        }
+
+        if (mineralQuantities.length == 0) {
+            throw new MissionValidationException(
+                "Миссия должна добывать хотя бы один астероид"
+            );
+        }
+
+        for (int quantity : mineralQuantities) {
+            if (quantity < 0) {
+                throw new MissionValidationException(
+                    "Количество минералов не может быть отрицательным: " +
+                        quantity
+                );
+            }
+        }
+
+        if (missionName == null || missionName.trim().isEmpty()) {
+            throw new MissionValidationException(
+                "Название миссии не может быть пустым"
+            );
+        }
+
+        if (equipmentMaintenanceCost < 0) {
+            throw new MissionValidationException(
+                "Стоимость обслуживания оборудования не может быть отрицательной: " +
+                    equipmentMaintenanceCost
+            );
+        }
+
+        this.mineralQuantities = mineralQuantities.clone();
+        this.missionName = missionName;
+        this.equipmentMaintenanceCost = equipmentMaintenanceCost;
     }
 
     @Override

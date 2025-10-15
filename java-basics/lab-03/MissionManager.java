@@ -130,7 +130,7 @@ public class MissionManager {
             try {
                 int profit = mission.calculateNetProfit();
                 profitGroups
-                    .computeIfAbsent(profit, k -> new ArrayList<>())
+                    .computeIfAbsent(profit, _ -> new ArrayList<>())
                     .add(mission);
             } catch (MissionBusinessException e) {
                 System.out.println(

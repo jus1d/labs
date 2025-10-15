@@ -1,8 +1,8 @@
 all: run clean
 
-run: InvalidAlbumDataException.java InvalidDurationException.java LiveAlbum.java MusicCollection.java MusicCollectionApp.java StudioAlbum.java
+run: AsteroidMiningMission.java MissionBusinessException.java MissionManager.java PlanetExplorationMission.java SpaceMission.java
 	javac *.java
-	java MusicCollectionApp
+	java MissionManager
 
 clean:
 	rm -f *.class

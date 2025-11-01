@@ -1,5 +1,10 @@
 all: run clean
 
+test:
+	javac *.java
+	java TestExample
+	$(MAKE) clean
+
 run: AsteroidMiningMission.java MissionBusinessException.java MissionManager.java PlanetExplorationMission.java SpaceMission.java
 	javac *.java
 	java MissionManager

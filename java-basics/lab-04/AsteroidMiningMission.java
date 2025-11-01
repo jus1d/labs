@@ -1,6 +1,9 @@
+import java.io.*;
 import java.util.Arrays;
 
-class AsteroidMiningMission implements SpaceMission {
+class AsteroidMiningMission implements SpaceMission, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private int[] mineralQuantities;
     private String missionName;
@@ -213,5 +216,35 @@ class AsteroidMiningMission implements SpaceMission {
         result = 31 * result + missionName.hashCode();
         result = 31 * result + equipmentMaintenanceCost;
         return result;
+    }
+
+    @Override
+    public void output(OutputStream out) throws IOException {
+        DataOutputStream dos = new DataOutputStream(out);
+
+        dos.writeUTF(missionName);
+        dos.writeInt(equipmentMaintenanceCost);
+        dos.writeInt(mineralQuantities.length);
+        for (int quantity : mineralQuantities) {
+            dos.writeInt(quantity);
+        }
+
+        dos.flush();
+    }
+
+    @Override
+    public void write(Writer out) throws IOException {
+        out.write(missionName + " ");
+        out.write(equipmentMaintenanceCost + " ");
+        out.write(mineralQuantities.length + " ");
+
+        for (int i = 0; i < mineralQuantities.length; i++) {
+            out.write(mineralQuantities[i] + "");
+            if (i < mineralQuantities.length - 1) {
+                out.write(" ");
+            }
+        }
+        out.write("\n");
+        out.flush();
     }
 }

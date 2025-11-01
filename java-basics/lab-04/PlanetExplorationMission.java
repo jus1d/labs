@@ -1,6 +1,9 @@
+import java.io.*;
 import java.util.Arrays;
 
-class PlanetExplorationMission implements SpaceMission {
+class PlanetExplorationMission implements SpaceMission, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private int[] resourceYields;
     private String missionName;
@@ -205,5 +208,35 @@ class PlanetExplorationMission implements SpaceMission {
         result = 31 * result + missionName.hashCode();
         result = 31 * result + fuelCostPerPlanet;
         return result;
+    }
+
+    @Override
+    public void output(OutputStream out) throws IOException {
+        DataOutputStream dos = new DataOutputStream(out);
+
+        dos.writeUTF(missionName);
+        dos.writeInt(fuelCostPerPlanet);
+        dos.writeInt(resourceYields.length);
+        for (int yield : resourceYields) {
+            dos.writeInt(yield);
+        }
+
+        dos.flush();
+    }
+
+    @Override
+    public void write(Writer out) throws IOException {
+        out.write(missionName + " ");
+        out.write(fuelCostPerPlanet + " ");
+        out.write(resourceYields.length + " ");
+
+        for (int i = 0; i < resourceYields.length; i++) {
+            out.write(resourceYields[i] + "");
+            if (i < resourceYields.length - 1) {
+                out.write(" ");
+            }
+        }
+        out.write("\n");
+        out.flush();
     }
 }

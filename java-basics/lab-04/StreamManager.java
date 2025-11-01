@@ -28,13 +28,11 @@ public class StreamManager {
         );
     }
 
-    // Запись в символьный поток
     public static void writeSpaceMission(SpaceMission o, Writer out)
         throws IOException {
         o.write(out);
     }
 
-    // Чтение из символьного потока
     public static SpaceMission readSpaceMission(Reader in) throws IOException {
         StreamTokenizer tokenizer = new StreamTokenizer(in);
 
@@ -64,7 +62,6 @@ public class StreamManager {
         );
     }
 
-    // Вывод сериализованного объекта
     public static void serializeSpaceMission(SpaceMission o, OutputStream out)
         throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(out);
@@ -72,14 +69,12 @@ public class StreamManager {
         oos.flush();
     }
 
-    // Ввод десериализованного объекта
     public static SpaceMission deserializeSpaceMission(InputStream in)
         throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(in);
         return (SpaceMission) ois.readObject();
     }
 
-    // Вывод с форматированием
     public static void writeFormatSpaceMission(SpaceMission o, Writer out)
         throws IOException {
         PrintWriter pw = new PrintWriter(out);
@@ -93,7 +88,6 @@ public class StreamManager {
         pw.flush();
     }
 
-    // Ввод с использованием Scanner
     public static SpaceMission readFormatSpaceMission(Scanner in) {
         String missionName = in.next();
         int costPerUnit = in.nextInt();

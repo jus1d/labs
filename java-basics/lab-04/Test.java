@@ -31,17 +31,14 @@ public class Test {
             System.out.println("Ошибка расчета прибыли: " + e.getMessage());
         }
 
-        // Байтовые потоки
         System.out.println("\n--- ТЕСТ 1: Байтовые потоки ---");
         try {
-            // Запись
             FileOutputStream fos = new FileOutputStream("test_byte.dat");
             StreamManager.outputSpaceMission(mission1, fos);
             StreamManager.outputSpaceMission(mission2, fos);
             fos.close();
             System.out.println("Запись в байтовый поток выполнена");
 
-            // Чтение
             FileInputStream fis = new FileInputStream("test_byte.dat");
             SpaceMission loaded1 = StreamManager.inputSpaceMission(fis);
             SpaceMission loaded2 = StreamManager.inputSpaceMission(fis);
@@ -54,17 +51,14 @@ public class Test {
             System.out.println("Ошибка: " + e.getMessage());
         }
 
-        // Текстовые потоки
         System.out.println("\n--- ТЕСТ 2: Текстовые потоки ---");
         try {
-            // Запись
             FileWriter fw = new FileWriter("test_text.txt");
             StreamManager.writeSpaceMission(mission1, fw);
             StreamManager.writeSpaceMission(mission2, fw);
             fw.close();
             System.out.println("Запись в текстовый поток выполнена");
 
-            // Чтение
             FileReader fr = new FileReader("test_text.txt");
             SpaceMission loaded1 = StreamManager.readSpaceMission(fr);
             SpaceMission loaded2 = StreamManager.readSpaceMission(fr);
@@ -77,17 +71,14 @@ public class Test {
             System.out.println("Ошибка: " + e.getMessage());
         }
 
-        // Сериализация
         System.out.println("\n--- ТЕСТ 3: Сериализация ---");
         try {
-            // Запись
             FileOutputStream fos = new FileOutputStream("test_serial.ser");
             StreamManager.serializeSpaceMission(mission1, fos);
             StreamManager.serializeSpaceMission(mission2, fos);
             fos.close();
             System.out.println("Сериализация выполнена");
 
-            // Чтение
             FileInputStream fis = new FileInputStream("test_serial.ser");
             SpaceMission loaded1 = StreamManager.deserializeSpaceMission(fis);
             SpaceMission loaded2 = StreamManager.deserializeSpaceMission(fis);
@@ -100,17 +91,14 @@ public class Test {
             System.out.println("Ошибка: " + e.getMessage());
         }
 
-        // Форматный текстовый ввод/вывод
         System.out.println("\n--- ТЕСТ 4: Форматный текстовый ввод/вывод ---");
         try {
-            // Запись
             FileWriter fw = new FileWriter("test_format.txt");
             StreamManager.writeFormatSpaceMission(mission1, fw);
             StreamManager.writeFormatSpaceMission(mission2, fw);
             fw.close();
             System.out.println("Форматная запись выполнена");
 
-            // Чтение
             Scanner scanner = new Scanner(new File("test_format.txt"));
             scanner.useLocale(java.util.Locale.US);
             SpaceMission loaded1 = StreamManager.readFormatSpaceMission(

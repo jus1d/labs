@@ -7,7 +7,9 @@ public class Main {
     private static List<SpaceMission> missions = new ArrayList<>();
 
     public static void main(String[] args) {
-        System.out.println("=== Лабораторная работа №4: Работа с потоками данных ===");
+        System.out.println(
+            "=== Лабораторная работа №4: Работа с потоками данных ==="
+        );
 
         boolean running = true;
         while (running) {
@@ -39,7 +41,9 @@ public class Main {
                         System.out.println("Завершение работы программы.");
                         break;
                     default:
-                        System.out.println("Неверный выбор. Попробуйте еще раз.");
+                        System.out.println(
+                            "Неверный выбор. Попробуйте еще раз."
+                        );
                 }
             } catch (Exception e) {
                 System.out.println("Ошибка: " + e.getMessage());
@@ -61,7 +65,6 @@ public class Main {
         System.out.println("7. Выход");
     }
 
-    // Задание 4: Заполнение базы элементов с консоли
     private static void fillDatabase() {
         System.out.println("\n--- Заполнение базы миссий ---");
         System.out.print("Сколько миссий вы хотите добавить? ");
@@ -77,7 +80,9 @@ public class Main {
             int type = getIntInput("Ваш выбор: ");
 
             try {
-                String missionName = getStringInput("Введите название миссии: ");
+                String missionName = getStringInput(
+                    "Введите название миссии: "
+                );
                 int costPerUnit = getIntInput(
                     "Введите стоимость за единицу (топливо/обслуживание): "
                 );
@@ -114,14 +119,13 @@ public class Main {
                 System.out.println("Миссия успешно добавлена!");
             } catch (MissionValidationException e) {
                 System.out.println("Ошибка валидации: " + e.getMessage());
-                i--; // Повторить попытку для этой миссии
+                i--;
             }
         }
 
         System.out.println("\nВсего добавлено миссий: " + missions.size());
     }
 
-    // Задание 4: Тест байтовых потоков
     private static void testByteStreams() throws IOException {
         if (missions.isEmpty()) {
             System.out.println("База миссий пуста! Сначала заполните её.");
@@ -130,22 +134,16 @@ public class Main {
 
         String filename = "missions_byte.dat";
 
-        System.out.println(
-            "\n--- Тест байтовых потоков (Задание 1) ---"
-        );
+        System.out.println("\n--- Тест байтовых потоков (Задание 1) ---");
 
-        // Запись в файл
         System.out.println("Запись миссий в байтовый файл: " + filename);
         try (FileOutputStream fos = new FileOutputStream(filename)) {
             for (SpaceMission mission : missions) {
                 StreamManager.outputSpaceMission(mission, fos);
             }
         }
-        System.out.println(
-            "Записано миссий: " + missions.size()
-        );
+        System.out.println("Записано миссий: " + missions.size());
 
-        // Чтение из файла
         System.out.println("\nЧтение миссий из байтового файла: " + filename);
         List<SpaceMission> loadedMissions = new ArrayList<>();
         try (FileInputStream fis = new FileInputStream(filename)) {
@@ -156,14 +154,12 @@ public class Main {
         }
         System.out.println("Прочитано миссий: " + loadedMissions.size());
 
-        // Вывод прочитанных данных
         System.out.println("\nПрочитанные миссии:");
         for (int i = 0; i < loadedMissions.size(); i++) {
             System.out.println((i + 1) + ". " + loadedMissions.get(i));
         }
     }
 
-    // Задание 4: Тест текстовых потоков
     private static void testTextStreams() throws IOException {
         if (missions.isEmpty()) {
             System.out.println("База миссий пуста! Сначала заполните её.");
@@ -172,11 +168,8 @@ public class Main {
 
         String filename = "missions_text.txt";
 
-        System.out.println(
-            "\n--- Тест текстовых потоков (Задание 1) ---"
-        );
+        System.out.println("\n--- Тест текстовых потоков (Задание 1) ---");
 
-        // Запись в файл
         System.out.println("Запись миссий в текстовый файл: " + filename);
         try (FileWriter fw = new FileWriter(filename)) {
             for (SpaceMission mission : missions) {
@@ -185,7 +178,6 @@ public class Main {
         }
         System.out.println("Записано миссий: " + missions.size());
 
-        // Чтение из файла
         System.out.println("\nЧтение миссий из текстового файла: " + filename);
         List<SpaceMission> loadedMissions = new ArrayList<>();
         try (FileReader fr = new FileReader(filename)) {
@@ -196,14 +188,12 @@ public class Main {
         }
         System.out.println("Прочитано миссий: " + loadedMissions.size());
 
-        // Вывод прочитанных данных
         System.out.println("\nПрочитанные миссии:");
         for (int i = 0; i < loadedMissions.size(); i++) {
             System.out.println((i + 1) + ". " + loadedMissions.get(i));
         }
     }
 
-    // Задание 4: Тест сериализации
     private static void testSerialization()
         throws IOException, ClassNotFoundException {
         if (missions.isEmpty()) {
@@ -213,14 +203,9 @@ public class Main {
 
         String filename = "missions_serialized.ser";
 
-        System.out.println(
-            "\n--- Тест сериализации (Задание 2) ---"
-        );
+        System.out.println("\n--- Тест сериализации (Задание 2) ---");
 
-        // Запись в файл
-        System.out.println(
-            "Сериализация миссий в файл: " + filename
-        );
+        System.out.println("Сериализация миссий в файл: " + filename);
         try (FileOutputStream fos = new FileOutputStream(filename)) {
             for (SpaceMission mission : missions) {
                 StreamManager.serializeSpaceMission(mission, fos);
@@ -228,27 +213,24 @@ public class Main {
         }
         System.out.println("Сериализовано миссий: " + missions.size());
 
-        // Чтение из файла
         System.out.println("\nДесериализация миссий из файла: " + filename);
         List<SpaceMission> loadedMissions = new ArrayList<>();
         try (FileInputStream fis = new FileInputStream(filename)) {
             for (int i = 0; i < missions.size(); i++) {
-                SpaceMission mission = StreamManager.deserializeSpaceMission(fis);
+                SpaceMission mission = StreamManager.deserializeSpaceMission(
+                    fis
+                );
                 loadedMissions.add(mission);
             }
         }
-        System.out.println(
-            "Десериализовано миссий: " + loadedMissions.size()
-        );
+        System.out.println("Десериализовано миссий: " + loadedMissions.size());
 
-        // Вывод прочитанных данных
         System.out.println("\nДесериализованные миссии:");
         for (int i = 0; i < loadedMissions.size(); i++) {
             System.out.println((i + 1) + ". " + loadedMissions.get(i));
         }
     }
 
-    // Задание 4: Тест форматного текстового ввода/вывода
     private static void testFormattedTextIO() throws IOException {
         if (missions.isEmpty()) {
             System.out.println("База миссий пуста! Сначала заполните её.");
@@ -261,10 +243,7 @@ public class Main {
             "\n--- Тест форматного текстового ввода/вывода (Задание 3) ---"
         );
 
-        // Запись в файл с форматированием
-        System.out.println(
-            "Форматная запись миссий в файл: " + filename
-        );
+        System.out.println("Форматная запись миссий в файл: " + filename);
         try (FileWriter fw = new FileWriter(filename)) {
             for (SpaceMission mission : missions) {
                 StreamManager.writeFormatSpaceMission(mission, fw);
@@ -272,16 +251,15 @@ public class Main {
         }
         System.out.println("Записано миссий: " + missions.size());
 
-        // Чтение из файла с использованием Scanner
-        System.out.println(
-            "\nФорматное чтение миссий из файла: " + filename
-        );
+        System.out.println("\nФорматное чтение миссий из файла: " + filename);
         List<SpaceMission> loadedMissions = new ArrayList<>();
         try (Scanner fileScanner = new Scanner(new File(filename))) {
-            // Важно: устанавливаем локаль для правильного чтения чисел
             fileScanner.useLocale(Locale.US);
 
-            while (fileScanner.hasNextLine() && loadedMissions.size() < missions.size()) {
+            while (
+                fileScanner.hasNextLine() &&
+                loadedMissions.size() < missions.size()
+            ) {
                 SpaceMission mission = StreamManager.readFormatSpaceMission(
                     fileScanner
                 );
@@ -290,7 +268,6 @@ public class Main {
         }
         System.out.println("Прочитано миссий: " + loadedMissions.size());
 
-        // Вывод прочитанных данных
         System.out.println("\nПрочитанные миссии:");
         for (int i = 0; i < loadedMissions.size(); i++) {
             System.out.println((i + 1) + ". " + loadedMissions.get(i));

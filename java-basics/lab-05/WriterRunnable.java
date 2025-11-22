@@ -3,11 +3,13 @@ import java.util.Random;
 public class WriterRunnable implements Runnable {
 
     private SpaceMission mission;
-    private Semaphore semaphore;
+    private Semaphore writeSem;
+    private Semaphore readSem;
 
-    public WriterRunnable(SpaceMission mission, Semaphore semaphore) {
+    public WriterRunnable(SpaceMission mission, Semaphore writeSem, Semaphore readSem) {
         this.mission = mission;
-        this.semaphore = semaphore;
+        this.writeSem = writeSem;
+        this.readSem = readSem;
     }
 
     @Override
@@ -15,13 +17,13 @@ public class WriterRunnable implements Runnable {
         Random random = new Random();
         for (int i = 0; i < mission.size(); i++) {
             try {
-                semaphore.acquire();
+                writeSem.acquire();
 
                 int value = random.nextInt(1000) + 1;
                 mission.setArrayElement(i, value);
                 System.out.println("Write: " + value + " to position " + i);
 
-                semaphore.release();
+                readSem.release();
             } catch (InterruptedException e) {
                 System.err.println(
                     "WriterRunnable interrupted: " + e.getMessage()

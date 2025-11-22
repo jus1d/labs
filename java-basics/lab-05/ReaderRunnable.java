@@ -1,23 +1,29 @@
 public class ReaderRunnable implements Runnable {
 
     private SpaceMission mission;
-    private Semaphore semaphore;
+    private Semaphore readSem;
+    private Semaphore writeSem;
 
-    public ReaderRunnable(SpaceMission mission, Semaphore semaphore) {
+    public ReaderRunnable(
+        SpaceMission mission,
+        Semaphore readSem,
+        Semaphore writeSem
+    ) {
         this.mission = mission;
-        this.semaphore = semaphore;
+        this.readSem = readSem;
+        this.writeSem = writeSem;
     }
 
     @Override
     public void run() {
         for (int i = 0; i < mission.size(); i++) {
             try {
-                semaphore.acquire();
+                readSem.acquire();
 
                 int value = mission.getArrayElement(i);
                 System.out.println("Read: " + value + " from position " + i);
 
-                semaphore.release();
+                writeSem.release();
             } catch (InterruptedException e) {
                 System.err.println(
                     "ReaderRunnable interrupted: " + e.getMessage()

@@ -2,6 +2,7 @@ SOURCES = AsteroidMiningMission.java \
           Comparators.java \
           Main.java \
           MissionBusinessException.java \
+          MissionDatabaseGUI.java \
           PlanetExplorationMission.java \
           ReaderRunnable.java \
           ReaderThread.java \
@@ -14,12 +15,20 @@ SOURCES = AsteroidMiningMission.java \
           WriterRunnable.java \
           WriterThread.java
 
-run: $(SOURCES)
+all: compile
+
+compile: $(SOURCES)
 	javac *.java
+
+run: compile
 	java Main
+	$(MAKE) clean
+
+gui: compile
+	java MissionDatabaseGUI
 	$(MAKE) clean
 
 clean:
 	rm -f *.class
 
-.PHONY: all run clean
+.PHONY: all compile run gui clean

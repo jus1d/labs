@@ -132,22 +132,13 @@ public class Main {
             5
         );
 
-        ManualSemaphore writeSemaphore = new ManualSemaphore(1);
-        ManualSemaphore readSemaphore = new ManualSemaphore(0);
+        Semaphore semaphore = new Semaphore(1);
 
         System.out.println("\nЗапуск WriterRunnable и ReaderRunnable...");
         System.out.println("Ожидается порядок: write-read-write-read-...\n");
 
-        WriterRunnable writerRunnable = new WriterRunnable(
-            mission,
-            writeSemaphore,
-            readSemaphore
-        );
-        ReaderRunnable readerRunnable = new ReaderRunnable(
-            mission,
-            writeSemaphore,
-            readSemaphore
-        );
+        WriterRunnable writerRunnable = new WriterRunnable(mission, semaphore);
+        ReaderRunnable readerRunnable = new ReaderRunnable(mission, semaphore);
 
         Thread writerThread = new Thread(writerRunnable);
         Thread readerThread = new Thread(readerRunnable);

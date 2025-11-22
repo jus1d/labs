@@ -1,6 +1,7 @@
 import java.io.*;
+import java.util.Iterator;
 
-interface SpaceMission {
+interface SpaceMission extends Comparable<SpaceMission>, Iterable<Integer> {
     int[] getResourceData();
     void setResourceData(int[] resourceData);
 

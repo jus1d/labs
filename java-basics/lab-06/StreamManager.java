@@ -1,7 +1,43 @@
 import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class StreamManager {
+
+    private static SpaceMissionFactory factory =
+        new PlanetExplorationMissionFactory();
+
+    public static void setSpaceMissionFactory(SpaceMissionFactory newFactory) {
+        factory = newFactory;
+    }
+
+    public static SpaceMission createInstance() {
+        return factory.createInstance();
+    }
+
+    public static SpaceMission createInstance(
+        int[] resourceData,
+        String missionName,
+        int costPerUnit
+    ) {
+        return factory.createInstance(resourceData, missionName, costPerUnit);
+    }
+
+    public static void sortSpaceMission(SpaceMission[] array) {
+        Arrays.sort(array);
+    }
+
+    public static void sortSpaceMission(
+        SpaceMission[] array,
+        Comparator<SpaceMission> comp
+    ) {
+        Arrays.sort(array, comp);
+    }
+
+    public static SpaceMission unmodifiableSpaceMission(SpaceMission mission) {
+        return new UnmodifiableSpaceMission(mission);
+    }
 
     public static void outputSpaceMission(SpaceMission o, OutputStream out)
         throws IOException {
@@ -21,11 +57,7 @@ public class StreamManager {
             resourceData[i] = dis.readInt();
         }
 
-        return new AsteroidMiningMission(
-            resourceData,
-            missionName,
-            costPerUnit
-        );
+        return createInstance(resourceData, missionName, costPerUnit);
     }
 
     public static void writeSpaceMission(SpaceMission o, Writer out)
@@ -55,11 +87,7 @@ public class StreamManager {
             resourceData[i] = Integer.parseInt(tokenizer.sval);
         }
 
-        return new AsteroidMiningMission(
-            resourceData,
-            missionName,
-            costPerUnit
-        );
+        return createInstance(resourceData, missionName, costPerUnit);
     }
 
     public static void serializeSpaceMission(SpaceMission o, OutputStream out)
@@ -98,11 +126,7 @@ public class StreamManager {
             resourceData[i] = in.nextInt();
         }
 
-        return new AsteroidMiningMission(
-            resourceData,
-            missionName,
-            costPerUnit
-        );
+        return createInstance(resourceData, missionName, costPerUnit);
     }
 
     public static SpaceMission synchronizedSpaceMission(SpaceMission mission) {

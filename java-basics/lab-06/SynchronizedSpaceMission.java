@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Iterator;
 
 public class SynchronizedSpaceMission implements SpaceMission {
 
@@ -84,5 +85,15 @@ public class SynchronizedSpaceMission implements SpaceMission {
     @Override
     public synchronized int hashCode() {
         return mission.hashCode();
+    }
+
+    @Override
+    public synchronized int compareTo(SpaceMission other) {
+        return mission.compareTo(other);
+    }
+
+    @Override
+    public synchronized Iterator<Integer> iterator() {
+        return mission.iterator();
     }
 }

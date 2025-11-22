@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.Arrays;
+import java.util.Iterator;
 
 class AsteroidMiningMission implements SpaceMission, Serializable {
 
@@ -246,5 +247,34 @@ class AsteroidMiningMission implements SpaceMission, Serializable {
         }
         out.write("\n");
         out.flush();
+    }
+
+    @Override
+    public int compareTo(SpaceMission other) {
+        try {
+            return Integer.compare(
+                this.calculateNetProfit(),
+                other.calculateNetProfit()
+            );
+        } catch (MissionBusinessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Iterator<Integer> iterator() {
+        return new Iterator<>() {
+            private int idx = 0;
+
+            @Override
+            public boolean hasNext() {
+                return idx < mineralQuantities.length;
+            }
+
+            @Override
+            public Integer next() {
+                return mineralQuantities[idx++];
+            }
+        };
     }
 }

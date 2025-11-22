@@ -1,6 +1,20 @@
-all: run clean
+SOURCES = AsteroidMiningMission.java \
+          Comparators.java \
+          Main.java \
+          MissionBusinessException.java \
+          PlanetExplorationMission.java \
+          ReaderRunnable.java \
+          ReaderThread.java \
+          Semaphore.java \
+          SpaceMission.java \
+          SpaceMissionFactory.java \
+          StreamManager.java \
+          SynchronizedSpaceMission.java \
+          UnmodifiableSpaceMission.java \
+          WriterRunnable.java \
+          WriterThread.java
 
-run: AsteroidMiningMission.java MissionBusinessException.java MissionManager.java PlanetExplorationMission.java SpaceMission.java
+run: $(SOURCES)
 	javac *.java
 	java Main
 	$(MAKE) clean
@@ -8,4 +22,4 @@ run: AsteroidMiningMission.java MissionBusinessException.java MissionManager.jav
 clean:
 	rm -f *.class
 
-.PHONY: run clean
+.PHONY: all run clean

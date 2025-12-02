@@ -36,7 +36,7 @@ JOIN film_category fc ON f.film_id = fc.film_id
 JOIN category cat ON fc.category_id = cat.category_id
 WHERE YEAR(p.payment_date) = 2005
   AND MONTH(p.payment_date) = 5
-GROUP BY cat.category_id, cat.name
+GROUP BY cat.name
 ORDER BY SUM(p.amount) DESC
 LIMIT 10;
 

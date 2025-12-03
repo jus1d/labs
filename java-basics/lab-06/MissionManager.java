@@ -76,13 +76,19 @@ public class MissionManager {
 
             SpaceMission mission;
             if (type == 1) {
-                mission = new PlanetExplorationMission(
+                StreamManager.setSpaceMissionFactory(
+                    new PlanetExplorationMissionFactory()
+                );
+                mission = StreamManager.createInstance(
                     resources,
                     missionName,
                     costPerUnit
                 );
             } else {
-                mission = new AsteroidMiningMission(
+                StreamManager.setSpaceMissionFactory(
+                    new AsteroidMiningMissionFactory()
+                );
+                mission = StreamManager.createInstance(
                     resources,
                     missionName,
                     costPerUnit

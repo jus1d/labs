@@ -18,7 +18,7 @@ SOURCES = AsteroidMiningMission.java \
 all: compile
 
 compile: $(SOURCES)
-	javac *.java
+	javac $(SOURCES)
 
 run: compile
 	java Main

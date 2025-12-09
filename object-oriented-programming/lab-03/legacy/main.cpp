@@ -47,7 +47,7 @@ public:
     }
 
     // Получение текущей позиции в файле
-    long get_position() {
+    long tell() {
         if (file != nullptr) {
             return ftell(file);
         }
@@ -55,7 +55,7 @@ public:
     }
 
     // Установка позиции в файле
-    bool set_position(long pos) {
+    bool seek(long pos) {
         if (file != nullptr) {
             return fseek(file, pos, SEEK_SET) == 0;
         }
@@ -126,7 +126,7 @@ private:
                 return position;
             }
 
-            position = file.get_position();
+            position = file.tell();
         }
 
         return -1;
@@ -139,7 +139,7 @@ private:
             return -1;
         }
 
-        long position = file.get_position();
+        long position = file.tell();
         file.write_line(str);
 
         return position;
@@ -152,7 +152,7 @@ private:
             return false;
         }
 
-        if (!file.set_position(position)) {
+        if (!file.seek(position)) {
             return false;
         }
 
@@ -258,7 +258,7 @@ public:
                 }
             }
 
-            position = students_file.get_position();
+            position = students_file.tell();
         }
 
         if (name_count == 0) {
@@ -303,7 +303,7 @@ public:
             return;
         }
 
-        printf("\n=== Список всех студентов ===\n");
+        printf("\n--- Список всех студентов ---\n");
 
         LinkRecord link;
         char students[MAX_STRING_LENGTH];
@@ -339,7 +339,7 @@ void input_string(const char* prompt, char* buffer, int max_length) {
 
 // Главное меню
 void print_menu() {
-    printf("\n=== Меню ===\n");
+    printf("\n--- Меню ---\n");
     printf("1. Добавить новую группу\n");
     printf("2. Добавить студента с указанием группы\n");
     printf("3. Найти группы студента по фамилии\n");

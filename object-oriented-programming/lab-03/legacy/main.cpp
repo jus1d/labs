@@ -16,83 +16,65 @@ typedef struct {
 class DataFile {
 private:
     FILE* file;
-    char* filename;
 
 public:
     DataFile(const char* name, const char* mode) {
-        this->filename = (char*)malloc(strlen(name) + 1);
-        assert(this->filename != nullptr);
-        strcpy(this->filename, name);
-
-        this->file = fopen(name, mode);
-        if (this->file == nullptr) {
+        file = fopen(name, mode);
+        if (file == nullptr) {
             printf("Ошибка: не удалось открыть файл '%s'\n", name);
-            free(this->filename);
-            this->filename = nullptr;
         }
     }
 
     ~DataFile() {
-        if (this->file != nullptr) {
-            fclose(this->file);
-        }
-        if (this->filename != nullptr) {
-            free(this->filename);
+        if (file != nullptr) {
+            fclose(file);
         }
     }
 
     bool is_open() const {
-        return this->file != nullptr;
+        return file != nullptr;
     }
 
     FILE* get_file() {
-        return this->file;
+        return file;
     }
 
     void close() {
-        if (this->file != nullptr) {
-            fclose(this->file);
-            this->file = nullptr;
+        if (file != nullptr) {
+            fclose(file);
+            file = nullptr;
         }
     }
 
     // Получение текущей позиции в файле
     long get_position() {
-        if (this->file != nullptr) {
-            return ftell(this->file);
+        if (file != nullptr) {
+            return ftell(file);
         }
         return -1;
     }
 
     // Установка позиции в файле
     bool set_position(long pos) {
-        if (this->file != nullptr) {
-            return fseek(this->file, pos, SEEK_SET) == 0;
-        }
-        return false;
-    }
-
-    // Переход в конец файла
-    bool seek_to_end() {
-        if (this->file != nullptr) {
-            return fseek(this->file, 0, SEEK_END) == 0;
+        if (file != nullptr) {
+            return fseek(file, pos, SEEK_SET) == 0;
         }
         return false;
     }
 
     // Чтение строки
     char* read_line(char* buffer, int max_length) {
-        if (this->file != nullptr) {
-            return fgets(buffer, max_length, this->file);
+        if (file != nullptr) {
+            return fgets(buffer, max_length, file);
         }
         return nullptr;
     }
 
     // Запись строки с переводом строки
     bool write_line(const char* str) {
-        if (this->file != nullptr) {
-            fputs(str, this->file);
-            fputc('\n', this->file);
+        if (file != nullptr) {
+            fputs(str, file);
+            fputc('\n', file);
             return true;
         }
         return false;
@@ -100,16 +82,16 @@ public:
 
     // Чтение структуры LinkRecord
     bool read_link_record(LinkRecord* record) {
-        if (this->file != nullptr) {
-            return fread(record, sizeof(LinkRecord), 1, this->file) == 1;
+        if (file != nullptr) {
+            return fread(record, sizeof(LinkRecord), 1, file) == 1;
         }
         return false;
     }
 
     // Запись структуры LinkRecord
     bool write_link_record(const LinkRecord* record) {
-        if (this->file != nullptr) {
-            return fwrite(record, sizeof(LinkRecord), 1, this->file) == 1;
+        if (file != nullptr) {
+            return fwrite(record, sizeof(LinkRecord), 1, file) == 1;
         }
         return false;
     }
@@ -157,7 +139,6 @@ private:
             return -1;
         }
 
-        file.seek_to_end();
         long position = file.get_position();
         file.write_line(str);
 
@@ -190,22 +171,22 @@ private:
 
 public:
     StudentDatabase(const char* students_file, const char* groups_file, const char* link_file) {
-        this->students_filename = students_file;
-        this->groups_filename = groups_file;
-        this->link_filename = link_file;
+        students_filename = students_file;
+        groups_filename = groups_file;
+        link_filename = link_file;
     }
 
     // Добавление новой группы
     bool add_group(const char* groups_name) {
         // Проверяем, существует ли уже такая группа
-        long existing_pos = find_string_in_file(this->groups_filename, groups_name);
+        long existing_pos = find_string_in_file(groups_filename, groups_name);
         if (existing_pos != -1) {
             printf("Группа '%s' уже существует.\n", groups_name);
             return false;
         }
 
         // Добавляем группу
-        long position = append_string_to_file(this->groups_filename, groups_name);
+        long position = append_string_to_file(groups_filename, groups_name);
         if (position == -1) {
             printf("Ошибка при добавлении группы.\n");
             return false;
@@ -218,14 +199,14 @@ public:
     // Добавление нового студента с указанием группы
     bool add_student(const char* students, const char* groups_name) {
         // Проверяем, существует ли группа
-        long groups_idx = find_string_in_file(this->groups_filename, groups_name);
+        long groups_idx = find_string_in_file(groups_filename, groups_name);
         if (groups_idx == -1) {
             printf("Группа '%s' не существует. Сначала добавьте группу.\n", groups_name);
             return false;
         }
 
         // Добавляем фамилию в students.dat
-        long name_idx = append_string_to_file(this->students_filename, students);
+        long name_idx = append_string_to_file(students_filename, students);
         if (name_idx == -1) {
             printf("Ошибка при добавлении фамилии.\n");
             return false;
@@ -236,7 +217,7 @@ public:
         link.name_idx = name_idx;
         link.groups_idx = groups_idx;
 
-        DataFile link_file(this->link_filename, "ab");
+        DataFile link_file(link_filename, "ab");
         if (!link_file.is_open() || !link_file.write_link_record(&link)) {
             printf("Ошибка при создании связи.\n");
             return false;
@@ -253,7 +234,7 @@ public:
         assert(name_positions != nullptr);
         int name_count = 0;
 
-        DataFile students_file(this->students_filename, "r");
+        DataFile students_file(students_filename, "r");
         if (!students_file.is_open()) {
             printf("Ошибка при открытии файла `students.dat`\n");
             free(name_positions);
@@ -289,7 +270,7 @@ public:
         // Находим соответствующие группы в links.idx
         printf("Студент '%s' учится в группе(ах):\n", students);
 
-        DataFile link_file(this->link_filename, "rb");
+        DataFile link_file(link_filename, "rb");
         if (!link_file.is_open()) {
             printf("Ошибка при открытии файла `links.idx`\n");
             free(name_positions);
@@ -303,7 +284,7 @@ public:
                 if (link.name_idx == name_positions[i]) {
                     // Читаем название группы по groups_idx
                     char groups_name[MAX_STRING_LENGTH];
-                    if (read_string_at_position(this->groups_filename, link.groups_idx, groups_name)) {
+                    if (read_string_at_position(groups_filename, link.groups_idx, groups_name)) {
                         printf("  - %s\n", groups_name);
                     }
                     break;
@@ -316,7 +297,7 @@ public:
 
     // Вывод всех студентов и их групп
     void print_all_students() {
-        DataFile link_file(this->link_filename, "rb");
+        DataFile link_file(link_filename, "rb");
         if (!link_file.is_open()) {
             printf("База данных пуста или файл не существует.\n");
             return;
@@ -330,8 +311,8 @@ public:
         int index = 0;
 
         while (link_file.read_link_record(&link)) {
-            if (read_string_at_position(this->students_filename, link.name_idx, students) &&
-                read_string_at_position(this->groups_filename, link.groups_idx, groups)) {
+            if (read_string_at_position(students_filename, link.name_idx, students) &&
+                read_string_at_position(groups_filename, link.groups_idx, groups)) {
                 printf("%d:\n", index);
                 printf("- Фамилия: %s\n", students);
                 printf("- Группа: %s\n\n", groups);

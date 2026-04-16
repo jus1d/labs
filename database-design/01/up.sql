@@ -7,9 +7,9 @@ INSERT INTO addresses (postal_index, city, street, house) VALUES
 ('630000', 'Novosibirsk', 'Sovetskaya', '3');
 
 INSERT INTO suppliers (supplier_name, inn, legal_address_id, bank_address_id, bank_account) VALUES
-('ООО МеталлПоставка', '7701234567', 1, 2, '40702810900000000001'),
-('ООО ХимСнаб', '7809876543', 3, 4, '40702810900000000002'),
-('ООО СтройРесурс', '5401122334', 5, 6, '40702810900000000003');
+('Biba & Boba LLC', '7701234567', 1, 2, '40702810900000000001'),
+('BBBBIWYIMR LLC', '7809876543', 3, 4, '40702810900000000002'),
+('Build & Freak LLC', '5401122334', 5, 6, '40702810900000000003');
 
 INSERT INTO material_classes (class_code) VALUES
 ('A'),

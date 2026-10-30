@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Каталог маршрутов по России с поиском по названию, фильтром по региону и направлениям.">
+  <title>Маршруты — Турмаршрут</title>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="img/logo.svg" alt="Турмаршрут — на главную" width="177" height="24"></a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="catalog.html" aria-current="page">Маршруты</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>Маршруты</h1>
+    <p>В каталоге собраны готовые маршруты путешествий по России: от прогулок по природе до поездок на несколько дней. Найдите маршрут по названию, выберите регион или откройте нужное направление.</p>
+    <form action="catalog.html" method="get">
+      <label for="search">Поиск маршрутов</label>
+      <input type="search" id="search" name="q" placeholder="Например, Байкал">
+      <label for="region">Регион</label>
+      <select id="region" name="region">
+        <option value="">Все регионы</option>
+        <option value="irkutsk">Иркутская область</option>
+        <option value="kaliningrad">Калининградская область</option>
+        <option value="karelia">Карелия</option>
+        <option value="altai">Алтай</option>
+        <option value="samara">Самарская область</option>
+      </select>
+      <label for="sort">Сортировка</label>
+      <select id="sort" name="sort">
+        <option value="name">По названию</option>
+        <option value="duration">По длительности</option>
+        <option value="distance">По протяжённости</option>
+      </select>
+      <button type="submit">Найти</button>
+    </form>
+
+    <p>Это макет каталога: поиск и фильтры пока не изменяют список маршрутов.</p>
+
+    <h2>Маршруты по вашему запросу</h2>
+    <p>Найдено маршрутов: 3.</p>
+    <div class="route-cards">
+      <div class="route-card">
+        <img src="img/baikal.svg" alt="Горы и берег озера Байкал" width="240" height="180">
+        <p><a href="route.html">Кругобайкальская дорога и Листвянка</a></p>
+        <dl>
+          <dt>Длительность</dt>
+          <dd>3 дня</dd>
+          <dt>Протяжённость</dt>
+          <dd>240 км</dd>
+          <dt>Регион</dt>
+          <dd>Иркутская область</dd>
+        </dl>
+      </div>
+      <div class="route-card">
+        <img src="img/curonian.svg" alt="Песчаные дюны и море на Куршской косе" width="240" height="180">
+        <p>Куршская коса пешком</p>
+        <dl>
+          <dt>Длительность</dt>
+          <dd>2 дня</dd>
+          <dt>Протяжённость</dt>
+          <dd>38 км</dd>
+          <dt>Регион</dt>
+          <dd>Калининградская область</dd>
+        </dl>
+      </div>
+      <div class="route-card">
+        <img src="img/karelia.svg" alt="Лес и озеро в Карелии" width="240" height="180">
+        <p>Петрозаводск, Кивач и Марциальные воды</p>
+        <dl>
+          <dt>Длительность</dt>
+          <dd>4 дня</dd>
+          <dt>Протяжённость</dt>
+          <dd>310 км</dd>
+          <dt>Регион</dt>
+          <dd>Карелия</dd>
+        </dl>
+      </div>
+    </div>
+
+    <h2>Направления</h2>
+    <ul>
+        <li><a href="catalog.html?region=irkutsk">Байкал</a></li>
+        <li><a href="catalog.html?region=karelia">Карелия</a></li>
+        <li><a href="catalog.html?region=kaliningrad">Куршская коса</a></li>
+        <li><a href="catalog.html?region=altai">Алтай</a></li>
+        <li><a href="catalog.html?region=samara">Самарская область</a></li>
+    </ul>
+  </main>
+  <footer>
+    <address>
+      Электронная почта: <a href="mailto:info@turmarshrut.example">info@turmarshrut.example</a>
+    </address>
+    <p>Турмаршрут</p>
+  </footer>
+</body>
+</html>

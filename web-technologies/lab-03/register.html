@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Регистрация путешественника на сайте Турмаршрут.">
+    <title>Регистрация — Турмаршрут</title>
+  </head>
+  <body>
+    <header>
+      <a href="index.html"><img src="img/logo.svg" alt="Турмаршрут — на главную" width="177" height="24"></a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="catalog.html">Маршруты</a></li>
+          <li><a href="guide.html">Гид путешественника</a></li>
+          <li><a href="add-route.html">Добавить маршрут</a></li>
+          <li><a href="account.html">Личный кабинет</a></li>
+          <li><a href="about.html">О проекте</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>Создать аккаунт путешественника</h1>
+      <p>После регистрации в личном кабинете можно сохранять маршруты и отправлять собственные описания. Эта форма подготовлена для будущей реализации регистрации.</p>
+      <form action="account.html" method="post">
+        <p><label for="name">Имя</label><input id="name" name="name" type="text" required autocomplete="name"></p>
+        <p><label for="email">Электронная почта</label><input id="email" name="email" type="email" required autocomplete="email"></p>
+        <p><label for="password">Пароль</label><input id="password" name="password" type="password" required minlength="8" autocomplete="new-password"></p>
+        <p><label for="password-repeat">Повторите пароль</label><input id="password-repeat" name="password-repeat" type="password" required minlength="8" autocomplete="new-password"></p>
+        <p><input id="agreement" name="agreement" type="checkbox" required><label for="agreement">Я принимаю правила использования сайта</label></p>
+        <button type="submit">Зарегистрироваться</button>
+      </form>
+      <p>Уже есть аккаунт? <a href="login.html">Войдите</a>.</p>
+    </main>
+    <footer>
+      <address>Электронная почта: <a href="mailto:info@turmarshrut.example">info@turmarshrut.example</a></address>
+      <p>Турмаршрут</p>
+    </footer>
+  </body>
+</html>

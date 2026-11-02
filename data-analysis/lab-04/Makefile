@@ -1,14 +1,10 @@
-DB := poker.db
+.PHONY: clean
 
-.PHONY: all clean
-
-all: $(DB)
-
-$(DB): dump.sql schema.sql
-	rm -f $@
-	sqlite3 $@ < dump.sql
-	sqlite3 $@ "ALTER TABLE players RENAME TO poker_dataset;"
-	sqlite3 $@ < schema.sql
+poker.db: dump.sql schema.sql
+	rm -f poker.db
+	sqlite3 poker.db < dump.sql
+	# sqlite3 poker.db "ALTER TABLE players RENAME TO poker_dataset;"
+	sqlite3 poker.db < schema.sql
 
 clean:
-	rm -f $(DB)
+	rm -f *.db

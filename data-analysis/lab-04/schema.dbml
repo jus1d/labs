@@ -1,0 +1,33 @@
+Table players {
+  player_id text [pk]
+  player_name text [not null, note: 'Пока совпадает с player_id: исходный датасет не содержит настоящих имён.']
+}
+
+Table player_characteristics {
+  assessment_id int [pk]
+  player_id text [not null]
+  skill real
+  bankroll_mgmt real
+  tilt_control real
+  study_hours_week real
+}
+
+Table player_statistics {
+  result_id int [pk]
+  assessment_id int [not null, unique]
+  tournaments_played int
+  avg_field_size int
+  avg_buyin real
+  bankroll_buyins int
+  itm_rate real
+  final_table_rate real
+  win_rate real
+  biggest_cash_x real
+  final_bankroll_bi real
+  realized_roi real
+  went_broke int
+  profitable int
+}
+
+Ref: player_characteristics.player_id > players.player_id
+Ref: player_statistics.assessment_id - player_characteristics.assessment_id

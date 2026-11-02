@@ -5,7 +5,8 @@ DROP TABLE IF EXISTS player_characteristics;
 DROP TABLE IF EXISTS players;
 
 CREATE TABLE players (
-    player_id TEXT PRIMARY KEY
+    player_id TEXT PRIMARY KEY,
+    player_name TEXT NOT NULL
 );
 
 CREATE TABLE player_characteristics (
@@ -36,8 +37,8 @@ CREATE TABLE player_statistics (
     FOREIGN KEY (assessment_id) REFERENCES player_characteristics(assessment_id)
 );
 
-INSERT INTO players (player_id)
-SELECT DISTINCT player_id
+INSERT INTO players (player_id, player_name)
+SELECT DISTINCT player_id, player_id
 FROM poker_dataset;
 
 INSERT INTO player_characteristics (
